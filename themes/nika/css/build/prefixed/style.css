@@ -575,6 +575,8 @@ header {
   padding-bottom: 80px;
   z-index: 2;
   position: relative; }
+  header h1, header h2 {
+    transition: opacity 2s; }
 
 .moon {
   width: 70px;
@@ -593,6 +595,9 @@ header {
     padding-bottom: 0; }
   .moon svg {
     cursor: pointer; }
+
+.moon-page {
+  transition: opacity 2s; }
 
 .moon-page-content {
   padding-top: 160px;
@@ -632,6 +637,25 @@ header {
   transition: opacity 0.8s; }
   .star.active {
     opacity: 1; }
+
+.screensaver header h1, .screensaver header h2 {
+  opacity: 0; }
+.screensaver .moon-page {
+  opacity: 0; }
+.screensaver .screensaver-date, .screensaver .screensaver-clock {
+  opacity: 1; }
+
+.screensaver-date, .screensaver-clock {
+  opacity: 0;
+  position: fixed;
+  transition: opacity 2s;
+  bottom: 20px; }
+
+.screensaver-clock {
+  left: 30px; }
+
+.screensaver-date {
+  right: 30px; }
 
 .project-thumbnail-wrapper {
   text-align: left; }

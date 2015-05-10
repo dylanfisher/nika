@@ -79,6 +79,11 @@ header {
   padding-bottom: 80px;
   z-index: 2;
   position: relative;
+
+  h1,
+  h2 {
+    transition: opacity 2s;
+  }
 }
 
 .moon {
@@ -107,6 +112,10 @@ header {
 //
 // Night
 //
+
+.moon-page {
+  transition: opacity 2s;
+}
 
 .moon-page-content {
   padding-top: 160px;
@@ -157,6 +166,40 @@ header {
   &.active {
     opacity: 1;
   }
+}
+
+.screensaver {
+  header {
+    h1,
+    h2 {
+      opacity: 0;
+    }
+  }
+
+  .moon-page {
+    opacity: 0;
+  }
+
+  .screensaver-date,
+  .screensaver-clock {
+    opacity: 1;
+  }
+}
+
+.screensaver-date,
+.screensaver-clock {
+  opacity: 0;
+  position: fixed;
+  transition: opacity 2s;
+  bottom: 20px;
+}
+
+.screensaver-clock {
+  left: 30px;
+}
+
+.screensaver-date {
+  right: 30px;
 }
 
 //

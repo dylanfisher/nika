@@ -55,6 +55,8 @@ Website developed by Dylan Fisher
       </div>
     </div>
     <div class="star-wrapper"></div>
+    <div class="screensaver-date" id="screensaver-date"></div>
+    <div class="screensaver-clock" id="screensaver-clock"></div>
   </div>
 
   <div class="wrapper">
