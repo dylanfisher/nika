@@ -31,10 +31,16 @@ Version: 1.0
   display: inline-block; }
 
 .box-shadow, .project-thumbnail, .project-image-content, .pin {
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2); }
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 2s; }
+  .night .box-shadow, .night .project-thumbnail, .night .project-image-content, .night .pin {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.9); }
 
 .filter-shadow {
-  filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.2)); }
+  filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.2));
+  transition: filter 2s; }
+  .night .filter-shadow {
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.9)); }
 
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 /**
@@ -532,6 +538,9 @@ body {
   margin: 0 auto;
   padding: 80px 40px; }
 
+.content {
+  padding-bottom: 320px; }
+
 .entry-content {
   max-width: 630px;
   margin: 0 auto;
@@ -564,7 +573,9 @@ a {
   transition: color 0.4s; }
 
 header {
-  padding-bottom: 80px; }
+  padding-bottom: 80px;
+  z-index: 2;
+  position: relative; }
 
 .moon {
   width: 70px;
@@ -579,6 +590,47 @@ header {
     margin-top: 0;
     padding-top: 80px;
     padding-bottom: 0; }
+  .moon svg {
+    cursor: pointer; }
+
+.moon-page-content {
+  padding-top: 160px;
+  text-align: left; }
+  .home .moon-page-content {
+    padding-top: 330px; }
+
+.night-cover {
+  opacity: 0;
+  background: #000;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transition: opacity 2s;
+  overflow: hidden; }
+  .night .night-cover {
+    opacity: 1;
+    z-index: 2; }
+  .night-transition .night-cover {
+    z-index: 2; }
+
+.star-wrapper {
+  position: function;
+  width: 100%;
+  height: 100%; }
+
+.star {
+  opacity: 0;
+  position: absolute;
+  background: #fff;
+  width: 1px;
+  height: 1px;
+  z-index: 2;
+  transition: opacity 0.8s; }
+  .star.active {
+    opacity: 1; }
 
 .project-thumbnail-wrapper {
   text-align: left; }
@@ -661,6 +713,15 @@ header {
 
 a.pin:hover {
   transform: translate(0, -20px); }
+
+.previous-post-link a, .next-post-link a {
+  display: inline-block; }
+
+.previous-post-link {
+  text-align: left; }
+
+.next-post-link {
+  text-align: right; }
 
 .alignnone {
   margin: 5px 20px 20px 0; }

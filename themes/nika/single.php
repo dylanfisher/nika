@@ -44,6 +44,15 @@
       ?>
     </div>
   </div>
+
+  <div class="previous-post-link">
+    <?php previous_post_link( '%link', 'Previous' ); ?>
+  </div>
+
+  <div class="next-post-link">
+    <?php next_post_link( '%link', 'Next' ); ?>
+  </div>
+
 <?php get_footer() ?>
 </body>
 </html>

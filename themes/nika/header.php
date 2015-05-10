@@ -18,10 +18,10 @@
    | ::|    |      \    \ \    \ `--' =/
   /  '/\    /       )    |/     `-...-`
  /    | |  `\    /-'    /;
- \  ,,/ |    \   D    .'  \
-  `""`   \  nnh  D_.-'L__nnh
-          `"""`
-
+ \  ,,/ |    \   D    .'  \                          ,-,
+  `""`   \  nnh  D_.-'L__nnh                        /.(
+          `"""`                                     \ {
+                                                     `-`
 Website developed by Dylan Fisher
 -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -40,15 +40,30 @@ Website developed by Dylan Fisher
   <!--[if lte IE 9]>
     <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
   <![endif]-->
+  <div class="night-cover">
+    <div class="moon-page">
+      <div class="moon-page-content">
+        <div class="wrapper">
+          <?php
+            $moon_page = get_page_by_path('moon');
+            $moon_content = $moon_page->post_content;
+            $filtered_content = apply_filters( 'the_content', $moon_content );
+            $filtered_content = str_replace( ']]>', ']]&gt;', $moon_content );
+            echo $filtered_content;
+          ?>
+        </div>
+      </div>
+    </div>
+    <div class="star-wrapper"></div>
+  </div>
+
   <div class="wrapper">
     <header class="relative center">
       <h1 class="site-title absolute absolute-left absolute-top">
         <a href="<?php bloginfo('url') ?>/" title="<?php echo esc_html( bloginfo('name'), 1 ) ?>" rel="home"><?php bloginfo('name') ?></a>
       </h1>
       <div class="moon ib">
-        <a href="<?php echo home_url(); ?>">
-          <?php get_template_part('images/svg/'.$moon_phase.'.svg'); ?>
-        </a>
+        <?php get_template_part('images/svg/'.$moon_phase.'.svg'); ?>
       </div>
       <h2 class="absolute absolute-right absolute-top">
         <a href="#Information">Information</a>
