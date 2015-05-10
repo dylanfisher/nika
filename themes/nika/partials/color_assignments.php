@@ -44,14 +44,16 @@
 
   .neutral                 { background-color: <?php echo $neutral; ?>; }
   .accent-background       { background-color: <?php echo $accent; ?>; }
-  .accent                  { color: <?php echo $accent; ?>; }
+  .accent, .answer         { color: <?php echo $accent; ?>; }
+  a                        { border-color: <?php echo $accent; ?>; }
+  a:hover                  { color: <?php echo $accent; ?>; }
   .entry-content a         { border-color: <?php echo $accent; ?>; }
-  .entry-content a:hover   { color: <?php echo $accent; ?>; }
 
-  ::-moz-selection { background: <?php echo $neutral; ?>; }
-  ::selection      { background: <?php echo $neutral; ?>; }
+  ::-moz-selection { background: <?php echo $accent; ?>; }
+  ::selection      { background: <?php echo $accent; ?>; }
 
   .gradient {
+    background: #939393;
     background: <?php echo $neutral ?>;
     background: -moz-linear-gradient(<?php echo $direction; ?>, <?php echo $colors; ?>);
     background: -webkit-linear-gradient(<?php echo $direction; ?>, <?php echo $colors; ?>);

@@ -7,13 +7,14 @@ jQuery(document).ready(function($){
   var clockTimer;
 
   nightTimeInit();
+  surveyInit();
 
   function nightTimeInit() {
     var transition;
     var starInterval;
     var duration = 2000;
     var screensaverTimer;
-    var screensaverWaitPeriod = 20000;
+    var screensaverWaitPeriod = 60000;
 
     screensaverTimout();
 
@@ -130,6 +131,32 @@ jQuery(document).ready(function($){
   function checkTime(i) {
     if (i<10) {i = '0' + i;}  // add zero in front of numbers < 10
     return i;
+  }
+
+  function surveyInit() {
+    var survey = $('.survey');
+    var surveyItems = survey.find('.survey-item');
+    if(survey.length) {
+      survey.prepend('<div class="new-question">New Question</div>');
+      surveyItems.find('.question').prepend('Q. ');
+      surveyItems.find('.answer').prepend('A. ');
+      randomSurveyItem();
+    }
+
+    function randomSurveyItem() {
+      var random = Math.floor(Math.random() * surveyItems.length);
+      var item = surveyItems.eq(random);
+      if(item.hasClass('active')) {
+        randomSurveyItem();
+      } else {
+        surveyItems.removeClass('active');
+        item.addClass('active');
+      }
+    }
+
+    $(document).on('click', '.new-question', function(){
+      randomSurveyItem();
+    });
   }
 
 });

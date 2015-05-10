@@ -45,12 +45,12 @@
     </div>
   </div>
 
-  <div class="previous-post-link">
-    <?php previous_post_link( '%link', 'Previous' ); ?>
+  <div class="previous-post-link large-sans">
+    <?php previous_post_link( '%link', '<div class="hidden-title">%title</div>Previous' ); ?>
   </div>
 
-  <div class="next-post-link">
-    <?php next_post_link( '%link', 'Next' ); ?>
+  <div class="next-post-link large-sans">
+    <?php next_post_link( '%link', '<div class="hidden-title">%title</div>Next' ); ?>
   </div>
 
 <?php get_footer() ?>

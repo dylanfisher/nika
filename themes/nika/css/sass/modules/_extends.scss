@@ -11,6 +11,13 @@
   display: inline-block;
 }
 
+%ibnorm {
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+.ibnorm { @extend %ibnorm; }
+
 %clearfix {
   *zoom: 1;
   &:before,

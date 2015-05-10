@@ -2,17 +2,17 @@
 
 # GitHub Updater
 * Contributors: [Andy Fragen](https://github.com/afragen), [Gary Jones](https://github.com/GaryJones), [Seth Carstens](https://github.com/scarstens), [contributors](https://github.com/afragen/github-updater/graphs/contributors)
-* Tags: plugin, theme, update, updater, github, bitbucket, remote install
+* Tags: plugin, theme, update, updater, github, bitbucket, gitlab, remote install
 * Requires at least: 3.8
 * Requires PHP: 5.3
-* Tested up to: 4.2
+* Tested up to: 4.2.x
 * Stable tag: master
 * Donate link: http://bit.ly/github-updater
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 
-A simple plugin to enable automatic updates to your GitHub or Bitbucket hosted WordPress plugins and themes. It also allows for the remote installation of plugins or themes.
+A simple plugin to enable automatic updates to your GitHub, Bitbucket, or GitLab hosted WordPress plugins and themes. It also allows for the remote installation of plugins or themes.
 
 This plugin is [not allowed in the wp.org repo](https://github.com/afragen/github-updater/issues/34). :frowning:
 
@@ -29,8 +29,6 @@ or
 `GitHub Theme URI: https://github.com/afragen/test-child`
 
 ...where the above URI leads to the __owner/repository__ of your theme or plugin. The URI may be in the format `https://github.com/<owner>/<repo>` or the short format `<owner>/<repo>`. You do not need both. Only one Plugin or Theme URI is required. You **must not** include any extensions like `.git`.
-
-Developers please note that your plugin/theme installation directory and remote repository names **must** be identical. This includes case sensitivity. Otherwise issues may arise where certain features fail to work properly. Please be consistent in your naming.
 
 ## Installation
 
@@ -85,27 +83,9 @@ This way you get automatic updates and cannot deactivate the plugin.
 
 ## Usage
 
-### Themes
-
-There must be a `GitHub Theme URI` or `Bitbucket Theme URI` declaration in the `style.css` file.
-
-~~~css
-/*
-Theme Name:       Test
-Theme URI:        http://drfragen.info/
-Version:          0.1.0
-Description:      Child theme of TwentyTwelve.
-Author:           Andy Fragen
-Template:         twentytwelve
-Template Version: 1.0.0
-GitHub Theme URI: https://github.com/afragen/test-child
-GitHub Branch:    master
-*/
-~~~
-
 ### Plugins 
 
-There must be a `GitHub Plugin URI` or `Bitbucket Plugin URI` declaration in the plugin's header. The plugin's primary file **must** be named similarly to the repo name.
+There must be a `GitHub Plugin URI`, `Bitbucket Plugin URI`, or `GitLab Plugin URI` declaration in the plugin's header. The plugin's primary file **must** be named similarly to the repo name.
 
 ~~~php
 /*
@@ -123,15 +103,37 @@ GitHub Branch:     master
 */
 ~~~
 
+### Themes
+
+There must be a `GitHub Theme URI`, `Bitbucket Theme URI`, or `GitLab Theme URI` declaration in the `style.css` file.
+
+~~~css
+/*
+Theme Name:       Test
+Theme URI:        http://drfragen.info/
+Version:          0.1.0
+Description:      Child theme of TwentyTwelve.
+Author:           Andy Fragen
+Template:         twentytwelve
+Template Version: 1.0.0
+GitHub Theme URI: https://github.com/afragen/test-child
+GitHub Branch:    master
+*/
+~~~
+
 ### Optional Headers
 
-`GitHub Branch` and `Bitbucket Branch` are available but not required.
+`GitHub Branch`, `Bitbucket Branch`, and `GitLab Branch` are available but not required.
 
-### Enterprise Support
+### Self Hosted Support
 
-#### GitHub Enterprise Support
+#### GitHub Self Hosted Support
 
-Add the `GitHub Enterprise` header to the plugin or theme that is hosted on your GitHub Enterprise installation. The settings should be similar to `GitHub Enterprise: https://github.yourhost.com`.
+Add the `GitHub Self-Hosted` header to the plugin or theme that is hosted on your GitHub self-hosted installation. The settings should be similar to `GitHub Self-Hosted: https://github.yourhost.com`.
+
+#### GitLab Self Hosted Support
+
+Add the `GitLab Self-Hosted` header to the plugin or theme that is hosted on your GitLab self-hosted installation. The settings should be similar to `GitLab Self-Hosted: https://gitlab.yourhost.com`.
 
 ### Versions
 
@@ -147,13 +149,15 @@ To specify a branch that you would like to use for updating, just add a branch h
 
 The default state is either `GitHub Branch: master` or nothing at all. They are equivalent.
 
-If you want to update against branch of your repository other than `master` and have that branch push updates out to users make sure you specify the testing branch in a header, i.e. `GitHub Branch: develop`. When you want users to update against the release branch just have them manually change the header to `GitHub Branch: master` or remove it completely. Tags will be ignored when a branch other than `master` is specified. In this case I would suggest semantic versioning similar to the following, `<major>.<minor>.<patch>.<development>`.
+If you want to update against branch of your repository other than `master` and have that branch push updates out to users make sure you specify the testing branch in a header, i.e. `GitHub Branch: develop`. When you want users to update against the release branch just have them manually change the header to `GitHub Branch: master` or remove it completely. Tags will be ignored when a branch other than `master` is specified. In this case I would suggest semantic version numbering similar to the following, `<major>.<minor>.<patch>.<development>`.
 
-In the GitHub Updater Settings there is a new setting to enable branch switching for plugins. When checked there will be a new ability from the Plugins page to switch between plugin branches.
+In the GitHub Updater Settings there is a new setting to enable branch switching for plugins. When checked there will be a new ability from the Plugins page to switch between plugin branches. Switching to the current branch will reinstall the current branch.
 
 ## Tagging
 
 If `GitHub Branch` or `Bitbucket Branch` is not specified (or is set to `master`), then the latest tag will be used. GitHub Updater will preferentially use a tag over a branch in this instance.
+
+If you prefer to create a release asset for distribution, this will be used in preference to a tag.
 
 ## Bitbucket Support
 
@@ -162,6 +166,16 @@ Instead of the `GitHub Plugin URI` header you will need to use the `Bitbucket Pl
 Instead of the `GitHub Theme URI` header you will need to use the `Bitbucket Theme URI` header.
 
 The `Bitbucket Branch` header is supported for both plugins and themes.
+
+## GitLab Support
+
+Instead of the `GitHub Plugin URI` header you will need to use the `GitLab Plugin URI` header.
+
+Instead of the `GitHub Theme URI` header you will need to use the `GitLab Theme URI` header.
+
+The `GitLab Branch` header is supported for both plugins and themes.
+
+You must set a GitLab private token. Go to your GitLab profile page under Edit Account. From here you can retrieve or reset your GitLab private token.
 
 ## Private Repositories
 
@@ -238,6 +252,10 @@ There is a new setting for a personal GitHub Access Token. I **strongly** encour
 * using an incorrect private repo GitHub Access Token for a public repo
 * an incorrect Access Token for a private GitHub repo.
 
+### 429 - Too Many Requests
+
+I've seen this error code occasionally with Bitbucket.
+
 ## Extras
 
 [szepeviktor](https://github.com/szepeviktor) has created an add-on plugin to GitHub Updater that identifies all plugins with an icon in the plugin view for GitHub or Bitbucket depending upon where they get updates. It's very clever.
@@ -282,7 +300,10 @@ This plugin's theme updater class was based upon [Whitelabel Framework's updater
 
 The plugin updater class was based upon [codepress/github-plugin-updater](https://github.com/codepress/github-plugin-updater).
 
-Includes [Emanuil Rusev's](https://github.com/erusev) [Parsedown](https://github.com/erusev/parsedown) for rendering ChangeLogs.
+Includes
+
+* [Emanuil Rusev's](https://github.com/erusev) [Parsedown](https://github.com/erusev/parsedown) for rendering ChangeLogs.
+* [Mark Jaquith's](https://github.com/markjaquith) [WordPress Plugin Readme Parser](https://github.com/markjaquith/WordPress-Plugin-Readme-Parser/tree/WordPress.org) for parsing `readme.txt`.
 
 GitHub Updater logo by [LogoMajestic](http://www.logomajestic.com).
 

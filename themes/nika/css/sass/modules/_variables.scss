@@ -2,6 +2,16 @@
 // Variables
 //
 
+// Fonts
+$serif: 'electra', serif;
+$sans: 'venus', sans-serif;
+
 // Transitions
 $tt: 0.4s;
 $tt-long: 0.8s;
+
+// Breakpoints and Media Queries
+$break-ext  : 1600px;
+$break-desk : 1230px;
+$break-tab  : 1023px;
+$break-hand : 767px;

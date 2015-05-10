@@ -61,13 +61,13 @@ Website developed by Dylan Fisher
 
   <div class="wrapper">
     <header class="relative center">
-      <h1 class="site-title absolute absolute-left absolute-top">
+      <h1 class="site-title absolute absolute-left absolute-top large-sans">
         <a href="<?php bloginfo('url') ?>/" title="<?php echo esc_html( bloginfo('name'), 1 ) ?>" rel="home"><?php bloginfo('name') ?></a>
       </h1>
       <div class="moon ib">
         <?php get_template_part('images/svg/'.$moon_phase.'.svg'); ?>
       </div>
-      <h2 class="absolute absolute-right absolute-top">
-        <a href="#Information">Information</a>
+      <h2 class="absolute absolute-right absolute-top large-sans">
+        <a href="<?php echo get_the_permalink(get_page_by_path('information')); ?>">Information</a>
       </h2>
     </header>

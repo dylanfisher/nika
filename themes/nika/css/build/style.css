@@ -1,3 +1,5 @@
+@import url("//hello.myfonts.net/count/2e224d");
+@import url("//hello.myfonts.net/count/2e224c");
 /*!
 Theme Name: Nika
 Theme URI: https://github.com/dylanfisher/nika
@@ -23,6 +25,16 @@ Version: 1.0
   `""`   \  nnh  D_.-'L__nnh
           `"""`
 */
+@font-face {
+  font-family: 'electra';
+  src: url('fonts/2E224D_0_0.eot');
+  src: url('fonts/2E224D_0_0.eot?#iefix') format('embedded-opentype'), url('fonts/2E224D_0_0.woff2') format('woff2'), url('fonts/2E224D_0_0.woff') format('woff'), url('fonts/2E224D_0_0.ttf') format('truetype'); }
+
+@font-face {
+  font-family: 'venus';
+  src: url('fonts/2E224C_0_0.eot');
+  src: url('fonts/2E224C_0_0.eot?#iefix') format('embedded-opentype'), url('fonts/2E224C_0_0.woff2') format('woff2'), url('fonts/2E224C_0_0.woff') format('woff'), url('fonts/2E224C_0_0.ttf') format('truetype'); }
+
 .ibfix, .project-thumbnail-wrapper {
   font-size: 0;
   letter-spacing: -4px; }
@@ -30,10 +42,15 @@ Version: 1.0
 .ib {
   display: inline-block; }
 
-.box-shadow, .project-thumbnail, .project-image-content, .pin {
+.ibnorm, .entry-content, .sidebar, .page-entry-content, .regular {
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: 0; }
+
+.box-shadow, .project-thumbnail, .project-image-content, .pin, .survey {
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
   transition: box-shadow 2s; }
-  .night .box-shadow, .night .project-thumbnail, .night .project-image-content, .night .pin {
+  .night .box-shadow, .night .project-thumbnail, .night .project-image-content, .night .pin, .night .survey {
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.9); }
 
 .filter-shadow {
@@ -525,10 +542,14 @@ h1, h2, h3, h4, h5, h6 {
   padding: 20px; }
 
 html {
-  font-family: sans-serif;
+  font-family: 'venus', sans-serif;
   height: 100%;
   color: #fff;
-  text-align: center; }
+  text-align: center;
+  text-rendering: optimizeLegibility; }
+  @media (max-width: 767px) {
+    html {
+      text-rendering: auto; } }
 
 body {
   min-height: 100%; }
@@ -542,35 +563,74 @@ body {
   padding-bottom: 320px; }
 
 .entry-content {
-  max-width: 630px;
+  max-width: 680px;
   margin: 0 auto;
   padding-bottom: 40px; }
+
+.sidebar, .page-entry-content {
+  text-align: left;
+  display: inline-block; }
+
+.sidebar {
+  width: 30%; }
+
+.page-entry-content {
+  width: 70%; }
+
+.small-width {
+  max-width: 450px;
+  margin-left: auto;
+  margin-right: auto; }
 
 h1, h2, h3, h4, h5, h6 {
   font-size: 24px; }
 
-.content {
-  font-family: serif;
-  font-size: 30px;
-  line-height: 1.3; }
-
 .entry-title {
-  font-size: 42px;
   margin-bottom: 1em; }
 
-.small, .pin {
-  font-family: sans-serif;
-  font-size: 16px;
+.small-sans, .pin, .new-question {
+  font-family: 'venus', sans-serif;
+  font-size: 17px;
+  line-height: 1.5;
+  letter-spacing: 0.6px;
+  margin-top: 1em;
+  margin-bottom: 1em; }
+
+.small-serif {
+  font-family: 'electra', serif;
+  font-size: 18px;
   line-height: 1.6;
-  margin: 1em 0; }
+  letter-spacing: 0; }
+
+.medium-serif, .entry-content, .page-entry-content, .hidden-title {
+  font-family: 'electra', serif;
+  font-size: 32px;
+  line-height: 1.3;
+  letter-spacing: 0; }
+
+.large-sans {
+  font-family: 'venus', sans-serif;
+  font-size: 30px;
+  line-height: 1.4;
+  letter-spacing: 0.6px; }
+
+.large-serif, .entry-title, .survey {
+  font-family: 'electra', serif;
+  font-size: 48px;
+  line-height: 1.3;
+  letter-spacing: 0; }
+
+p {
+  margin-top: 1em;
+  margin-bottom: 1.4em; }
 
 a {
   color: #fff;
-  text-decoration: none; }
+  text-decoration: none;
+  transition: color 0.4s; }
 
 .entry-content a {
-  border-bottom: 1px solid;
-  transition: color 0.4s; }
+  border-bottom: 1px solid; }
 
 header {
   padding-bottom: 80px;
@@ -580,7 +640,6 @@ header {
     transition: opacity 2s; }
 
 .moon {
-  width: 70px;
   margin-top: -22px;
   padding-bottom: 22px;
   filter: drop-shadow(0px 0px 20px rgba(255, 255, 255, 0.9));
@@ -588,11 +647,13 @@ header {
   .moon:hover {
     filter: drop-shadow(0px 0px 20px #b9b9b9); }
   .home .moon {
-    width: 150px;
     margin-top: 0;
     padding-top: 80px;
     padding-bottom: 0; }
+    .home .moon svg {
+      height: 140px; }
   .moon svg {
+    height: 70px;
     cursor: pointer; }
 
 .moon-page {
@@ -622,7 +683,7 @@ header {
     z-index: 2; }
 
 .star-wrapper {
-  position: function;
+  position: absolute;
   width: 100%;
   height: 100%; }
 
@@ -736,16 +797,49 @@ header {
     width: 70%; }
 
 a.pin:hover {
+  color: #000;
   transform: translate(0, -20px); }
 
 .previous-post-link a, .next-post-link a {
   display: inline-block; }
+  .previous-post-link a:hover, .next-post-link a:hover {
+    color: #fff; }
+    .previous-post-link a:hover .hidden-title, .next-post-link a:hover .hidden-title {
+      opacity: 1; }
 
 .previous-post-link {
   text-align: left; }
 
 .next-post-link {
   text-align: right; }
+
+.hidden-title {
+  opacity: 0;
+  transition: opacity 0.4s; }
+
+.survey-title {
+  margin-top: 60px; }
+
+.survey {
+  position: relative;
+  color: #000;
+  margin-top: 30px;
+  min-height: 500px;
+  padding: 40px; }
+
+.survey-item {
+  display: none;
+  margin-top: 120px; }
+  .survey-item.active {
+    display: block; }
+  .survey-item .answer {
+    margin-top: 60px; }
+
+.new-question {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  cursor: pointer; }
 
 .alignnone {
   margin: 5px 20px 20px 0; }

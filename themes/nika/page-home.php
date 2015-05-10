@@ -5,8 +5,7 @@
     <?php
       $args = array(
         'post_type' => 'project',
-        'posts_per_page' => -1,
-        'orderby' => 'menu_order'
+        'posts_per_page' => -1
       );
 
       $home_query = new WP_Query($args);
