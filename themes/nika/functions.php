@@ -6,6 +6,7 @@
 //  ___) | (_| | | | | (_| | |_) | (_) >  <
 // |____/ \__,_|_| |_|\__,_|_.__/ \___/_/\_\
 
+include 'lib/MoonPhase.php';
 
 //
 // Enables
@@ -80,13 +81,14 @@ add_action( 'admin_menu', 'sandbox_remove_menus' );
 // Get an <img> at size from an ACF image field
 function sandbox_image($acf_image_field_name, $image_size) {
   $image = get_field($acf_image_field_name);
+  if(!$image) $image = get_sub_field($acf_image_field_name);
   $alt = $image['alt'];
   if(empty($alt)) $alt = $image['title'];
   $size = $image_size;
   $url = $image['sizes'][$size];
   $width = $image['sizes'][$size.'-width'];
   $height = $image['sizes'][$size.'-height'];
-  echo '<img src="'.$url.'" width="'.$width.'" height="'.$height.'">';
+  echo '<img src="'.$url.'" width="'.$width.'" height="'.$height.'" alt="nika simovich '.$alt.'">';
 }
 
 // Function to create slug out of text
@@ -167,5 +169,38 @@ add_filter('wp_nav_menu', 'sandbox_add_slug_class_to_menu_item');
 //   return '<div class="staff-member"><div class="staff-member-name">'.$a['name'].'</div><div class="staff-member-title">'.$a['title'].'</div><div class="staff-member-bio">'.$content.'</div><div class="staff-member-bio-link">View Bio</div></div>';
 // }
 // add_shortcode( 'example', 'sandbox_example_shortcode' );
+
+//
+// Post types
+//
+
+function project_init() {
+  register_post_type( 'project', array(
+    'labels'            => array(
+      'name'                => __( 'Projects', 'nika' ),
+      'singular_name'       => __( 'Project', 'nika' ),
+      'all_items'           => __( 'Projects', 'nika' ),
+      'new_item'            => __( 'New project', 'nika' ),
+      'add_new'             => __( 'Add New', 'nika' ),
+      'add_new_item'        => __( 'Add New project', 'nika' ),
+      'edit_item'           => __( 'Edit project', 'nika' ),
+      'view_item'           => __( 'View project', 'nika' ),
+      'search_items'        => __( 'Search projects', 'nika' ),
+      'not_found'           => __( 'No projects found', 'nika' ),
+      'not_found_in_trash'  => __( 'No projects found in trash', 'nika' ),
+      'parent_item_colon'   => __( 'Parent project', 'nika' ),
+      'menu_name'           => __( 'Projects', 'nika' ),
+    ),
+    'public'            => true,
+    'hierarchical'      => false,
+    'show_ui'           => true,
+    'show_in_nav_menus' => true,
+    'supports'          => array( 'title', 'editor' ),
+    'has_archive'       => true,
+    'rewrite'           => true,
+    'query_var'         => true,
+  ) );
+}
+add_action( 'init', 'project_init' );
 
 ?>

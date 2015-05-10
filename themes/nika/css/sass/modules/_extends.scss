@@ -2,6 +2,15 @@
 // Extends
 //
 
+%ibfix {
+  font-size: 0;
+  letter-spacing: -4px;
+}
+
+%ib {
+  display: inline-block;
+}
+
 %clearfix {
   *zoom: 1;
   &:before,
@@ -29,3 +38,13 @@
   // Force hardware accelaration with translate3d
   transform: translate3d(0, 0, 0);
 }
+
+%box-shadow {
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+}
+.box-shadow { @extend %box-shadow; }
+
+%filter-shadow {
+  filter: drop-shadow( 0 0 30px rgba(0, 0, 0, 0.2) );
+}
+.filter-shadow { @extend %filter-shadow; }

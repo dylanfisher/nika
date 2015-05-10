@@ -88,3 +88,22 @@
  .no-underline:hover {
   border-bottom: 0 !important;
  }
+
+.absolute { position: absolute; }
+.relative { position: relative; }
+.fixed    { position: fixed; }
+.static   { position: static; }
+
+.absolute-left            { left: 0; }
+.absolute-right           { right: 0; }
+.absolute-top             { top: 0; }
+.absolute-bottom          { bottom: 0; }
+.absolute-center          { left: 50%; transform: translate(-50%); }
+.absolute-center-vertical { left: 50%; top: 50%; transform: translate(-50%, -50%); }
+
+.left   { text-align: left; }
+.right  { text-align: right; }
+.center { text-align: center; }
+
+.ibfix { @extend %ibfix; }
+.ib    { @extend %ib; }
