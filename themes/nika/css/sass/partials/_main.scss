@@ -312,8 +312,8 @@ header {
   text-align: left;
 }
 
-$project-thumbnail-margin: 2.5%;
-$project-thumbnail-size: (100%/3) - ($project-thumbnail-margin * 2);
+$project-thumbnail-margin: 3%;
+$project-thumbnail-size: (100%/3) - ($project-thumbnail-margin/1.5);
 
 .project-thumbnail {
   @extend %box-shadow;

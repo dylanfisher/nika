@@ -751,14 +751,14 @@ header {
 .project-thumbnail {
   position: relative;
   height: 0;
-  width: 28.3333333333%;
-  padding-bottom: 28.3333333333%;
+  width: 31.3333333333%;
+  padding-bottom: 31.3333333333%;
   display: inline-block;
-  margin-bottom: 5%; }
+  margin-bottom: 6%; }
   .project-thumbnail:nth-child(3n+1) {
-    margin-right: 2.5%; }
+    margin-right: 3%; }
   .project-thumbnail:nth-child(3n+2) {
-    margin-right: 2.5%; }
+    margin-right: 3%; }
   .project-thumbnail:hover .project-thumbnail-image {
     opacity: 0; }
   .project-thumbnail:hover .cover {
