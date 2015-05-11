@@ -830,6 +830,9 @@ a.pin:hover {
   color: #000;
   transform: translate(0, -20px); }
 
+.adjacent-post-wrapper {
+  height: 100px; }
+
 .previous-post-link a, .next-post-link a {
   display: inline-block; }
   .previous-post-link a:hover, .next-post-link a:hover {

@@ -46,12 +46,13 @@
     </div>
   </div>
 
-  <div class="previous-post-link large-sans">
-    <?php previous_post_link( '%link', '<div class="hidden-title">%title</div>Previous' ); ?>
-  </div>
-
-  <div class="next-post-link large-sans">
-    <?php next_post_link( '%link', '<div class="hidden-title">%title</div>Next' ); ?>
+  <div class="adjacent-post-wrapper relative">
+    <div class="previous-post-link large-sans absolute abolute-left absolute-top">
+      <?php previous_post_link( '%link', '<div class="hidden-title">%title</div>Previous' ); ?>
+    </div>
+    <div class="next-post-link large-sans absolute absolute-right absolute-top">
+      <?php next_post_link( '%link', '<div class="hidden-title">%title</div>Next' ); ?>
+    </div>
   </div>
 
 <?php get_footer() ?>
