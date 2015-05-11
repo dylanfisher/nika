@@ -28,11 +28,9 @@ Website developed by Dylan Fisher
   <title><?php wp_title( '-', true, 'right' ); echo esc_html( get_bloginfo('name'), 1 ) ?></title>
   <meta name="description" content="<?php echo get_bloginfo('description') ?>">
   <meta name="keywords" content="">
-  <meta name="viewport" content="width=device-width">
   <link rel="icon" type="image/png" href="<?php echo get_bloginfo('template_url'); ?>/images/favicon.png">
   <link rel="stylesheet" type="text/css" href="<?php echo  bloginfo('stylesheet_url'); ?>" />
   <?php include(locate_template('partials/color_assignments.php')); ?>
-  <script src="<?php echo get_bloginfo('template_url'); ?>/js/modernizr.custom.45797.js"></script>
   <?php wp_enqueue_script('jquery') // runs in noConflict mode ?>
   <?php wp_head() // For plugins ?>
 </head>
@@ -44,6 +42,15 @@ Website developed by Dylan Fisher
     <div class="moon-page">
       <div class="moon-page-content">
         <div class="wrapper">
+          <div class="small-sans time-and-date">
+            <div class="screensaver-clock"></div> on
+            <div class="screensaver-date"></div>
+          </div>
+          <p><?php echo $phase_name; ?></p>
+          <p>Next new moon begins on<br>
+            <?php $next_moon = $moon->next_new_moon(); ?>
+            <?php echo date('F j g:ia', $next_moon); ?>
+          </p>
           <?php
             $moon_page = get_page_by_path('moon');
             $moon_content = $moon_page->post_content;

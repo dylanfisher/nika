@@ -61,6 +61,18 @@ Version: 1.0
     -webkit-filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.9));
             filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.9)); }
 
+.page-information header h2 a:before {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  left: -20px;
+  top: 50%;
+  margin-top: -8px;
+  background: #fff;
+  border-radius: 50%;
+  transition: background 0.4s; }
+
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 /**
  * 1. Set default font family to sans-serif.
@@ -559,7 +571,7 @@ body {
   padding: 80px 40px; }
 
 .content {
-  padding-bottom: 320px; }
+  padding-bottom: 160px; }
 
 .entry-content {
   max-width: 680px;
@@ -571,10 +583,14 @@ body {
   display: inline-block; }
 
 .sidebar {
-  width: 30%; }
+  width: 35%;
+  padding-right: 180px; }
+  @media (max-width: 1023px) {
+    .sidebar {
+      padding-right: 40px; } }
 
 .page-entry-content {
-  width: 70%; }
+  width: 65%; }
 
 .small-width {
   max-width: 450px;
@@ -587,18 +603,20 @@ h1, h2, h3, h4, h5, h6 {
 .entry-title {
   margin-bottom: 1em; }
 
+p {
+  margin-top: 0.2em;
+  margin-bottom: 1.4em; }
+
 .small-sans, .pin, .new-question {
   font-family: 'venus', sans-serif;
   font-size: 17px;
   line-height: 1.5;
-  letter-spacing: 0.6px;
-  margin-top: 1em;
-  margin-bottom: 1em; }
+  letter-spacing: 0.6px; }
 
-.small-serif {
+.small-serif, .sidebar {
   font-family: 'electra', serif;
-  font-size: 18px;
-  line-height: 1.6;
+  font-size: 22px;
+  line-height: 1.5;
   letter-spacing: 0; }
 
 .medium-serif, .entry-content, .page-entry-content, .hidden-title {
@@ -606,6 +624,8 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 32px;
   line-height: 1.3;
   letter-spacing: 0; }
+  .medium-serif p, .entry-content p, .page-entry-content p, .hidden-title p {
+    margin-bottom: 1em; }
 
 .large-sans {
   font-family: 'venus', sans-serif;
@@ -613,22 +633,20 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.4;
   letter-spacing: 0.6px; }
 
-.large-serif, .entry-title, .survey {
+.large-serif, .entry-title, .moon-page, .survey {
   font-family: 'electra', serif;
   font-size: 48px;
   line-height: 1.3;
   letter-spacing: 0; }
-
-p {
-  margin-top: 1em;
-  margin-bottom: 1.4em; }
+  .large-serif p, .entry-title p, .moon-page p, .survey p {
+    margin-bottom: 1em; }
 
 a {
   color: #fff;
   text-decoration: none;
   transition: color 0.4s; }
 
-.entry-content a {
+.entry-content a, .sidebar a {
   border-bottom: 1px solid; }
 
 header {
@@ -659,6 +677,12 @@ header {
 
 .moon-page {
   transition: opacity 2s; }
+  .moon-page .time-and-date {
+    margin-bottom: 80px; }
+  .moon-page .screensaver-clock, .moon-page .screensaver-date {
+    opacity: 1;
+    position: static;
+    display: inline-block; }
 
 .moon-page-content {
   padding-top: 160px;
@@ -686,7 +710,9 @@ header {
 .star-wrapper {
   position: absolute;
   width: 100%;
-  height: 100%; }
+  height: 100%;
+  top: 0;
+  left: 0; }
 
 .star {
   opacity: 0;
@@ -701,10 +727,11 @@ header {
 
 .screensaver header h1, .screensaver header h2 {
   opacity: 0; }
-.screensaver .moon-page {
-  opacity: 0; }
 .screensaver .screensaver-date, .screensaver .screensaver-clock {
   opacity: 1; }
+
+.screensaver .moon-page, .screensaver-transition .moon-page {
+  display: none; }
 
 .screensaver-date, .screensaver-clock {
   opacity: 0;
@@ -766,6 +793,8 @@ header {
 .project-image-outer {
   margin-bottom: 40px;
   position: relative; }
+  .project-image-outer.project-with-pin {
+    margin-bottom: 130px; }
 
 .project-image-content {
   padding: 40px; }
@@ -776,7 +805,8 @@ header {
 .pin-wrapper {
   position: absolute;
   right: -20px;
-  bottom: -90px; }
+  bottom: -90px;
+  z-index: 1; }
 
 .pin {
   position: relative;
@@ -821,6 +851,9 @@ a.pin:hover {
 .hidden-title {
   opacity: 0;
   transition: opacity 0.4s; }
+
+.page-information header h2 a {
+  position: relative; }
 
 .survey-title {
   margin-top: 60px; }

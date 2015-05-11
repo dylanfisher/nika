@@ -44,13 +44,15 @@
 
   .neutral                 { background-color: <?php echo $neutral; ?>; }
   .accent-background       { background-color: <?php echo $accent; ?>; }
-  .accent, .answer         { color: <?php echo $accent; ?>; }
+  .accent                  { color: <?php echo $accent; ?>; }
   a                        { border-color: <?php echo $accent; ?>; }
   a:hover                  { color: <?php echo $accent; ?>; }
-  .entry-content a         { border-color: <?php echo $accent; ?>; }
+  a:hover:before           { background: <?php echo $accent; ?> !important; }
+  .entry-content a,
+  .sidebar a               { border-color: <?php echo $accent; ?>; }
 
-  ::-moz-selection { background: <?php echo $accent; ?>; }
-  ::selection      { background: <?php echo $accent; ?>; }
+  ::-moz-selection         { background: <?php echo $accent; ?>; }
+  ::selection              { background: <?php echo $accent; ?>; }
 
   .gradient {
     background: #939393;

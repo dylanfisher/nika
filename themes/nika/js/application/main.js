@@ -37,6 +37,7 @@ jQuery(document).ready(function($){
       }, duration);
 
       starsOn();
+      startClock();
 
       if(typeof callback == 'function') callback();
     }
@@ -49,6 +50,7 @@ jQuery(document).ready(function($){
         $('html').removeClass('night-transition');
 
         starsOff();
+        stopClock();
 
         if(typeof callback == 'function') callback();
       }, duration);
@@ -68,13 +70,12 @@ jQuery(document).ready(function($){
       $('.star-wrapper').empty();
     }
 
-    // screensaver
+    // screensaver on
     function screensaverTimout() {
       screensaverTimer = setInterval(function(){
         if($('html.night, html.night-transition').length) return;
         nightOn();
-        startClock();
-        $('html').addClass('screensaver');
+        $('html').addClass('screensaver screensaver-transition');
       }, screensaverWaitPeriod);
     }
 
@@ -82,9 +83,11 @@ jQuery(document).ready(function($){
       clearInterval(screensaverTimer);
       screensaverTimout();
 
+      // screensaver off
       if($('html.night.screensaver, html.night-transition.screensaver').length) {
-        nightOff();
-        stopClock();
+        nightOff(function(){
+          $('html').removeClass('screensaver-transition');
+        });
         $('html').removeClass('screensaver');
       }
     });
@@ -94,17 +97,20 @@ jQuery(document).ready(function($){
   function startClock() {
     var today=new Date();
     var h=today.getHours();
+    var meridian = 'am';
     if (h > 12) {
       h -= 12;
+      meridian = 'pm';
     } else if (h === 0) {
       h = 12;
+      meridian = 'am';
     }
     var m=today.getMinutes();
     var s=today.getSeconds();
     m = checkTime(m);
     s = checkTime(s);
 
-    document.getElementById('screensaver-clock').innerHTML = h+':'+m+':'+s;
+    $('.screensaver-clock').get(0).innerHTML = h+':'+m+meridian;
 
     var monthNames = [
       'January', 'February', 'March',
@@ -117,11 +123,11 @@ jQuery(document).ready(function($){
     var monthIndex = today.getMonth();
     var year = today.getFullYear();
 
-    document.getElementById('screensaver-date').innerHTML = monthNames[monthIndex] + ' ' + day + ', ' + year;
+    $('.screensaver-date').get(0).innerHTML = monthNames[monthIndex] + ' ' + day + ', ' + year;
 
     clockTimer = setTimeout(function(){
       startClock();
-    },500);
+    },60000);
   }
 
   function stopClock() {
