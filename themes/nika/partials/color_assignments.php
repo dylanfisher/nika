@@ -25,7 +25,19 @@
   $moon_phase = $phase_names[$phase_name];
 
   $acf_index = getAcfIndex($moon_phase, $acf_phases);
-  $phase_assignment = $acf_phases[$acf_index];
+
+  if(isset($_GET['moon'])) {
+    $acf_index = $_GET['moon'];
+  }
+
+  if(array_key_exists($acf_index, $acf_phases)) {
+    $phase_assignment = $acf_phases[$acf_index];
+  } else {
+    $acf_index = getAcfIndex($moon_phase, $acf_phases);
+    $phase_assignment = $acf_phases[$acf_index];
+  }
+
+
 
   $neutral = $phase_assignment['neutral_color'];
   $accent = $phase_assignment['accent_color'];
