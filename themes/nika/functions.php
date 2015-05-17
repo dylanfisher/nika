@@ -78,6 +78,10 @@ add_action( 'admin_menu', 'sandbox_remove_menus' );
 // Custom functions
 //
 
+function sandbox_month_day_time($timestamp) {
+  return strftime( "%B %e", $timestamp );
+}
+
 // Get an <img> at size from an ACF image field
 function sandbox_image($acf_image_field_name, $image_size) {
   $image = get_field($acf_image_field_name);

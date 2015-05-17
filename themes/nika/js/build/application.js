@@ -19,10 +19,12 @@ jQuery(document).ready(function($){
     screensaverTimout();
 
     $('.moon svg').click(function(){
-      if($('html').hasClass('night')) {
-        nightOff();
-      } else {
-        nightOn();
+      if($('body').hasClass('home')) {
+        if($('html').hasClass('night')) {
+          nightOff();
+        } else {
+          nightOn();
+        }
       }
     });
 

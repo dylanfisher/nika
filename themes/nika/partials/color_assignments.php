@@ -37,6 +37,8 @@
     $phase_assignment = $acf_phases[$acf_index];
   }
 
+  $moon_phase_name = $phase_assignment['acf_fc_layout']; // e.g. 'moon_1'
+
   $neutral = $phase_assignment['neutral_color'];
   $accent = $phase_assignment['accent_color'];
   $direction = $phase_assignment['gradient_direction'];

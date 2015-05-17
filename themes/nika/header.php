@@ -44,10 +44,11 @@ Website developed by Dylan Fisher
       <h1 class="site-title absolute absolute-left absolute-top large-sans">
         <a href="<?php bloginfo('url') ?>/" title="<?php echo esc_html( bloginfo('name'), 1 ) ?>" rel="home"><?php bloginfo('name') ?></a>
       </h1>
-      <div class="moon ib">
-        <?php $moon_phase_name = $phase_assignment['acf_fc_layout']; ?>
-        <?php get_template_part('images/svg/'.$moon_phase_name.'.svg'); ?>
-      </div>
+      <?php if(!is_front_page()) { echo '<a href="'.get_home_url().'">'; } ?>
+        <div class="moon ib">
+          <?php get_template_part('images/svg/'.$moon_phase_name.'.svg'); ?>
+        </div>
+      <?php if(!is_front_page()) { echo '</a>'; } ?>
       <h2 class="absolute absolute-right absolute-top large-sans">
         <a href="<?php echo get_the_permalink(get_page_by_path('information')); ?>">Information</a>
       </h2>

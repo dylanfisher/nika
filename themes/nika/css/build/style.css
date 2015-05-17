@@ -665,7 +665,7 @@ header {
 .moon-page {
   transition: opacity 2s; }
   .moon-page .time-and-date {
-    margin-bottom: 80px; }
+    margin-bottom: 1em; }
   .moon-page .screensaver-clock, .moon-page .screensaver-date {
     opacity: 1;
     position: static;

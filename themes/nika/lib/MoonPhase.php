@@ -330,6 +330,18 @@ class MoonPhase {
 		return $this->get_phase( 7 );
 	}
 
+	function phase_at($phase_number){
+		return $this->get_phase( $phase_number );
+	}
+
+	function days_left_in_phase(){
+		return $this->synmonth - $this->age();
+	}
+
+	function day_of_new_phase(){
+		return time() + ($this->days_left_in_phase() * 86400);
+	}
+
 	function phase_name() {
 		$names = array( 'New Moon', 'Waxing Crescent', 'First Quarter', 'Waxing Gibbous', 'Full Moon', 'Waning Gibbous', 'Third Quarter', 'Waning Crescent', 'New Moon' );
 		// There are eight phases, evenly split. A "New Moon" occupies the 1/16th phases either side of phase = 0, and the rest follow from that.
