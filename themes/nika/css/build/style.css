@@ -59,18 +59,6 @@ Version: 1.0
   .night .filter-shadow {
     filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.9)); }
 
-.page-information header h2 a:before {
-  content: '';
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  left: -20px;
-  top: 50%;
-  margin-top: -8px;
-  background: #fff;
-  border-radius: 50%;
-  transition: background 0.4s; }
-
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 /**
  * 1. Set default font family to sans-serif.
@@ -846,9 +834,6 @@ a.pin:hover {
 .hidden-title {
   opacity: 0;
   transition: opacity 0.4s; }
-
-.page-information header h2 a {
-  position: relative; }
 
 .survey-title {
   margin-top: 60px; }

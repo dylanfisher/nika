@@ -1,7 +1,7 @@
 <?php
   $moon = new Solaris\MoonPhase();
 
-  function getAcfIndex($name, $array){
+  function get_acf_index($name, $array){
     foreach($array as $key => $value){
       if(is_array($value) && $value['acf_fc_layout'] == $name)
         return $key;
@@ -24,7 +24,7 @@
   $acf_phases = get_field('phases', 'option');
   $moon_phase = $phase_names[$phase_name];
 
-  $acf_index = getAcfIndex($moon_phase, $acf_phases);
+  $acf_index = get_acf_index($moon_phase, $acf_phases);
 
   if(isset($_GET['moon'])) {
     $acf_index = $_GET['moon'];
@@ -33,11 +33,9 @@
   if(array_key_exists($acf_index, $acf_phases)) {
     $phase_assignment = $acf_phases[$acf_index];
   } else {
-    $acf_index = getAcfIndex($moon_phase, $acf_phases);
+    $acf_index = get_acf_index($moon_phase, $acf_phases);
     $phase_assignment = $acf_phases[$acf_index];
   }
-
-
 
   $neutral = $phase_assignment['neutral_color'];
   $accent = $phase_assignment['accent_color'];

@@ -465,13 +465,6 @@ a.pin:hover {
   transition: opacity $tt;
 }
 
-.page-information {
-  header h2 a {
-    @extend %bullet;
-    position: relative;
-  }
-}
-
 //
 // Survey
 //
