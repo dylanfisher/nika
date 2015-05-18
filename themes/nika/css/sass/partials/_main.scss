@@ -353,6 +353,12 @@ $project-thumbnail-size: (100%/3) - ($project-thumbnail-margin/1.5);
   left: 50%;
   transform: translate(-50%, -50%);
   transition: opacity $tt;
+
+  &.full-width {
+    top: 0;
+    left: 0;
+    transform: none;
+  }
 }
 
 .cover {

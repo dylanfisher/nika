@@ -765,6 +765,10 @@ header {
   left: 50%;
   transform: translate(-50%, -50%);
   transition: opacity 0.4s; }
+  .project-thumbnail-image.full-width {
+    top: 0;
+    left: 0;
+    transform: none; }
 
 .cover {
   opacity: 0;
