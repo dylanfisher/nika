@@ -42,7 +42,7 @@ Website developed by Dylan Fisher
   <div class="wrapper">
     <header class="relative center">
       <h1 class="site-title absolute absolute-left absolute-top large-sans">
-        <a href="<?php bloginfo('url') ?>/" title="<?php echo esc_html( bloginfo('name'), 1 ) ?>" rel="home"><?php bloginfo('name') ?></a>
+        <a href="<?php bloginfo('url') ?>/" rel="home"><?php bloginfo('name') ?></a>
       </h1>
       <?php if(!is_front_page()) { echo '<a href="'.get_home_url().'">'; } ?>
         <div class="moon ib">

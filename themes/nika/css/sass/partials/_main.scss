@@ -317,6 +317,8 @@ $project-thumbnail-size: (100%/3) - ($project-thumbnail-margin/1.5);
 
 .project-thumbnail {
   @extend %box-shadow;
+  @extend %hardware_acceleration;
+  overflow: hidden;
   position: relative;
   height: 0;
   width: $project-thumbnail-size;
@@ -355,9 +357,9 @@ $project-thumbnail-size: (100%/3) - ($project-thumbnail-margin/1.5);
   transition: opacity $tt;
 
   &.full-width {
-    top: 0;
+    top: 50%;
     left: 0;
-    transform: none;
+    transform: translate(0, -50%);
   }
 }
 

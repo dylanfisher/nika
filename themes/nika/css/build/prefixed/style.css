@@ -47,6 +47,10 @@ Version: 1.0
   line-height: 1.6;
   letter-spacing: 0; }
 
+.project-thumbnail {
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0); }
+
 .box-shadow, .project-thumbnail, .project-image-content, .pin, .survey {
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
   transition: box-shadow 2s; }
@@ -737,6 +741,7 @@ header {
   text-align: left; }
 
 .project-thumbnail {
+  overflow: hidden;
   position: relative;
   height: 0;
   width: 31.3333333333%;
@@ -768,10 +773,10 @@ header {
           transform: translate(-50%, -50%);
   transition: opacity 0.4s; }
   .project-thumbnail-image.full-width {
-    top: 0;
+    top: 50%;
     left: 0;
-    -webkit-transform: none;
-            transform: none; }
+    -webkit-transform: translate(0, -50%);
+            transform: translate(0, -50%); }
 
 .cover {
   opacity: 0;
