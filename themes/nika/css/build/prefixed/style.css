@@ -756,6 +756,11 @@ header {
     opacity: 0; }
   .project-thumbnail:hover .cover {
     opacity: 1; }
+  .project-thumbnail.full-width .project-thumbnail-image {
+    top: 50%;
+    left: 0;
+    -webkit-transform: translate(0, -50%);
+            transform: translate(0, -50%); }
 
 .project-thumbnail-content {
   position: absolute;
@@ -772,11 +777,6 @@ header {
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   transition: opacity 0.4s; }
-  .project-thumbnail-image.full-width {
-    top: 50%;
-    left: 0;
-    -webkit-transform: translate(0, -50%);
-            transform: translate(0, -50%); }
 
 .cover {
   opacity: 0;

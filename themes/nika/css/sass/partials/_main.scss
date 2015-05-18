@@ -338,6 +338,14 @@ $project-thumbnail-size: (100%/3) - ($project-thumbnail-margin/1.5);
       opacity: 1;
     }
   }
+
+  &.full-width {
+    .project-thumbnail-image {
+      top: 50%;
+      left: 0;
+      transform: translate(0, -50%);
+    }
+  }
 }
 
 .project-thumbnail-content {
@@ -355,12 +363,6 @@ $project-thumbnail-size: (100%/3) - ($project-thumbnail-margin/1.5);
   left: 50%;
   transform: translate(-50%, -50%);
   transition: opacity $tt;
-
-  &.full-width {
-    top: 50%;
-    left: 0;
-    transform: translate(0, -50%);
-  }
 }
 
 .cover {
