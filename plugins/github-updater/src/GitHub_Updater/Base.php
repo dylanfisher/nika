@@ -69,6 +69,26 @@ class Base {
 	protected static $error_code = array();
 
 	/**
+	 * Holds git server types.
+	 * @var array
+	 */
+	protected static $git_servers = array(
+		'github'    => 'GitHub',
+		'bitbucket' => 'Bitbucket',
+		'gitlab'    => 'GitLab',
+	);
+
+	/**
+	 * Holds extra repo header types.
+	 * @var array
+	 */
+	protected static $extra_repo_headers = array(
+		'branch'     => 'Branch',
+		'enterprise' => 'Enterprise',
+		'gitlab_ce'  => 'CE',
+	);
+
+	/**
 	 * Constructor
 	 *
 	 * Loads options to private static variable.
@@ -84,13 +104,13 @@ class Base {
 	 */
 	public static function init() {
 		if ( current_user_can( 'update_plugins' ) ) {
-			new Plugin;
+			new Plugin();
 		}
 		if ( current_user_can( 'update_themes' ) ) {
-			new Theme;
+			new Theme();
 		}
 		if ( is_admin() && ( current_user_can( 'update_plugins' ) || current_user_can( 'update_themes' ) ) ) {
-			new Settings;
+			new Settings();
 		}
 	}
 
@@ -109,18 +129,18 @@ class Base {
 	 * @return array
 	 */
 	public static function add_plugin_headers( $extra_headers ) {
-		$ghu_extra_headers   = array(
-			'GitHub Plugin URI'    => 'GitHub Plugin URI',
-			'GitHub Branch'        => 'GitHub Branch',
-			'GitHub Self-Hosted'   => 'GitHub Self-Hosted',
-			'Bitbucket Plugin URI' => 'Bitbucket Plugin URI',
-			'Bitbucket Branch'     => 'Bitbucket Branch',
-			'GitLab Plugin URI'    => 'GitLab Plugin URI',
-			'GitLab Branch'        => 'GitLab Branch',
-			'GitLab Self-Hosted'   => 'GitLab Self-Hosted',
-			'Requires WP'          => 'Requires WP',
-			'Requires PHP'         => 'Requires PHP',
+		$ghu_extra_headers = array(
+			'Requires WP'  => 'Requires WP',
+			'Requires PHP' => 'Requires PHP',
 		);
+
+		foreach ( self::$git_servers as $server ) {
+			$ghu_extra_headers[ $server . 'Plugin URI' ] = $server . ' Plugin URI';
+			foreach ( self::$extra_repo_headers as $header ) {
+				$ghu_extra_headers[ $server . ' ' . $header ] = $server . ' ' . $header;
+			}
+		}
+
 		self::$extra_headers = array_unique( array_merge( self::$extra_headers, $ghu_extra_headers ) );
 		$extra_headers       = array_merge( (array) $extra_headers, (array) $ghu_extra_headers );
 
@@ -134,18 +154,18 @@ class Base {
 	 * @return array
 	 */
 	public static function add_theme_headers( $extra_headers ) {
-		$ghu_extra_headers   = array(
-			'GitHub Theme URI'    => 'GitHub Theme URI',
-			'GitHub Branch'       => 'GitHub Branch',
-			'GitHub Self-Hosted'  => 'GitHub Self-Hosted',
-			'Bitbucket Theme URI' => 'Bitbucket Theme URI',
-			'Bitbucket Branch'    => 'Bitbucket Branch',
-			'GitLab Theme URI'    => 'GitLab Theme URI',
-			'GitLab Branch'       => 'GitLab Branch',
-			'GitLab Self-Hosted'  => 'GitLab Self-Hosted',
-			'Requires WP'         => 'Requires WP',
-			'Requires PHP'        => 'Requires PHP',
+		$ghu_extra_headers = array(
+			'Requires WP'  => 'Requires WP',
+			'Requires PHP' => 'Requires PHP',
 		);
+
+		foreach ( self::$git_servers as $server ) {
+			$ghu_extra_headers[ $server . ' Theme URI' ] = $server . ' Theme URI';
+			foreach ( self::$extra_repo_headers as $header ) {
+				$ghu_extra_headers[ $server . ' ' . $header ] = $server . ' ' . $header;
+			}
+		}
+
 		self::$extra_headers = array_unique( array_merge( self::$extra_headers, $ghu_extra_headers ) );
 		$extra_headers       = array_merge( (array) $extra_headers, (array) $ghu_extra_headers );
 
@@ -158,7 +178,7 @@ class Base {
 	 * @return array Indexed array of associative arrays of plugin details.
 	 */
 	protected function get_plugin_meta() {
-		/**
+		/*
 		 * Ensure get_plugins() function is available.
 		 */
 		include_once( ABSPATH . '/wp-admin/includes/plugin.php' );
@@ -177,7 +197,7 @@ class Base {
 			}
 
 			foreach ( (array) self::$extra_headers as $value ) {
-				$repo_self_hosted_uri = null;
+				$repo_enterprise_uri = null;
 
 				if ( empty( $headers[ $value ] ) ||
 				     false === stristr( $value, 'Plugin' )
@@ -192,24 +212,30 @@ class Base {
 					$header = $this->parse_header_uri( $headers[ $value ] );
 				}
 
-				if ( array_key_exists( $repo_parts['self_hosted'], $headers ) &&
-				     ! empty( $headers[ $repo_parts['self_hosted'] ] )
-				) {
-					$repo_self_hosted_uri = $headers[ $repo_parts['self_hosted'] ];
-					$repo_self_hosted_uri = trim( $repo_self_hosted_uri, '/' );
+				$self_hosted_parts = array_diff( array_keys( self::$extra_repo_headers ), array( 'branch' ) );
+				foreach ( $self_hosted_parts as $part ) {
+					if ( array_key_exists( $repo_parts[ $part ], $headers ) &&
+					     ! empty( $headers[ $repo_parts[ $part ] ] )
+					) {
+						$repo_enterprise_uri = $headers[ $repo_parts[ $part ] ];
+					}
+				}
+
+				if ( ! empty( $repo_enterprise_uri ) ) {
+					$repo_enterprise_uri = trim( $repo_enterprise_uri, '/' );
 					switch( $header_parts[0] ) {
 						case 'GitHub':
-							$repo_self_hosted_uri = $repo_self_hosted_uri . '/api/v3';
+							$repo_enterprise_uri = $repo_enterprise_uri . '/api/v3';
 							break;
 						case 'GitLab':
-							$repo_self_hosted_uri = $repo_self_hosted_uri . '/api/v3';
+							$repo_enterprise_uri = $repo_enterprise_uri . '/api/v3';
 							break;
 					}
 				}
 
 				$git_plugin['type']                    = $repo_parts['type'];
 				$git_plugin['uri']                     = $repo_parts['base_uri'] . $header['owner_repo'];
-				$git_plugin['self_hosted']             = $repo_self_hosted_uri;
+				$git_plugin['enterprise']              = $repo_enterprise_uri;
 				$git_plugin['owner']                   = $header['owner'];
 				$git_plugin['repo']                    = $header['repo'];
 				$git_plugin['local_path']              = WP_PLUGIN_DIR . '/' . $header['repo'] . '/';
@@ -238,9 +264,9 @@ class Base {
 		$themes     = wp_get_themes( array( 'errors' => null ) );
 
 		foreach ( (array) $themes as $theme ) {
-			$git_theme            = array();
-			$repo_uri             = null;
-			$repo_self_hosted_uri = null;
+			$git_theme           = array();
+			$repo_uri            = null;
+			$repo_enterprise_uri = null;
 
 			foreach ( (array) self::$extra_headers as $value ) {
 
@@ -258,22 +284,30 @@ class Base {
 					$header = $this->parse_header_uri( $repo_uri );
 				}
 
-				$repo_self_hosted_uri = $theme->get( $repo_parts['self_hosted'] );
-				if ( ! empty( $repo_self_hosted_uri ) ) {
-					$repo_self_hosted_uri = trim( $repo_self_hosted_uri, '/' );
+				$self_hosted_parts = array_diff( array_keys( self::$extra_repo_headers ), array( 'branch' ) );
+				foreach ( $self_hosted_parts as $part ) {
+					$self_hosted = $theme->get( $repo_parts[ $part ] );
+
+					if ( ! empty( $self_hosted ) ) {
+						$repo_enterprise_uri = $self_hosted;
+					}
+				}
+
+				if ( ! empty( $repo_enterprise_uri ) ) {
+					$repo_enterprise_uri = trim( $repo_enterprise_uri, '/' );
 					switch( $header_parts[0] ) {
 						case 'GitHub':
-							$repo_self_hosted_uri = $repo_self_hosted_uri . '/api/v3';
+							$repo_enterprise_uri = $repo_enterprise_uri . '/api/v3';
 							break;
 						case 'GitLab':
-							$repo_self_hosted_uri = $repo_self_hosted_uri . '/api/v3';
+							$repo_enterprise_uri = $repo_enterprise_uri . '/api/v3';
 							break;
 					}
 				}
 
 				$git_theme['type']                    = $repo_parts['type'];
 				$git_theme['uri']                     = $repo_parts['base_uri'] . $header['owner_repo'];
-				$git_theme['self_hosted']             = $repo_self_hosted_uri;
+				$git_theme['enterprise']              = $repo_enterprise_uri;
 				$git_theme['owner']                   = $header['owner'];
 				$git_theme['repo']                    = $header['repo'];
 				$git_theme['name']                    = $theme->get( 'Name' );
@@ -285,7 +319,7 @@ class Base {
 				$git_theme['branch']                  = $theme->get( $repo_parts['branch'] );
 			}
 
-			/**
+			/*
 			 * Exit if not git hosted theme.
 			 */
 			if ( empty( $git_theme ) ) {
@@ -355,14 +389,14 @@ class Base {
 		global $wp_filesystem;
 		$repo = null;
 
-		/**
+		/*
 		 * Check for upgrade process, return if both are false.
 		 */
 		if ( ( ! $upgrader instanceof \Plugin_Upgrader ) && ( ! $upgrader instanceof \Theme_Upgrader ) ) {
 			return $source;
 		}
 
-		/**
+		/*
 		 * Return $source if name already corrected.
 		 */
 		foreach ( (array) $this->config as $git_repo ) {
@@ -379,7 +413,7 @@ class Base {
 			return $source;
 		}
 
-		/**
+		/*
 		 * Get correct repo name based upon $upgrader instance if present.
 		 */
 		if ( $upgrader instanceof \Plugin_Upgrader ) {
@@ -395,7 +429,7 @@ class Base {
 			}
 		}
 
-		/**
+		/*
 		 * Get repo for automatic update process.
 		 */
 		if ( empty( $repo ) ) {
@@ -414,7 +448,7 @@ class Base {
 				}
 			}
 
-			/**
+			/*
 			 * Return already corrected $source or wp.org $source.
 			 */
 			if ( empty( $repo ) ) {
@@ -432,7 +466,7 @@ class Base {
 			)
 		);
 
-		/**
+		/*
 		 * If we can rename, do so and return the new name.
 		 */
 		if ( $wp_filesystem->move( $source, $corrected_source, true ) ) {
@@ -440,7 +474,7 @@ class Base {
 			return $corrected_source;
 		}
 
-		/**
+		/*
 		 * Otherwise, return an error.
 		 */
 		$upgrader->skin->feedback( __( 'Unable to rename downloaded repository.', 'github-updater' ) );
@@ -491,12 +525,12 @@ class Base {
 			$all_headers = $default_theme_headers;
 		}
 
-		/**
+		/*
 		 * Make sure we catch CR-only line endings.
 		 */
 		$file_data = str_replace( "\r", "\n", $contents );
 
-		/**
+		/*
 		 * Merge extra headers and default headers.
 		 */
 		$all_headers = array_merge( self::$extra_headers, (array) $all_headers );
@@ -567,6 +601,7 @@ class Base {
 		$header['scheme']     = isset( $header_parts['scheme'] ) ? $header_parts['scheme'] : null;
 		$header['host']       = isset( $header_parts['host'] ) ? $header_parts['host'] : null;
 		$owner_repo           = trim( $header_parts['path'], '/' );  // strip surrounding slashes
+		$header['path']       = $owner_repo;
 		$owner_repo           = explode( '/', $owner_repo );
 		$header['owner']      = $owner_repo[0];
 		$header['repo']       = $owner_repo[1];
@@ -603,11 +638,12 @@ class Base {
 		);
 
 		if ( array_key_exists( $repo, $repo_types ) ) {
-			$arr['type']        = $repo_types[ $repo ];
-			$arr['base_uri']    = $repo_base_uris[ $repo ];
-			$arr['branch']      = $repo . ' Branch';
-			$arr['self_hosted'] = $repo . ' Self-Hosted';
-			$arr['bool']        = true;
+			$arr['type']     = $repo_types[ $repo ];
+			$arr['base_uri'] = $repo_base_uris[ $repo ];
+			$arr['bool']     = true;
+			foreach ( self::$extra_repo_headers as $key => $value ) {
+				$arr[ $key ] = $repo . ' ' . $value;
+			}
 		}
 
 		return $arr;
@@ -797,7 +833,7 @@ class Base {
 	 *
 	 * @param $repo_meta
 	 *
-	 * @return float|int
+	 * @return integer
 	 */
 	protected function make_rating( $repo_meta ) {
 		$watchers    = empty( $repo_meta->watchers ) ? $this->type->watchers : $repo_meta->watchers;
@@ -811,7 +847,7 @@ class Base {
 			return 100;
 		}
 
-		return $rating;
+		return (integer) $rating;
 	}
 
 }

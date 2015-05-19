@@ -12,7 +12,7 @@ namespace Fragen\GitHub_Updater;
 
 abstract class API extends Base {
 
-	/**
+	/*
 	 * The following functions must be in any repository API.
 	 */
 	abstract public function get_remote_info( $file );
@@ -121,7 +121,7 @@ abstract class API extends Base {
 			'repo'  => $this->type->repo,
 		);
 
-		/**
+		/*
 		 * Add or filter the available segments that are used to replace placeholders.
 		 *
 		 * @param array $segments list of segments.
@@ -135,13 +135,13 @@ abstract class API extends Base {
 		switch ( $type['repo'] ) {
 			case 'github':
 				$endpoint = GitHub_API::add_endpoints( $this, $endpoint );
-				if ( $this->type->self_hosted ) {
+				if ( $this->type->enterprise ) {
 					return $endpoint;
 				}
 				break;
 			case 'gitlab':
 				$endpoint = GitLab_API::add_endpoints( $this, $endpoint );
-				if ( $this->type->self_hosted ) {
+				if ( $this->type->enterprise ) {
 					return $endpoint;
 				}
 				break;

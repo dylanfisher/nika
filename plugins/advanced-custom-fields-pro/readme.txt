@@ -106,6 +106,10 @@ http://support.advancedcustomfields.com/
 
 == Changelog ==
 
+= 5.2.5 =
+* Core: Fixed JS error preventing changes to large field groups
+* Language: Added Romanian translation - thanks to Eduard Ungureanu
+
 = 5.2.4 =
 * WYSIWYG field: Fixed bug where new editor is not focused when adding media
 * Core: Added new 'uploader' setting to `acf_form()` options for basic upload inputs

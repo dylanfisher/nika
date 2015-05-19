@@ -226,10 +226,17 @@ function get_field_object( $selector, $post_id = false, $format_value = true, $l
 	
 	
 	// load field reference if not a field_key
-	if( !acf_is_field_key($selector) )
-	{
+	if( !acf_is_field_key($selector) ) {
+		
 		$override_name = $selector;
-		$selector = acf_get_field_reference( $selector, $post_id );
+		$reference = acf_get_field_reference( $selector, $post_id );
+		
+		if( $reference ) {
+			
+			$selector = $reference;
+			
+		}
+		
 	}
 	
 	
@@ -238,9 +245,10 @@ function get_field_object( $selector, $post_id = false, $format_value = true, $l
 	
 	
 	// bail early if no field found
-	if( !$field )
-	{
+	if( !$field ) {
+		
 		return false;
+		
 	}
 	
 	

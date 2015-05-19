@@ -38,12 +38,12 @@ class GitLab_API extends API {
 		if ( ! isset( self::$options['gitlab_private_token'] ) ) {
 			self::$options['gitlab_private_token'] = null;
 		}
-		if ( ! isset( self::$options['gitlab_self_hosted_token'] ) ) {
-			self::$options['gitlab_self_hosted_token'] = null;
+		if ( ! isset( self::$options['gitlab_enterprise_token'] ) ) {
+			self::$options['gitlab_enterprise_token'] = null;
 		}
 		if (
 			empty( self::$options['gitlab_private_token'] ) ||
-			( empty( self::$options['gitlab_self_hosted_token'] ) && ! empty( $type->self_hosted ) )
+			( empty( self::$options['gitlab_enterprise_token'] ) && ! empty( $type->enterprise ) )
 		) {
 			Messages::create_error_message( 'gitlab' );
 		}
@@ -266,11 +266,11 @@ class GitLab_API extends API {
 	 * @return string URI
 	 */
 	public function construct_download_link( $rollback = false, $branch_switch = false ) {
-		/**
-		 * Check if using GitLab Self-Hosted.
+		/*
+		 * Check if using GitLab CE/Enterprise.
 		 */
-		if ( ! empty( $this->type->self_hosted ) ) {
-			$gitlab_base = $this->type->self_hosted;
+		if ( ! empty( $this->type->enterprise ) ) {
+			$gitlab_base = $this->type->enterprise;
 		} else {
 			$gitlab_base = 'https://gitlab.com';
 		}
@@ -278,7 +278,7 @@ class GitLab_API extends API {
 		$download_link_base = implode( '/', array( $gitlab_base, $this->type->owner, $this->type->repo, 'repository/archive.zip' ) );
 		$endpoint           = '';
 
-		/**
+		/*
 		 * Check for rollback.
 		 */
 		if ( ! empty( $_GET['rollback'] ) &&
@@ -290,9 +290,9 @@ class GitLab_API extends API {
 			$endpoint = add_query_arg( 'ref', $this->type->branch, $endpoint );
 		}
 
-		/**
+		/*
 		 * If a branch has been given, only check that for the remote info.
-		 * If it's not been given, GitHub will use the Default branch.
+		 * If it's not been given, GitLab will use the Default branch.
 		 * If branch is master and tags are used, use newest tag.
 		 */
 		if ( 'master' === $this->type->branch && ! empty( $this->type->tags ) ) {
@@ -300,7 +300,7 @@ class GitLab_API extends API {
 			$endpoint = add_query_arg( 'ref', $this->type->newest_tag, $endpoint );
 		}
 
-		/**
+		/*
 		 * Create endpoint for branch switching.
 		 */
 		if ( $branch_switch ) {
@@ -348,16 +348,16 @@ class GitLab_API extends API {
 				break;
 		}
 
-		/**
-		 * If using GitLab Self-Hosted header return this endpoint.
+		/*
+		 * If using GitLab CE/Enterprise header return this endpoint.
 		 */
-		if ( ! empty( $git->type->self_hosted ) ) {
+		if ( ! empty( $git->type->enterprise ) ) {
 			$endpoint = remove_query_arg( 'private_token', $endpoint );
-			if ( ! empty( parent::$options['gitlab_self_hosted_token'] ) ) {
-				$endpoint = add_query_arg( 'private_token', parent::$options['gitlab_self_hosted_token'], $endpoint );
+			if ( ! empty( parent::$options['gitlab_enterprise_token'] ) ) {
+				$endpoint = add_query_arg( 'private_token', parent::$options['gitlab_enterprise_token'], $endpoint );
 			}
 
-			return $git->type->self_hosted . $endpoint;
+			return $git->type->enterprise . $endpoint;
 		}
 
 		return $endpoint;

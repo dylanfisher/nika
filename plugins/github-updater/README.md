@@ -125,15 +125,15 @@ GitHub Branch:    master
 
 `GitHub Branch`, `Bitbucket Branch`, and `GitLab Branch` are available but not required.
 
-### Self Hosted Support
+### Enterprise and Self-Hosted Support
 
-#### GitHub Self Hosted Support
+#### GitHub Enterprise Support
 
-Add the `GitHub Self-Hosted` header to the plugin or theme that is hosted on your GitHub self-hosted installation. The settings should be similar to `GitHub Self-Hosted: https://github.yourhost.com`.
+Add the `GitHub Enterprise` header to the plugin or theme that is hosted on your GitHub self-hosted installation. The settings should be similar to `GitHub Enterprise: https://github.yourhost.com`.
 
-#### GitLab Self Hosted Support
+#### GitLab CE/Enterprise Support
 
-Add the `GitLab Self-Hosted` header to the plugin or theme that is hosted on your GitLab self-hosted installation. The settings should be similar to `GitLab Self-Hosted: https://gitlab.yourhost.com`.
+Add the `GitLab CE` or `GitLab Enterprise` header to the plugin or theme that is hosted on your GitLab self-hosted installation. The settings should be similar to `GitLab CE: https://gitlab.yourhost.com` or `GitLab Enterprise: https://gitlab.yourhost.com`.
 
 ### Versions
 
@@ -219,7 +219,7 @@ Be careful about refreshing the browser window after this as you may be continua
 
 If you develop your plugin on GitHub and it also resides in the WP.org repo, the plugin will preferentially pull updates from WP.org if `GitHub Branch: master`. If `GitHub Branch` is anything other than `master` then the update will pull from GitHub. Make sure that the version of your plugin uploaded to WP.org has `GitHub Branch: master`.
 
-The same applies for Bitbucket hosted plugins.
+The same applies for Bitbucket or GitLab hosted plugins.
 
 ## Remote Installation of Repositories
 

@@ -2163,7 +2163,7 @@ var acf;
 		
 		validation_complete: function( json, $form ){
 			
-			if( json.errors ) {
+			if( json && json.errors ) {
 				
 				this.on();
 				
@@ -6470,6 +6470,14 @@ var scroll_timer = null;
 	
 	acf.add_filter('validation_complete', function( json, $form ){
 		
+		// bail early if no errors
+		if( !json || !json.errors ) {
+			
+			return;
+			
+		}
+		
+		
 		// show field error messages
 		$.each( json.errors, function( k, item ){
 		
@@ -6479,20 +6487,23 @@ var scroll_timer = null;
 			
 			
 			// does tab group exist?
-			if( ! $tab.exists() )
-			{
+			if( ! $tab.exists() ) {
+				
 				return;
+				
 			}
 
 			
 			// is this field hidden
-			if( $field.hasClass('hidden-by-tab') )
-			{
+			if( $field.hasClass('hidden-by-tab') ) {
+				
 				// show this tab
 				$tab.siblings('.acf-tab-wrap').find('a[data-key="' + acf.get_data($tab, 'key') + '"]').trigger('click');
 				
+				
 				// end loop
 				return false;
+				
 			}
 			
 			
@@ -7153,8 +7164,7 @@ var scroll_timer = null;
 			
 			
 			// vars
-			var data = acf.serialize_form( $form, 'acf' ),
-				success = false;
+			var data = acf.serialize_form( $form, 'acf' );
 				
 			
 			// append AJAX action		
@@ -7177,14 +7187,20 @@ var scroll_timer = null;
 				dataType: 'json',
 				success: function( json ){
 					
-					success = true;
+					// bail early if not json success
+					if( !acf.is_ajax_success(json) ) {
+						
+						return;
+						
+					}
 					
-					self.fetch_success( $form, json );
+					
+					self.fetch_success( $form, json.data );
 					
 				},
 				complete: function(){
 					
-					self.fetch_complete( $form, success );
+					self.fetch_complete( $form );
 			
 				}
 			});
@@ -7205,7 +7221,7 @@ var scroll_timer = null;
 		*  @return	$post_id (int)
 		*/
 		
-		fetch_complete: function( $form, success ){
+		fetch_complete: function( $form ){
 			
 			// set busy
 			this.busy = 0;
@@ -7272,16 +7288,12 @@ var scroll_timer = null;
 		
 		fetch_success: function( $form, json ){
 			
-			// set trigger
-			//this.is_fetch_success = true;
-			
-			
 			// filter for 3rd party customization
 			json = acf.apply_filters('validation_complete', json, $form);
 						
 			
 			// validate json
-			if( !json || typeof json.result === 'undefined' || json.result == 1 ) {
+			if( !json || json.valid || !json.errors ) {
 				
 				// set valid (allows fetch_complete to run)
 				this.valid = true;
@@ -7289,6 +7301,7 @@ var scroll_timer = null;
 				
 				// end function
 				return;
+				
 			}
 			
 			
