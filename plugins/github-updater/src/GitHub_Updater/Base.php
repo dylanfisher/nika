@@ -387,67 +387,71 @@ class Base {
 	public function upgrader_source_selection( $source, $remote_source , $upgrader ) {
 
 		global $wp_filesystem;
-		$repo = null;
+		$repo                = null;
+		$source_base         = basename( $source );
+		$chopped_source_base = null;
 
 		/*
-		 * Check for upgrade process, return if both are false.
+		 * Check for upgrade process, return if both are false or
+		 * not of same updater.
 		 */
-		if ( ( ! $upgrader instanceof \Plugin_Upgrader ) && ( ! $upgrader instanceof \Theme_Upgrader ) ) {
-			return $source;
-		}
-
-		/*
-		 * Return $source if name already corrected.
-		 */
-		foreach ( (array) $this->config as $git_repo ) {
-			if ( basename( $source ) === $git_repo->repo ) {
-				return $source;
-			}
-		}
 		if (
-			( ! empty( $upgrader->skin->options['plugin' ] ) &&
-			  ( basename( $source ) === $upgrader->skin->options['plugin'] ) ) ||
-			( ! empty( $upgrader->skin->options['theme'] ) &&
-			  ( basename( $source ) === $upgrader->skin->options['theme'] ) )
+			( ! $upgrader instanceof \Plugin_Upgrader ) && ( ! $upgrader instanceof \Theme_Upgrader ) ||
+			( $upgrader instanceof \Plugin_Upgrader && ( ! $this instanceof Plugin ) ) ||
+			( $upgrader instanceof \Theme_Upgrader  && ( ! $this instanceof Theme ) )
 		) {
 			return $source;
 		}
 
 		/*
-		 * Get correct repo name based upon $upgrader instance if present.
+		 * Get repo for remote install update process.
 		 */
-		if ( $upgrader instanceof \Plugin_Upgrader ) {
-			if ( ! empty( $upgrader->skin->options['plugin'] ) &&
-			     stristr( basename( $source ), $upgrader->skin->options['plugin'] ) ) {
-				$repo = $upgrader->skin->options['plugin'];
-			}
-		}
-		if ( $upgrader instanceof \Theme_Upgrader ) {
-			if ( ! empty( $upgrader->skin->options['theme'] ) &&
-			     stristr( basename( $source ), $upgrader->skin->options['theme'] ) ) {
-				$repo = $upgrader->skin->options['theme'];
-			}
+		if ( isset( self::$options['github_updater_install_repo'] ) &&
+		     false !== stristr( $source_base, self::$options['github_updater_install_repo'] )
+
+		) {
+			$repo = self::$options['github_updater_install_repo'];
 		}
 
 		/*
-		 * Get repo for automatic update process.
+		 * Get/set $repo for updating.
 		 */
 		if ( empty( $repo ) ) {
 			foreach ( (array) $this->config as $git_repo ) {
-				if ( $upgrader instanceof \Plugin_Upgrader && ( false !== stristr( $git_repo->type, 'plugin' ) ) ) {
-					if ( stristr( basename( $source ), $git_repo->repo ) ) {
-						$repo = $git_repo->repo;
-						break;
-					}
-				}
-				if ( $upgrader instanceof \Theme_Upgrader && ( false !== stristr( $git_repo->type, 'theme' ) ) ) {
-					if ( stristr( basename( $source ), $git_repo->repo ) ) {
-						$repo = $git_repo->repo;
-						break;
-					}
-				}
-			}
 
+				/*
+				 * Return $source if name already corrected.
+				 */
+				if ( $source_base === $git_repo->repo ) {
+					return $source;
+				}
+
+				/*
+				 * Correct repo name for automatic updates.
+				 * Chop `<owner>-` and `-<hash>` from remote update $source_base.
+				 * Chop `.git` from GitLab remote update $source_base.
+				 */
+				if ( false !== stristr( $source_base, '.git' ) ) {
+					$chopped_source_base = rtrim( $source_base, '.git' );
+				}
+
+				if ( false !== stristr( $source_base, $git_repo->repo ) && empty( $chopped_source_base ) ) {
+					$lchop = str_replace( $git_repo->owner . '-', '', $source_base );
+					$chopped_source_base = substr( $lchop, 0, false !== ( $pos = strrpos( $lchop, '-') ) ? $pos : strlen( $lchop ) );
+				}
+
+				if ( $chopped_source_base === $git_repo->repo ) {
+					if ( $upgrader instanceof \Plugin_Upgrader && $this instanceof Plugin ) {
+						$repo = $git_repo->repo;
+						break;
+					}
+					if ( $upgrader instanceof \Theme_Upgrader && $this instanceof Theme ) {
+						$repo = $git_repo->repo;
+						break;
+					}
+				}
+
+			}
 			/*
 			 * Return already corrected $source or wp.org $source.
 			 */
@@ -461,7 +465,7 @@ class Base {
 		$upgrader->skin->feedback(
 			sprintf(
 				__( 'Renaming %1$s to %2$s', 'github-updater' ) . '&#8230;',
-				'<span class="code">' . basename( $source ) . '</span>',
+				'<span class="code">' . $source_base . '</span>',
 				'<span class="code">' . basename( $corrected_source ) . '</span>'
 			)
 		);

@@ -1,3 +1,26 @@
+#### 4.5.6
+* bugfix for renaming code to properly strip `<owner>-`
+* most of Russian translation by [Anatoly Yumashev](https://github.com/yumashev)
+
+#### 4.5.5
+* back to simplifying the renaming code, always remember to test renaming on live server.
+* strip `<owner>-` and `-<hash>` from beginning and end of update for more precise renaming
+* I think this is the end of renaming for a while.
+
+#### 4.5.4
+* hotfix for renaming, I reverted back a bunch with more extensive testing on server. It's amazing how different renaming is locally vs on server.
+
+#### 4.5.3
+* updated language files -- oops
+
+#### 4.5.2
+* cleanup and refactor of renaming code.
+* added Romanian translation by [Corneliu Cirlan](https://github.com/corneliucirlan)
+* added Japanese translation by [ishihara](https://github.com/1shiharat)
+
+#### 4.5.1
+* fix bug so updates display without having to randomly refresh.
+
 #### 4.5.0
 * fix some PHP notices
 * add update by GitHub release asset in lieu of update by tag when asset is present
@@ -5,6 +28,7 @@
 * refactor to simplify class structure, created `abstract class API` and `class Messages`
 * add GitLab support!!
 * refactor to set all git servers and extra headers to static arrays in `Base`
+* remove checkbox when loaded as mu-plugin, props @pbearne
 
 #### 4.4.0
 * only add custom user agent once :P
