@@ -330,12 +330,8 @@ $project-thumbnail-size: (100%/3) - ($project-thumbnail-margin/1.5);
   &:nth-child(3n + 2) { margin-right: $project-thumbnail-margin; }
 
   &:hover {
-    .project-thumbnail-image {
-      opacity: 0;
-    }
-
     .cover {
-      opacity: 1;
+      opacity: 0.9;
     }
   }
 

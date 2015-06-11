@@ -752,10 +752,8 @@ header {
     margin-right: 3%; }
   .project-thumbnail:nth-child(3n+2) {
     margin-right: 3%; }
-  .project-thumbnail:hover .project-thumbnail-image {
-    opacity: 0; }
   .project-thumbnail:hover .cover {
-    opacity: 1; }
+    opacity: 0.9; }
   .project-thumbnail.full-width .project-thumbnail-image {
     top: 50%;
     left: 0;

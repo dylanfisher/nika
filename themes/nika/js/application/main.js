@@ -29,8 +29,10 @@ jQuery(document).ready(function($){
     });
 
     $(document).on('click', function(e){
-      if(!$('html').hasClass('night-transition') && !$(e.target).closest('a').length) {
-        nightOff();
+      if($('body').hasClass('home')) {
+        if(!$('html').hasClass('night-transition') && !$(e.target).closest('a').length) {
+          nightOff();
+        }
       }
     });
 
