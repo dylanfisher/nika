@@ -28,6 +28,12 @@ jQuery(document).ready(function($){
       }
     });
 
+    $(document).on('click', function(e){
+      if(!$('html').hasClass('night-transition') && !$(e.target).closest('a').length) {
+        nightOff();
+      }
+    });
+
     function nightOn(callback) {
       $('.night-cover').css({height: ''});
       $('.night-cover').css({height: $(document).height() });
