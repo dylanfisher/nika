@@ -4,7 +4,8 @@
   <?php the_post(); ?>
   <div class="ibfix">
     <div class="sidebar">
-      <?php the_field('sidebar'); ?>
+      <?php $information_page = get_page_by_path('/information'); ?>
+      <?php the_field('sidebar', $information_page->ID); ?>
     </div>
     <div class="page-entry-content">
       <?php the_content(); ?>
