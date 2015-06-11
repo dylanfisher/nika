@@ -160,6 +160,28 @@ function sandbox_add_slug_class_to_menu_item($output){
 }
 add_filter('wp_nav_menu', 'sandbox_add_slug_class_to_menu_item');
 
+// Apply parent page template theme to child pages
+function sandbox_child_page_template_inheriter() {
+  global $post;
+  // Checks if current post type is a page, rather than a post
+  if (is_page()) {
+    // Checks if page is parent, if yes, return
+    if ($post->post_parent == 0)
+      return true;
+    else if ($post->post_parent != $post->ID) {
+      $parent_page_template = get_post_meta($post->post_parent,'_wp_page_template',true);
+
+      $template = TEMPLATEPATH . "/{$parent_page_template}";
+      if (file_exists($template)) {
+        load_template($template);
+        exit;
+      }
+    }
+  }
+}
+add_action('template_redirect','sandbox_child_page_template_inheriter');
+
+
 //
 // Shortcode functions
 //
