@@ -38,7 +38,7 @@ Website developed by Dylan Fisher
   <!--[if lte IE 9]>
     <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
   <![endif]-->
-  <?php include(locate_template('partials/night.php')); ?>
+  <?php include(locate_template('partials/night.php')); // The moon page ?>
   <div class="wrapper">
     <header class="relative center">
       <h1 class="site-title absolute absolute-left absolute-top large-sans">
