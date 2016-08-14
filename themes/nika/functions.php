@@ -181,6 +181,10 @@ function sandbox_child_page_template_inheriter() {
 }
 add_action('template_redirect','sandbox_child_page_template_inheriter');
 
+function sandbox_embed_oembed_html($html, $url, $attr, $post_id) {
+  return '</div><div class="embed-wrapper project-image-outer neutral"><div class="project-image">' . $html . '</div></div><div class="entry-content entry-content-after-embed">';
+}
+add_filter('embed_oembed_html', 'sandbox_embed_oembed_html', 99, 4);
 
 //
 // Shortcode functions

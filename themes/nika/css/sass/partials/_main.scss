@@ -37,6 +37,20 @@ body {
   padding-bottom: 40px;
 }
 
+.entry-content-after-embed {
+  padding-bottom: 0;
+}
+
+.embed-wrapper {
+  @extend %box-shadow;
+  padding-top: 80px;
+  padding-bottom: 76px;
+}
+
+iframe {
+  max-width: 100%;
+}
+
 .sidebar,
 .page-entry-content {
   @extend %ibnorm;
