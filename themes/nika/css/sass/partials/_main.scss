@@ -389,6 +389,7 @@ $project-thumbnail-size: (100%/3) - ($project-thumbnail-margin/1.5);
   height: 100%;
   z-index: 1;
   transition: opacity $tt;
+  transform: translate3d(0, 0, 0);
 }
 
 //
