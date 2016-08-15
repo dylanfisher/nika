@@ -336,7 +336,7 @@ $project-thumbnail-size: (100%/3) - ($project-thumbnail-margin/1.5);
   position: relative;
   height: 0;
   width: $project-thumbnail-size;
-  padding-bottom: $project-thumbnail-size - (1/3);
+  padding-bottom: $project-thumbnail-size;
   display: inline-block;
   margin-bottom: $project-thumbnail-margin * 2;
 
@@ -373,6 +373,10 @@ $project-thumbnail-size: (100%/3) - ($project-thumbnail-margin/1.5);
   left: 50%;
   transform: translate(-50%, -50%);
   transition: opacity $tt;
+
+  img {
+    max-width: calc(100% + 2px);
+  }
 }
 
 .cover {
