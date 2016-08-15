@@ -336,7 +336,7 @@ $project-thumbnail-size: (100%/3) - ($project-thumbnail-margin/1.5);
   position: relative;
   height: 0;
   width: $project-thumbnail-size;
-  padding-bottom: $project-thumbnail-size;
+  padding-bottom: $project-thumbnail-size - (1/3);
   display: inline-block;
   margin-bottom: $project-thumbnail-margin * 2;
 
