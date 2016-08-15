@@ -10,6 +10,8 @@ jQuery(document).ready(function($){
   surveyInit();
 
   function nightTimeInit() {
+    if ( $(window).width() < 900 ) return;
+
     var transition;
     var starInterval;
     var duration = 2000;
