@@ -373,6 +373,7 @@ $project-thumbnail-size: (100%/3) - ($project-thumbnail-margin/1.5);
   left: 50%;
   transform: translate(-50%, -50%);
   transition: opacity $tt;
+  overflow: hidden;
 
   img {
     max-width: calc(100% + 2px);

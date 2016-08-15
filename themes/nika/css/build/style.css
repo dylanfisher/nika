@@ -831,7 +831,8 @@ header {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  transition: opacity 0.4s; }
+  transition: opacity 0.4s;
+  overflow: hidden; }
   .project-thumbnail-image img {
     max-width: calc(100% + 2px); }
 
