@@ -31,3 +31,14 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 delete_site_option( 'github_updater' );
 delete_option( 'github_updater' );
+delete_site_option( 'github_updater_api_key' );
+delete_option( 'github_updater_api_key' );
+
+delete_site_option( 'github_updater_remote_management' );
+delete_option( 'github_updater_remote_management' );
+
+global $wpdb;
+$table         = is_multisite() ? $wpdb->base_prefix . 'sitemeta' : $wpdb->base_prefix . 'options';
+$column        = is_multisite() ? 'meta_key' : 'option_name';
+$delete_string = 'DELETE FROM ' . $table . ' WHERE ' . $column . ' LIKE %s LIMIT 1000';
+$wpdb->query( $wpdb->prepare( $delete_string, array( '%ghu-%' ) ) );

@@ -10,7 +10,7 @@ $cache_gc_email_me = 0; //Added by WP-Cache Manager
 $wp_cache_mod_rewrite = 1; //Added by WP-Cache Manager
 $cache_time_interval = '3600'; //Added by WP-Cache Manager
 $cache_scheduled_time = '00:00'; //Added by WP-Cache Manager
-$cache_schedule_type = 'time'; //Added by WP-Cache Manager
+$cache_schedule_type = 'interval'; //Added by WP-Cache Manager
 $wp_cache_refresh_single_only = '0'; //Added by WP-Cache Manager
 $wp_cache_make_known_anon = 0; //Added by WP-Cache Manager
 $wp_cache_front_page_checks = 1; //Added by WP-Cache Manager
@@ -27,7 +27,7 @@ if ( ! defined('WPCACHEHOME') )
 $cache_compression = 1; //Added by WP-Cache Manager
 $cache_enabled = true; //Added by WP-Cache Manager
 $super_cache_enabled = true; //Added by WP-Cache Manager
-$cache_max_time = 21600; //Added by WP-Cache Manager
+$cache_max_time = 3600; //Added by WP-Cache Manager
 //$use_flock = true; // Set it true or false if you know what to use
 $cache_path = WP_CONTENT_DIR . '/cache/';
 $file_prefix = 'wp-cache-';

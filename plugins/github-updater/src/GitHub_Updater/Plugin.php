@@ -10,10 +10,18 @@
 
 namespace Fragen\GitHub_Updater;
 
+/*
+ * Exit if called directly.
+ */
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 /**
+ * Class Plugin
+ *
  * Update a WordPress plugin from a GitHub repo.
  *
- * Class    Plugin
  * @package Fragen\GitHub_Updater
  * @author  Andy Fragen
  * @author  Codepress
@@ -22,11 +30,18 @@ namespace Fragen\GitHub_Updater;
 class Plugin extends Base {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @var bool|Plugin
+	 */
+	private static $instance = false;
+
+	/**
 	 * Rollback variable
 	 *
 	 * @var string branch
 	 */
-	protected $tag = false;
+	public $tag = false;
 
 	/**
 	 * Constructor.
@@ -34,77 +49,178 @@ class Plugin extends Base {
 	public function __construct() {
 
 		/*
-		 * Get details of git sourced plugins.
+		 * Get details of installed git sourced plugins.
 		 */
 		$this->config = $this->get_plugin_meta();
-		
+
 		if ( empty( $this->config ) ) {
 			return false;
 		}
-		if ( isset( $_GET['force-check'] ) && '1' === $_GET['force-check'] ) {
-			$this->delete_all_transients( 'plugins' );
-		}
-
-		foreach ( (array) $this->config as $plugin ) {
-			switch( $plugin->type ) {
-				case 'github_plugin':
-					$repo_api = new GitHub_API( $plugin );
-					break;
-				case 'bitbucket_plugin':
-					$repo_api = new Bitbucket_API( $plugin );
-					break;
-				case 'gitlab_plugin';
-					$repo_api = new GitLab_API( $plugin );
-					break;
-			}
-
-			$this->{$plugin->type} = $plugin;
-			$this->set_defaults( $plugin->type );
-
-			if ( $repo_api->get_remote_info( basename( $plugin->slug ) ) ) {
-				$repo_api->get_repo_meta();
-				$repo_api->get_remote_tag();
-				$changelog = $this->get_changelog_filename( $plugin->type );
-				if ( $changelog ) {
-					$repo_api->get_remote_changes( $changelog );
-				}
-				$repo_api->get_remote_readme();
-				$plugin->download_link = $repo_api->construct_download_link();
-			}
-
-			/*
-			 * Update plugin transient with rollback (branch switching) data.
-			 */
-			if ( ! empty( $_GET['rollback'] ) &&
-			     ( isset( $_GET['plugin'] ) && $_GET['plugin'] === $plugin->slug )
-			) {
-				$this->tag         = $_GET['rollback'];
-				$updates_transient = get_site_transient('update_plugins');
-				$rollback          = array(
-					'slug'        => $plugin->repo,
-					'plugin'      => $plugin->slug,
-					'new_version' => $this->tag,
-					'url'         => $plugin->uri,
-					'package'     => $repo_api->construct_download_link( false, $this->tag ),
-				);
-				$updates_transient->response[ $plugin->slug ] = (object) $rollback;
-				set_site_transient( 'update_plugins', $updates_transient );
-			}
-
-			add_action( "after_plugin_row_$plugin->slug", array( &$this, 'wp_plugin_update_row' ), 15, 3 );
-		}
-
-		$this->make_force_check_transient( 'plugins' );
-
-		add_filter( 'plugin_row_meta', array( &$this, 'plugin_row_meta' ), 10, 2 );
-		add_filter( 'pre_set_site_transient_update_plugins', array( &$this, 'pre_set_site_transient_update_plugins' ) );
-		add_filter( 'plugins_api', array( &$this, 'plugins_api' ), 99, 3 );
-		add_filter( 'upgrader_source_selection', array( &$this, 'upgrader_source_selection' ), 10, 3 );
-		add_filter( 'http_request_args', array( 'Fragen\\GitHub_Updater\\API', 'http_request_args' ), 10, 2 );
-
-		Settings::$ghu_plugins = $this->config;
 	}
 
+	/**
+	 * Returns an array of configurations for the known plugins.
+	 *
+	 * @return array
+	 */
+	public function get_plugin_configs() {
+		return $this->config;
+	}
+
+	/**
+	 * The Plugin object can be created/obtained via this
+	 * method - this prevents unnecessary work in rebuilding the object and
+	 * querying to construct a list of categories, etc.
+	 *
+	 * @return object $instance Plugin
+	 */
+	public static function instance() {
+		if ( false === self::$instance ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
+	/**
+	 * Get details of Git-sourced plugins from those that are installed.
+	 *
+	 * @return array Indexed array of associative arrays of plugin details.
+	 */
+	protected function get_plugin_meta() {
+		/*
+		 * Ensure get_plugins() function is available.
+		 */
+		include_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+
+		$plugins     = get_plugins();
+		$git_plugins = array();
+
+		/**
+		 * Filter to add plugins not containing appropriate header line.
+		 *
+		 * @since   5.4.0
+		 * @access  public
+		 *
+		 * @param   array $additions    Listing of plugins to add.
+		 *                              Default null.
+		 * @param   array $plugins      Listing of all plugins.
+		 * @param         string        'plugin'    Type being passed.
+		 */
+		$additions = apply_filters( 'github_updater_additions', null, $plugins, 'plugin' );
+		$plugins   = array_merge( $plugins, (array) $additions );
+
+		foreach ( (array) $plugins as $plugin => $headers ) {
+			$git_plugin = array();
+
+			if ( empty( $headers['GitHub Plugin URI'] ) &&
+			     empty( $headers['Bitbucket Plugin URI'] ) &&
+			     empty( $headers['GitLab Plugin URI'] )
+			) {
+				continue;
+			}
+
+			foreach ( (array) self::$extra_headers as $value ) {
+				$header = null;
+
+				if ( in_array( $value, array( 'Requires PHP', 'Requires WP', 'Languages' ) ) ) {
+					continue;
+				}
+
+				if ( empty( $headers[ $value ] ) || false === stristr( $value, 'Plugin' ) ) {
+					continue;
+				}
+
+				$header_parts = explode( ' ', $value );
+				$repo_parts   = $this->get_repo_parts( $header_parts[0], 'plugin' );
+
+				if ( $repo_parts['bool'] ) {
+					$header = $this->parse_header_uri( $headers[ $value ] );
+					if ( empty( $header ) ) {
+						continue;
+					}
+				}
+
+				$header = $this->parse_extra_headers( $header, $headers, $header_parts, $repo_parts );
+
+				$git_plugin['type']                = $repo_parts['type'];
+				$git_plugin['uri']                 = $header['base_uri'] . '/' . $header['owner_repo'];
+				$git_plugin['enterprise']          = $header['enterprise_uri'];
+				$git_plugin['enterprise_api']      = $header['enterprise_api'];
+				$git_plugin['owner']               = $header['owner'];
+				$git_plugin['repo']                = $header['repo'];
+				$git_plugin['extended_repo']       = implode( '-', array(
+					$repo_parts['git_server'],
+					$header['owner'],
+					$header['repo'],
+				) );
+				$git_plugin['branch']              = ! empty( $headers[ $repo_parts['branch'] ] ) ? $headers[ $repo_parts['branch'] ] : 'master';
+				$git_plugin['slug']                = $plugin;
+				$git_plugin['local_path']          = WP_PLUGIN_DIR . '/' . $header['repo'] . '/';
+				$git_plugin['local_path_extended'] = WP_PLUGIN_DIR . '/' . $git_plugin['extended_repo'] . '/';
+
+				$plugin_data                           = get_plugin_data( WP_PLUGIN_DIR . '/' . $git_plugin['slug'] );
+				$git_plugin['author']                  = $plugin_data['AuthorName'];
+				$git_plugin['name']                    = $plugin_data['Name'];
+				$git_plugin['local_version']           = strtolower( $plugin_data['Version'] );
+				$git_plugin['sections']['description'] = $plugin_data['Description'];
+				$git_plugin['languages']               = ! empty( $header['languages'] ) ? $header['languages'] : null;
+				$git_plugin['ci_job']                  = ! empty( $header['ci_job'] ) ? $header['ci_job'] : null;
+				$git_plugin['release_asset']           = true == $plugin_data['Release Asset'] ? true : false;
+				$git_plugin['broken']                  = empty( $header['owner'] ) || empty( $header['repo'] ) ? true : false;
+
+				$git_plugin['banners']['high'] =
+					file_exists( trailingslashit( WP_PLUGIN_DIR ) . $header['repo'] . '/assets/banner-1544x500.png' )
+						? trailingslashit( WP_PLUGIN_URL ) . $header['repo'] . '/assets/banner-1544x500.png'
+						: null;
+
+				$git_plugin['banners']['low'] =
+					file_exists( trailingslashit( WP_PLUGIN_DIR ) . $header['repo'] . '/assets/banner-772x250.png' )
+						? trailingslashit( WP_PLUGIN_URL ) . $header['repo'] . '/assets/banner-772x250.png'
+						: null;
+
+			}
+
+			$git_plugins[ $git_plugin['repo'] ] = (object) $git_plugin;
+		}
+
+		return $git_plugins;
+	}
+
+	/**
+	 * Get remote plugin meta to populate $config plugin objects.
+	 * Calls to remote APIs to get data.
+	 */
+	public function get_remote_plugin_meta() {
+		foreach ( (array) $this->config as $plugin ) {
+
+			if ( ! $this->get_remote_repo_meta( $plugin ) ) {
+				continue;
+			}
+
+			// Update plugin transient with rollback (branch switching) data.
+			add_filter( 'wp_get_update_data', array( &$this, 'set_rollback' ) );
+
+			if ( ( ! is_multisite() || is_network_admin() ) && ! $plugin->release_asset &&
+			     'init' === current_filter() //added due to calling hook for shiny updates, don't show row twice
+			) {
+				add_action( "after_plugin_row_$plugin->slug", array( &$this, 'plugin_branch_switcher' ), 15, 3 );
+			}
+		}
+
+		if ( ! $this->is_wp_cli() ) {
+			$this->load_pre_filters();
+		}
+	}
+
+	/**
+	 * Load pre-update filters.
+	 */
+	public function load_pre_filters() {
+		add_filter( 'plugin_row_meta', array( &$this, 'plugin_row_meta' ), 10, 2 );
+		add_filter( 'plugins_api', array( &$this, 'plugins_api' ), 99, 3 );
+		add_filter( 'pre_set_site_transient_update_plugins', array( &$this, 'pre_set_site_transient_update_plugins' ) );
+	}
 
 	/**
 	 * Add branch switch row to plugins page.
@@ -114,18 +230,23 @@ class Plugin extends Base {
 	 *
 	 * @return bool
 	 */
-	public function wp_plugin_update_row( $plugin_file, $plugin_data ) {
+	public function plugin_branch_switcher( $plugin_file, $plugin_data ) {
 		$options = get_site_option( 'github_updater' );
 		if ( empty( $options['branch_switch'] ) ) {
 			return false;
 		}
 
-		$wp_list_table = _get_list_table( 'WP_MS_Themes_List_Table' );
-		$plugin        = dirname( $plugin_file );
-		$id            = $plugin . '-id';
-		$branches      = isset( $this->config[ $plugin ] ) ? $this->config[ $plugin ]->branches : null;
+		$enclosure         = $this->update_row_enclosure( $plugin_file, 'plugin', true );
+		$plugin            = $this->get_repo_slugs( dirname( $plugin_file ) );
+		$nonced_update_url = wp_nonce_url(
+			$this->get_update_url( 'plugin', 'upgrade-plugin', $plugin_file ),
+			'upgrade-plugin_' . $plugin_file
+		);
 
-		if ( ! $branches ) {
+		if ( ! empty( $plugin ) ) {
+			$id       = $plugin['repo'] . '-id';
+			$branches = isset( $this->config[ $plugin['repo'] ] ) ? $this->config[ $plugin['repo'] ]->branches : null;
+		} else {
 			return false;
 		}
 
@@ -140,30 +261,21 @@ class Plugin extends Base {
 			}
 		}
 
+		$branch_switch_data                      = array();
+		$branch_switch_data['slug']              = $plugin['repo'];
+		$branch_switch_data['nonced_update_url'] = $nonced_update_url;
+		$branch_switch_data['id']                = $id;
+		$branch_switch_data['branch']            = $branch;
+		$branch_switch_data['branches']          = $branches;
+
 		/*
 		 * Create after_plugin_row_
 		 */
-		if ( isset( $this->config[ $plugin ] ) ) {
-			echo '<tr class="plugin-update-tr"><td colspan="' . $wp_list_table->get_column_count() . '" class="plugin-update colspanchange"><div class="update-message update-ok">';
+		echo $enclosure['open'];
+		$this->make_branch_switch_row( $branch_switch_data );
+		echo $enclosure['close'];
 
-			printf( __( 'Current branch is `%1$s`, try %2$sanother branch%3$s.', 'github-updater' ),
-				$branch,
-				'<a href="#" onclick="jQuery(\'#' . $id .'\').toggle();return false;">',
-				'</a>'
-			);
-
-			print( '<ul id="' . $id . '" style="display:none; width: 100%;">' );
-			foreach ( $branches as $branch => $uri ) {
-
-				printf( '<li><a href="%s%s">%s</a></li>',
-					wp_nonce_url( self_admin_url( 'update.php?action=upgrade-plugin&plugin=' . urlencode( $plugin_file ) ), 'upgrade-plugin_' . $plugin_file ),
-					'&rollback=' . urlencode( $branch ),
-					esc_attr( $branch )
-				);
-			}
-			print( '</ul>' );
-			echo '</div></td></tr>';
-		}
+		return true;
 	}
 
 	/**
@@ -176,7 +288,9 @@ class Plugin extends Base {
 	 */
 	public function plugin_row_meta( $links, $file ) {
 		$regex_pattern = '/<a href="(.*)">(.*)<\/a>/';
-		$repo          = dirname ( $file );
+		$repo          = dirname( $file );
+		$slugs         = $this->get_repo_slugs( $repo );
+		$repo          = ! empty( $slugs ) ? $slugs['repo'] : null;
 
 		/*
 		 * Sanity check for some commercial plugins.
@@ -191,12 +305,22 @@ class Plugin extends Base {
 		 * Remove 'Visit plugin site' link in favor or 'View details' link.
 		 */
 		if ( array_key_exists( $repo, $this->config ) ) {
-			if ( false !== stristr( $links[2], 'Visit plugin site' ) ) {
+			if ( ! is_null( $repo ) ) {
 				unset( $links[2] );
 				$links[] = sprintf( '<a href="%s" class="thickbox">%s</a>',
-					network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . $repo .
-					                   '&TB_iframe=true&width=600&height=550' ),
-					__( 'View details', 'github-updater' )
+					esc_url(
+						add_query_arg(
+							array(
+								'tab'       => 'plugin-information',
+								'plugin'    => $repo,
+								'TB_iframe' => 'true',
+								'width'     => 600,
+								'height'    => 550,
+							),
+							network_admin_url( 'plugin-install.php' )
+						)
+					),
+					esc_html__( 'View details', 'github-updater' )
 				);
 			}
 		}
@@ -214,54 +338,44 @@ class Plugin extends Base {
 	 * @return mixed
 	 */
 	public function plugins_api( $false, $action, $response ) {
+		$contributors = array();
 		if ( ! ( 'plugin_information' === $action ) ) {
 			return $false;
 		}
 
-		$wp_repo_data = get_site_transient( 'ghu-' . md5( $response->slug . 'wporg' ) );
-		if ( ! $wp_repo_data ) {
-			$wp_repo_data = wp_remote_get( 'https://api.wordpress.org/plugins/info/1.0/' . $response->slug );
-			if ( is_wp_error( $wp_repo_data ) ) {
-				return false;
-			}
+		$plugin = isset( $this->config[ $response->slug ] ) ? $this->config[ $response->slug ] : false;
 
-			set_site_transient( 'ghu-' . md5( $response->slug . 'wporg' ), $wp_repo_data, ( 12 * HOUR_IN_SECONDS ) );
+		// wp.org plugin.
+		if ( ! $plugin || ( $plugin->dot_org && 'master' === $plugin->branch ) ) {
+			return $false;
 		}
 
-		$wp_repo_body = unserialize( $wp_repo_data['body'] );
-		if ( is_object( $wp_repo_body ) ) {
-			$response = $wp_repo_body;
+		/*
+		 * Fix for extended naming.
+		 */
+		$repos          = $this->get_repo_slugs( $plugin->repo );
+		$response->slug = ( $response->slug === $repos['extended_repo'] ) ? $repos['repo'] : $plugin->repo;
+
+		$response->plugin_name   = $plugin->name;
+		$response->name          = $plugin->name;
+		$response->author        = $plugin->author;
+		$response->homepage      = $plugin->uri;
+		$response->donate_link   = $plugin->donate_link;
+		$response->version       = $plugin->remote_version;
+		$response->sections      = $plugin->sections;
+		$response->requires      = $plugin->requires;
+		$response->tested        = $plugin->tested;
+		$response->downloaded    = $plugin->downloaded;
+		$response->last_updated  = $plugin->last_updated;
+		$response->download_link = $plugin->download_link;
+		$response->banners       = $plugin->banners;
+		foreach ( $plugin->contributors as $contributor ) {
+			$contributors[ $contributor ] = '//profiles.wordpress.org/' . $contributor;
 		}
-
-		foreach ( (array) $this->config as $plugin ) {
-			$contributors = array();
-			if ( strtolower( $response->slug ) === strtolower( $plugin->repo ) ) {
-				if ( is_object( $wp_repo_body ) && 'master' === $plugin->branch ) {
-					return $response;
-				}
-
-				$response->slug          = $plugin->repo;
-				$response->plugin_name   = $plugin->name;
-				$response->name          = $plugin->name;
-				$response->author        = $plugin->author;
-				$response->homepage      = $plugin->uri;
-				$response->version       = $plugin->remote_version;
-				$response->sections      = $plugin->sections;
-				$response->requires      = $plugin->requires;
-				$response->tested        = $plugin->tested;
-				$response->downloaded    = $plugin->downloaded;
-				$response->donate_link   = $plugin->donate;
-				$response->last_updated  = $plugin->last_updated;
-				$response->download_link = $plugin->download_link;
-				foreach ( $plugin->contributors as $contributor ) {
-					$contributors[ $contributor ] = '//profiles.wordpress.org/' . $contributor;
-				}
-				$response->contributors  = $contributors;
-				if ( ! $plugin->private ) {
-					$response->num_ratings = $plugin->num_ratings;
-					$response->rating      = $plugin->rating;
-				}
-			}
+		$response->contributors = $contributors;
+		if ( ! $this->is_private( $plugin ) ) {
+			$response->num_ratings = $plugin->num_ratings;
+			$response->rating      = $plugin->rating;
 		}
 
 		return $response;
@@ -285,22 +399,29 @@ class Plugin extends Base {
 					'new_version' => $plugin->remote_version,
 					'url'         => $plugin->uri,
 					'package'     => $plugin->download_link,
+					'branch'      => $plugin->branch,
+					'branches'    => array_keys( $plugin->branches ),
 				);
 
 				/*
-				 * If branch is 'master' and plugin is in wp.org repo then pull update from wp.org
+				 * Skip on branch switching or rollback.
 				 */
-				if ( isset( $transient->response[ $plugin->slug]->id ) && 'master' === $plugin->branch ) {
+				if ( $this->tag &&
+				     ( isset( $_GET['plugin'], $_GET['rollback'] ) && $plugin->slug === $_GET['plugin'] )
+				) {
 					continue;
 				}
 
 				/*
-				 * Don't overwrite if branch switching.
+				 * If branch is 'master' and plugin is in wp.org repo then pull update from wp.org
 				 */
-				if ( isset( $_GET['rollback'] ) &&
-				     ( isset( $_GET['plugin'] ) &&
-				       $plugin->slug === $_GET['plugin'] )
-				) {
+				if ( $plugin->dot_org && 'master' === $plugin->branch ) {
+					$transient = empty( $transient ) ? get_site_transient( 'update_plugins' ) : $transient;
+					if ( isset( $transient->response[ $plugin->slug ] ) &&
+					     ! isset( $transient->response[ $plugin->slug ]->id )
+					) {
+						unset( $transient->response[ $plugin->slug ] );
+					}
 					continue;
 				}
 
