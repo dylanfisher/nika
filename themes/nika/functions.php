@@ -8,6 +8,14 @@
 
 include 'lib/MoonPhase.php';
 
+// CSS and JS script enqueues
+require_once('functions/enqueue_scripts.php');
+
+// Include all functions
+foreach (glob(get_stylesheet_directory() . '/functions/functions/*.php') as $filename) {
+  require_once $filename;
+}
+
 //
 // Enables
 //

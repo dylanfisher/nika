@@ -29,9 +29,7 @@ Website developed by Dylan Fisher
   <meta name="description" content="<?php echo get_bloginfo('description'); ?>">
   <meta name="keywords" content="nika simovich, graphic design, designer, new york, nyc">
   <link rel="icon" type="image/png" href="<?php echo get_bloginfo('template_url'); ?>/images/favicon.png">
-  <link rel="stylesheet" type="text/css" href="<?php echo  bloginfo('stylesheet_url'); ?>?v2" />
   <?php include(locate_template('partials/color_assignments.php')); ?>
-  <?php wp_enqueue_script('jquery'); // runs in noConflict mode ?>
   <?php wp_head(); // For plugins ?>
 </head>
 <body <?php body_class('gradient') ?>>
