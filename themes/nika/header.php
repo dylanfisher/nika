@@ -33,21 +33,23 @@ Website developed by Dylan Fisher
   <?php wp_head(); // For plugins ?>
 </head>
 <body <?php body_class('gradient') ?>>
-  <!--[if lte IE 9]>
-    <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-  <![endif]-->
   <?php include(locate_template('partials/night.php')); // The moon page ?>
   <div class="wrapper">
     <header class="relative center">
       <h1 class="site-title absolute absolute-left absolute-top large-sans">
         <a href="<?php bloginfo('url') ?>/" rel="home"><?php bloginfo('name') ?></a>
       </h1>
-      <?php if(!is_front_page()) { echo '<a href="'.get_home_url().'">'; } ?>
-        <div class="moon ib">
-          <?php get_template_part('images/svg/'.$moon_phase_name.'.svg'); ?>
+      <?php if ( is_front_page() ): ?>
+        <div class="header__description huge-sans">
+          <?php echo get_bloginfo('description'); ?>
         </div>
-      <?php if(!is_front_page()) { echo '</a>'; } ?>
+      <?php endif; ?>
       <h2 class="absolute absolute-right absolute-top large-sans">
         <a href="<?php echo get_the_permalink(get_page_by_path('information')); ?>">Information</a>
       </h2>
     </header>
+    <?php if(!is_front_page()) { echo '<a href="'.get_home_url().'">'; } ?>
+      <div class="moon ib" id="moon">
+        <?php get_template_part('images/svg/'.$moon_phase_name.'.svg'); ?>
+      </div>
+    <?php if(!is_front_page()) { echo '</a>'; } ?>

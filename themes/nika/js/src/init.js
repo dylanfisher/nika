@@ -1,10 +1,20 @@
 // Primary Javascript file
 
 $ = jQuery;
+var App = {};
 
 jQuery(document).ready(function($){
 
   var clockTimer;
+
+  App.windowWidth = $(window).width();
+  App.windowHeight = $(window).height();
+  App.documentWidth = $(document).width();
+  App.documentHeight = $(document).height();
+
+  App.isHome = function() {
+    return $('body').hasClass('home');
+  };
 
   nightTimeInit();
   surveyInit();
@@ -15,6 +25,7 @@ jQuery(document).ready(function($){
     var transition;
     var starInterval;
     var duration = 2000;
+    var screensaverOn = false;
     var screensaverTimer;
     var screensaverWaitPeriod = 60000;
 
@@ -84,6 +95,7 @@ jQuery(document).ready(function($){
 
     // screensaver on
     function screensaverTimout() {
+      if ( !screensaverOn ) return;
       screensaverTimer = setInterval(function(){
         if($('html.night, html.night-transition').length) return;
         nightOn();
@@ -177,9 +189,33 @@ jQuery(document).ready(function($){
     });
   }
 
+  var $moon = $('#moon');
+
+  if ( App.isHome() ) {
+    $(window).scroll(function() {
+      checkMoonOpacity();
+    });
+
+    checkMoonOpacity();
+  }
+
+  function checkMoonOpacity() {
+    var st = $(window).scrollTop();
+    var ratio = 1 - ( st / App.windowHeight );
+    var minOpacity = 0.2;
+    var opacity = Math.max( ratio, minOpacity );
+
+    $moon.css({ opacity: opacity });
+  }
+
 });
 
 $(window).resize(function(){
+  App.windowWidth = $(window).width();
+  App.windowHeight = $(window).height();
+  App.documentWidth = $(document).width();
+  App.documentHeight = $(document).height();
+
   $('.night-cover').css({height: ''});
   $('.night-cover').css({height: $(document).height() });
 });
