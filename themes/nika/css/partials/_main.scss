@@ -8,7 +8,7 @@ html {
 }
 
 body {
-  background-image: linear-gradient(33deg, #CBDFFF 0%, #48C2FF 17%, #00F0FF 39%, #4BFFE4 58%, #04f 90%, #00BDFF 100%, #4BA36F 100%);
+  background-image: linear-gradient(33deg, #CBDFFF 0%, #48C2FF 17%, #e7a7ec 39%, #4BFFE4 58%, #04f 90%, #00BDFF 100%, #4BA36F 100%);
   background-size: 125%;
   background-attachment: fixed;
 }
@@ -32,7 +32,7 @@ body {
 }
 
 .moon {
-  animation: moonfadein 2s;
+  // animation: moonfadein 2s;
 }
 
 @keyframes fadein {

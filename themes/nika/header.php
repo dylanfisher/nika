@@ -41,14 +41,13 @@ Website developed by Dylan Fisher
     <div class="home-landing-text">
       <div class="huge-serif">
         <br>
-        <p>Nika Simovich is a designer  &amp; illustrator based in New York.</p>
-        <p> Currently designing at Anna Sheffield and teaching at Parsons, the New School for Design.</p>
-        <p>
-          Website being updated.
-          <br>
-          <a href="mailto:nika@nikasimovich.com">E-mail</a> for work samples.
+        <p>Nika Simovich is a designer  &amp; illustrator based in New York City.</p>
+        <p> 
+          Currently designing at <a href="http://www.annasheffield.com">Anna Sheffield</a> and teaching <a href="http://ci.nikasimovich.com">Core: Interaction</a>.
         </p>
-        <br>
-        <p>Check back soon</p>
+        <p>
+          Work samples available upon <a href="mailto:nika@nikasimovich.com">request.</a>
+        </p>
+        <p>Check back soon.</p>
       </div>
     </div>
