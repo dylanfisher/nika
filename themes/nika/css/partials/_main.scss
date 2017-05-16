@@ -31,10 +31,6 @@ body {
   }
 }
 
-.moon {
-  // animation: moonfadein 2s;
-}
-
 @keyframes fadein {
   from { opacity: 0; }
   to   { opacity: 1; }
@@ -267,6 +263,7 @@ header {
   top: 40px;
   right: 50px;
   width: 50vmax;
+  height: 100vh;
   // top: 110px;
   // left: 50%;
   // transform: translate(-35%, 0);
@@ -283,6 +280,7 @@ header {
   svg {
     width: 100%;
     height: auto;
+    max-height: 90%;
   }
 
   @include break(hand) {
