@@ -41,13 +41,9 @@ Website developed by Dylan Fisher
     <div class="home-landing-text">
       <div class="huge-serif">
         <br>
-        <p>Nika Simovich is a designer  &amp; illustrator based in New York City.</p>
-        <p> 
-          Currently designing at <a href="http://www.annasheffield.com">Anna Sheffield</a> and teaching <a href="http://ci.nikasimovich.com">Core: Interaction</a>.
-        </p>
-        <p>
-          Work samples available upon <a href="mailto:nika@nikasimovich.com">request.</a>
-        </p>
+        <p>Nika Simovich is a graphic designer &amp; art director based in New York City.</p>
+        <p>Currently working at <a href="http://www.annasheffield.com">Anna Sheffield</a> and teaching <a href="http://ci.nikasimovich.com">Core: Interaction</a>.</p>
+        <p>Work samples available upon <a href="mailto:nika@nikasimovich.com">request.</a></p>
         <p>Check back soon.</p>
       </div>
     </div>
