@@ -1,4 +1,22 @@
 </div><!-- .wrapper -->
+
+<footer class="footer small-sans">
+  <?php
+    global $moon_phase_name;
+    for ( $i=1; $i < 7; $i++ ):
+      $active_class = '';
+      if ( $moon_phase_name == 'moon_' . $i ):
+        $active_class = 'moon-icon-active';
+      endif;
+      echo '<div class="moon-icon-wrapper ' . $active_class . '">';
+        get_template_part('images/svg/moon_icon_' . $i . '.svg');
+      echo '</div>';
+    endfor;
+  ?>
+
+  <?php wp_nav_menu(); ?>
+</footer>
+
 <script>
   (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
   function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;

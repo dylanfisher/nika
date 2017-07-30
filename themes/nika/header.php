@@ -32,18 +32,12 @@ Website developed by Dylan Fisher
   <?php include(locate_template('partials/color_assignments.php')); ?>
   <?php wp_head(); // For plugins ?>
 </head>
-<body <?php // body_class('gradient') ?>>
+<body <?php body_class('gradient'); ?>>
   <?php include(locate_template('partials/night.php')); // The moon page ?>
   <div class="wrapper">
+    <div class="info-button" id="info-button">
+      <?php get_template_part('images/svg/info_icon.svg'); ?>
+    </div>
     <div class="moon ib" id="moon">
       <?php get_template_part('images/svg/'.$moon_phase_name.'.svg'); ?>
-    </div>
-    <div class="home-landing-text">
-      <div class="huge-serif">
-        <br>
-        <p>Nika Simovich is a graphic designer &amp; art director based in New York City.</p>
-        <p>Currently working at <a href="http://www.annasheffield.com">Anna Sheffield</a> and teaching <a href="http://ci.nikasimovich.com">Core: Interaction</a>.</p>
-        <p>Work samples available upon <a href="mailto:nika@nikasimovich.com">request.</a></p>
-        <p>Check back soon.</p>
-      </div>
     </div>

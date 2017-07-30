@@ -1,0 +1,53 @@
+//
+// Home
+//
+
+.home-landing-text {
+  text-align: left;
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+
+  a {
+    border-bottom: 1px solid;
+    line-height: 0.8;
+    display: inline-block;
+  }
+}
+
+.home-carousel {
+  margin-bottom: 84px;
+
+  .flickity-page-dots {
+    bottom: -61px !important;
+  }
+
+  .dot {
+    width: 18px !important;
+    height: 18px !important;
+    margin: 12px 10px !important;
+    opacity: 1 !important;
+    background: transparent !important;
+    border: 3px solid #fff;
+
+    &.is-selected {
+      background: #fff !important;
+    }
+  }
+
+  video {
+    width: 100%;
+  }
+}
+
+.home-carousel__slide {
+  width: 100%;
+}
+
+.home-carousel__slide-info {
+  display: none;
+
+  &:first-child {
+    display: block;
+  }
+}

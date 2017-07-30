@@ -38,9 +38,12 @@ Version: 1.0
 
 // Partials
 @import "partials/main";
+@import "partials/home";
+@import "partials/footer";
 
 // Vendor
 @import "vendor/wordpress_core";
+@import "vendor/flickity";
 
 // Media Queries
 @import "media_queries/media_queries";

@@ -101,9 +101,12 @@
 .absolute-center          { left: 50%; transform: translate(-50%); }
 .absolute-center-vertical { left: 50%; top: 50%; transform: translate(-50%, -50%); }
 
-.left   { text-align: left; }
-.right  { text-align: right; }
-.center { text-align: center; }
+.left        { text-align: left; }
+.text-left   { text-align: left; }
+.right       { text-align: right; }
+.text-right  { text-align: right; }
+.center      { text-align: center; }
+.text-center { text-align: center; }
 
 .ibfix { @extend %ibfix; }
 .ib    { @extend %ib; }

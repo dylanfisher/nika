@@ -31,7 +31,7 @@ jQuery(document).ready(function($){
 
     screensaverTimout();
 
-    $('.moon svg').click(function(){
+    $('#info-button').click(function(){
       if($('body').hasClass('home')) {
         if($('html').hasClass('night')) {
           nightOff();
@@ -43,7 +43,7 @@ jQuery(document).ready(function($){
 
     $(document).on('click', function(e){
       if($('body').hasClass('home')) {
-        if(!$('html').hasClass('night-transition') && !$(e.target).closest('a').length) {
+        if(!$('html').hasClass('night-transition') && !$(e.target).closest('a').length && $('html').hasClass('night')) {
           nightOff();
         }
       }
@@ -71,6 +71,7 @@ jQuery(document).ready(function($){
       clearTimeout(transition);
       transition = setTimeout(function(){
         $('html').removeClass('night-transition');
+        $('.night-cover').css({height: ''});
 
         starsOff();
         stopClock();
@@ -193,10 +194,10 @@ jQuery(document).ready(function($){
 
   if ( App.isHome() ) {
     $(window).scroll(function() {
-      checkMoonOpacity();
+      // checkMoonOpacity();
     });
 
-    checkMoonOpacity();
+    // checkMoonOpacity();
   }
 
   function checkMoonOpacity() {
@@ -207,6 +208,39 @@ jQuery(document).ready(function($){
 
     $moon.css({ opacity: opacity });
   }
+
+  var $homeCarousel = $('.home-carousel');
+
+  $homeCarousel.flickity({
+    adaptiveHeight: true,
+    prevNextButtons: false,
+    wrapAround: true,
+    imagesLoaded: true
+  });
+
+  $homeCarousel.on( 'select.flickity', function() {
+    var flkty = $homeCarousel.data('flickity');
+    var $currentSlide = $(flkty.selectedElement);
+    var $video = $currentSlide.find('video');
+    var $allVideos = $homeCarousel.find('video');
+    var index = $currentSlide.attr('data-index');
+    var $infoWrapper = $('.home-carousel__slide-info[data-index="' + index + '"]');
+    var $allInfoWrappers = $('.home-carousel__slide-info');
+
+    if ( $video.length ) {
+      $video.get(0).play();
+    } else {
+      $allVideos.each(function() {
+        $(this).get(0).pause();
+      });
+    }
+
+    $allInfoWrappers.hide();
+    $infoWrapper.show();
+
+    console.log(flkty);
+    console.log( 'Flickity select ' + flkty.selectedIndex );
+  });
 
 });
 

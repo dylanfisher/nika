@@ -1,3 +1,7 @@
+<div class="moon night-moon-clone ib">
+  <?php get_template_part('images/svg/'.$moon_phase_name.'.svg'); ?>
+</div>
+
 <div class="night-cover">
   <div class="moon-page">
     <div class="moon-page-content">
