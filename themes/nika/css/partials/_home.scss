@@ -2,21 +2,20 @@
 // Home
 //
 
-.home-landing-text {
-  text-align: left;
-  position: relative;
-  z-index: 1;
-  max-width: 900px;
+.home-page__name {
+  margin-right: 15px;
+}
 
-  a {
-    border-bottom: 1px solid;
-    line-height: 0.8;
-    display: inline-block;
-  }
+.home__down-arrow {
+  position: absolute;
+  top: calc(100% - 200px);
+  left: 50%;
+  transform: translate(-50%, 50%);
+  cursor: pointer;
 }
 
 .home-carousel {
-  margin-bottom: 84px;
+  margin-bottom: 104px;
 
   .flickity-page-dots {
     bottom: -61px !important;
@@ -50,4 +49,14 @@
   &:first-child {
     display: block;
   }
+}
+
+// .home-carousel__description {
+//   strong {
+//     @include large-serif;
+//   }
+// }
+
+.home-carousel__project_link {
+  margin-bottom: 45px;
 }

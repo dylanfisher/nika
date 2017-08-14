@@ -1,7 +1,7 @@
-<svg width="22px" height="20px" viewBox="0 0 22 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="23px" height="20px" viewBox="0 0 23 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" >
-        <g id="footer" transform="translate(-553.000000, -46.000000)" fill="#FFFFFF">
-            <path d="M560.936485,46 C556.838904,47.5627365 553.956424,51.2735978 553.956424,55.6042769 C553.956424,61.3457009 559.021413,66 565.269485,66 C569.050425,66 572.395885,64.293836 574.450127,61.6754629 L560.936485,46 Z" id="Fill-12"></path>
+        <g id="footer" transform="translate(-505.000000, -46.000000)" fill="#FFFFFF">
+            <path d="M527.406551,56 C527.406551,61.5229172 522.534231,66 516.524042,66 C510.513663,66 505.641438,61.5229172 505.641438,56 C505.641438,50.4771661 510.513663,46 516.524042,46 C522.534231,46 527.406551,50.4771661 527.406551,56" id="Fill-1"></path>
         </g>
     </g>
 </svg>

@@ -1,0 +1,1067 @@
+{
+    "key": "group_554e5aa826269",
+    "title": "Moon Phases",
+    "fields": [
+        {
+            "key": "field_554e5ab4572d6",
+            "label": "Phases",
+            "name": "phases",
+            "type": "flexible_content",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "button_label": "Add Row",
+            "min": 8,
+            "max": 8,
+            "layouts": [
+                {
+                    "key": "554e5af4b4c3e",
+                    "name": "moon_1",
+                    "label": "Phase 1 – New Moon",
+                    "display": "row",
+                    "sub_fields": [
+                        {
+                            "key": "field_554e5cd93e5a6",
+                            "label": "Neutral Color",
+                            "name": "neutral_color",
+                            "type": "color_picker",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": ""
+                        },
+                        {
+                            "key": "field_554e5ce63e5a7",
+                            "label": "Accent Color",
+                            "name": "accent_color",
+                            "type": "color_picker",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": ""
+                        },
+                        {
+                            "key": "field_554e5b2a572d8",
+                            "label": "Gradient Direction",
+                            "name": "gradient_direction",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "horizontal": "Horizontal",
+                                "vertical": "Vertical"
+                            },
+                            "default_value": {
+                                "horizontal": "horizontal"
+                            },
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "placeholder": "",
+                            "disabled": 0,
+                            "readonly": 0,
+                            "return_format": "value"
+                        },
+                        {
+                            "key": "field_554e5b78572d9",
+                            "label": "Gradient Colors",
+                            "name": "gradient_colors",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "min": 0,
+                            "max": 0,
+                            "layout": "table",
+                            "button_label": "Add Row",
+                            "sub_fields": [
+                                {
+                                    "key": "field_554e5b86572da",
+                                    "label": "Color",
+                                    "name": "color",
+                                    "type": "color_picker",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": ""
+                                },
+                                {
+                                    "key": "field_554e5ba7572db",
+                                    "label": "Color position",
+                                    "name": "color_position",
+                                    "type": "number",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": 50,
+                                    "prepend": "",
+                                    "append": "",
+                                    "min": 0,
+                                    "max": 100,
+                                    "step": 1,
+                                    "readonly": 0,
+                                    "disabled": 0
+                                }
+                            ],
+                            "collapsed": ""
+                        }
+                    ],
+                    "min": 1,
+                    "max": 1
+                },
+                {
+                    "key": "554e5e64d6fca",
+                    "name": "moon_2",
+                    "label": "Phase 2 – Waxing Crescent",
+                    "display": "row",
+                    "sub_fields": [
+                        {
+                            "key": "field_554e5e64d6fcb",
+                            "label": "Neutral Color",
+                            "name": "neutral_color",
+                            "type": "color_picker",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": ""
+                        },
+                        {
+                            "key": "field_554e5e64d6fcc",
+                            "label": "Accent Color",
+                            "name": "accent_color",
+                            "type": "color_picker",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": ""
+                        },
+                        {
+                            "key": "field_554e5e64d6fcd",
+                            "label": "Gradient Direction",
+                            "name": "gradient_direction",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "horizontal": "Horizontal",
+                                "vertical": "Vertical"
+                            },
+                            "default_value": {
+                                "horizontal": "horizontal"
+                            },
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "placeholder": "",
+                            "disabled": 0,
+                            "readonly": 0,
+                            "return_format": "value"
+                        },
+                        {
+                            "key": "field_554e5e64d6fce",
+                            "label": "Gradient Colors",
+                            "name": "gradient_colors",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "min": 0,
+                            "max": 0,
+                            "layout": "table",
+                            "button_label": "Add Row",
+                            "sub_fields": [
+                                {
+                                    "key": "field_554e5eb6d3522",
+                                    "label": "Color",
+                                    "name": "color",
+                                    "type": "color_picker",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": ""
+                                },
+                                {
+                                    "key": "field_554e5ebdd3523",
+                                    "label": "Color Position",
+                                    "name": "color_position",
+                                    "type": "number",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "min": 0,
+                                    "max": 100,
+                                    "step": 1,
+                                    "readonly": 0,
+                                    "disabled": 0
+                                }
+                            ],
+                            "collapsed": ""
+                        }
+                    ],
+                    "min": 1,
+                    "max": 1
+                },
+                {
+                    "key": "554e5e7bd6fd1",
+                    "name": "moon_3",
+                    "label": "Phase 3 – First Quarter",
+                    "display": "row",
+                    "sub_fields": [
+                        {
+                            "key": "field_554e5e7bd6fd2",
+                            "label": "Neutral Color",
+                            "name": "neutral_color",
+                            "type": "color_picker",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": ""
+                        },
+                        {
+                            "key": "field_554e5e7bd6fd3",
+                            "label": "Accent Color",
+                            "name": "accent_color",
+                            "type": "color_picker",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": ""
+                        },
+                        {
+                            "key": "field_554e5e7bd6fd4",
+                            "label": "Gradient Direction",
+                            "name": "gradient_direction",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "horizontal": "Horizontal",
+                                "vertical": "Vertical"
+                            },
+                            "default_value": {
+                                "horizontal": "horizontal"
+                            },
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "placeholder": "",
+                            "disabled": 0,
+                            "readonly": 0,
+                            "return_format": "value"
+                        },
+                        {
+                            "key": "field_554e5e7bd6fd5",
+                            "label": "Gradient Colors",
+                            "name": "gradient_colors",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "min": 0,
+                            "max": 0,
+                            "layout": "table",
+                            "button_label": "Add Row",
+                            "sub_fields": [
+                                {
+                                    "key": "field_554e5f0447366",
+                                    "label": "Color",
+                                    "name": "color",
+                                    "type": "color_picker",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": ""
+                                },
+                                {
+                                    "key": "field_554e5f2047367",
+                                    "label": "Color Position",
+                                    "name": "color_position",
+                                    "type": "number",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "min": 0,
+                                    "max": 100,
+                                    "step": 1,
+                                    "readonly": 0,
+                                    "disabled": 0
+                                }
+                            ],
+                            "collapsed": ""
+                        }
+                    ],
+                    "min": 1,
+                    "max": 1
+                },
+                {
+                    "key": "554e5e82d6fd8",
+                    "name": "moon_4",
+                    "label": "Phase 4 – Waxing Gibbous",
+                    "display": "row",
+                    "sub_fields": [
+                        {
+                            "key": "field_554e5e82d6fd9",
+                            "label": "Neutral Color",
+                            "name": "neutral_color",
+                            "type": "color_picker",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": ""
+                        },
+                        {
+                            "key": "field_554e5e82d6fda",
+                            "label": "Accent Color",
+                            "name": "accent_color",
+                            "type": "color_picker",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": ""
+                        },
+                        {
+                            "key": "field_554e5e82d6fdb",
+                            "label": "Gradient Direction",
+                            "name": "gradient_direction",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "horizontal": "Horizontal",
+                                "vertical": "Vertical"
+                            },
+                            "default_value": {
+                                "horizontal": "horizontal"
+                            },
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "placeholder": "",
+                            "disabled": 0,
+                            "readonly": 0,
+                            "return_format": "value"
+                        },
+                        {
+                            "key": "field_554e5e82d6fdc",
+                            "label": "Gradient Colors",
+                            "name": "gradient_colors",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "min": 0,
+                            "max": 0,
+                            "layout": "table",
+                            "button_label": "Add Row",
+                            "sub_fields": [
+                                {
+                                    "key": "field_554e5f3247368",
+                                    "label": "Color",
+                                    "name": "color",
+                                    "type": "color_picker",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": ""
+                                },
+                                {
+                                    "key": "field_554e5f3947369",
+                                    "label": "Color Position",
+                                    "name": "color_position",
+                                    "type": "number",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "min": 0,
+                                    "max": 100,
+                                    "step": 1,
+                                    "readonly": 0,
+                                    "disabled": 0
+                                }
+                            ],
+                            "collapsed": ""
+                        }
+                    ],
+                    "min": 1,
+                    "max": 1
+                },
+                {
+                    "key": "554e6ab8de4e3",
+                    "name": "moon_5",
+                    "label": "Phase 5 – Full Moon",
+                    "display": "row",
+                    "sub_fields": [
+                        {
+                            "key": "field_554e6ab8de4e4",
+                            "label": "Neutral Color",
+                            "name": "neutral_color",
+                            "type": "color_picker",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": ""
+                        },
+                        {
+                            "key": "field_554e6ab8de4e5",
+                            "label": "Accent Color",
+                            "name": "accent_color",
+                            "type": "color_picker",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": ""
+                        },
+                        {
+                            "key": "field_554e6ab8de4e6",
+                            "label": "Gradient Direction",
+                            "name": "gradient_direction",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "horizontal": "Horizontal",
+                                "vertical": "Vertical"
+                            },
+                            "default_value": {
+                                "horizontal": "horizontal"
+                            },
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "placeholder": "",
+                            "disabled": 0,
+                            "readonly": 0,
+                            "return_format": "value"
+                        },
+                        {
+                            "key": "field_554e6ab8de4e7",
+                            "label": "Gradient Colors",
+                            "name": "gradient_colors",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "min": 0,
+                            "max": 0,
+                            "layout": "table",
+                            "button_label": "Add Row",
+                            "sub_fields": [
+                                {
+                                    "key": "field_554e6b3aa3a10",
+                                    "label": "Color",
+                                    "name": "color",
+                                    "type": "color_picker",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": ""
+                                },
+                                {
+                                    "key": "field_554e6b42a3a11",
+                                    "label": "Color Position",
+                                    "name": "color_position",
+                                    "type": "number",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "min": 0,
+                                    "max": 100,
+                                    "step": 1,
+                                    "readonly": 0,
+                                    "disabled": 0
+                                }
+                            ],
+                            "collapsed": ""
+                        }
+                    ],
+                    "min": 1,
+                    "max": 1
+                },
+                {
+                    "key": "554e6adade4ea",
+                    "name": "moon_6",
+                    "label": "Phase 6 – Waning Gibbous",
+                    "display": "row",
+                    "sub_fields": [
+                        {
+                            "key": "field_554e6adade4eb",
+                            "label": "Neutral Color",
+                            "name": "neutral_color",
+                            "type": "color_picker",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": ""
+                        },
+                        {
+                            "key": "field_554e6adade4ec",
+                            "label": "Accent Color",
+                            "name": "accent_color",
+                            "type": "color_picker",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": ""
+                        },
+                        {
+                            "key": "field_554e6adade4ed",
+                            "label": "Gradient Direction",
+                            "name": "gradient_direction",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "horizontal": "Horizontal",
+                                "vertical": "Vertical"
+                            },
+                            "default_value": {
+                                "horizontal": "horizontal"
+                            },
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "placeholder": "",
+                            "disabled": 0,
+                            "readonly": 0,
+                            "return_format": "value"
+                        },
+                        {
+                            "key": "field_554e6adade4ee",
+                            "label": "Gradient Colors",
+                            "name": "gradient_colors",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "min": 0,
+                            "max": 0,
+                            "layout": "table",
+                            "button_label": "Add Row",
+                            "sub_fields": [
+                                {
+                                    "key": "field_554e6b50a3a12",
+                                    "label": "Color",
+                                    "name": "color",
+                                    "type": "color_picker",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": ""
+                                },
+                                {
+                                    "key": "field_554e6b54a3a13",
+                                    "label": "Color Position",
+                                    "name": "color_position",
+                                    "type": "number",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "min": 0,
+                                    "max": 100,
+                                    "step": 1,
+                                    "readonly": 0,
+                                    "disabled": 0
+                                }
+                            ],
+                            "collapsed": ""
+                        }
+                    ],
+                    "min": 1,
+                    "max": 1
+                },
+                {
+                    "key": "554e6aeede4f1",
+                    "name": "moon_7",
+                    "label": "Phase 7 – Third Quarter",
+                    "display": "row",
+                    "sub_fields": [
+                        {
+                            "key": "field_554e6aeede4f2",
+                            "label": "Neutral Color",
+                            "name": "neutral_color",
+                            "type": "color_picker",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": ""
+                        },
+                        {
+                            "key": "field_554e6aeede4f3",
+                            "label": "Accent Color",
+                            "name": "accent_color",
+                            "type": "color_picker",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": ""
+                        },
+                        {
+                            "key": "field_554e6aeede4f4",
+                            "label": "Gradient Direction",
+                            "name": "gradient_direction",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "horizontal": "Horizontal",
+                                "vertical": "Vertical"
+                            },
+                            "default_value": {
+                                "horizontal": "horizontal"
+                            },
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "placeholder": "",
+                            "disabled": 0,
+                            "readonly": 0,
+                            "return_format": "value"
+                        },
+                        {
+                            "key": "field_554e6aeede4f5",
+                            "label": "Gradient Colors",
+                            "name": "gradient_colors",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "min": 0,
+                            "max": 0,
+                            "layout": "table",
+                            "button_label": "Add Row",
+                            "sub_fields": [
+                                {
+                                    "key": "field_554e6b62a3a14",
+                                    "label": "Color",
+                                    "name": "color",
+                                    "type": "color_picker",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": ""
+                                },
+                                {
+                                    "key": "field_554e6b67a3a15",
+                                    "label": "Color Position",
+                                    "name": "color_position",
+                                    "type": "number",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "min": 0,
+                                    "max": 100,
+                                    "step": 1,
+                                    "readonly": 0,
+                                    "disabled": 0
+                                }
+                            ],
+                            "collapsed": ""
+                        }
+                    ],
+                    "min": 1,
+                    "max": 1
+                },
+                {
+                    "key": "554e6b02de4f8",
+                    "name": "moon_8",
+                    "label": "Phase 8 – Waning Crescent",
+                    "display": "row",
+                    "sub_fields": [
+                        {
+                            "key": "field_554e6b02de4f9",
+                            "label": "Neutral Color",
+                            "name": "neutral_color",
+                            "type": "color_picker",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": ""
+                        },
+                        {
+                            "key": "field_554e6b02de4fa",
+                            "label": "Accent Color",
+                            "name": "accent_color",
+                            "type": "color_picker",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": ""
+                        },
+                        {
+                            "key": "field_554e6b02de4fb",
+                            "label": "Gradient Direction",
+                            "name": "gradient_direction",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "horizontal": "Horizontal",
+                                "vertical": "Vertical"
+                            },
+                            "default_value": {
+                                "horizontal": "horizontal"
+                            },
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "placeholder": "",
+                            "disabled": 0,
+                            "readonly": 0,
+                            "return_format": "value"
+                        },
+                        {
+                            "key": "field_554e6b02de4fc",
+                            "label": "Gradient Colors",
+                            "name": "gradient_colors",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "min": 0,
+                            "max": 0,
+                            "layout": "table",
+                            "button_label": "Add Row",
+                            "sub_fields": [
+                                {
+                                    "key": "field_554e6b76a3a16",
+                                    "label": "Color",
+                                    "name": "color",
+                                    "type": "color_picker",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": ""
+                                },
+                                {
+                                    "key": "field_554e6b7ca3a17",
+                                    "label": "Color Position",
+                                    "name": "color_position",
+                                    "type": "number",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "min": 0,
+                                    "max": 100,
+                                    "step": 1,
+                                    "readonly": 0,
+                                    "disabled": 0
+                                }
+                            ],
+                            "collapsed": ""
+                        }
+                    ],
+                    "min": 1,
+                    "max": 1
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "acf-options"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1502682656
+}

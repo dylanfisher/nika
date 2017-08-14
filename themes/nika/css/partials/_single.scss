@@ -1,0 +1,144 @@
+//
+// Single
+//
+
+.single-project {
+  background: #F0F0F0;
+  color: #000;
+
+  .info-button {
+    svg g {
+      fill: #000;
+    }
+  }
+
+  a {
+    color: #000;
+  }
+}
+
+.project-header {
+  margin-top: 120px;
+  margin-bottom: 80px;
+}
+
+.project-header__year {
+  @media (min-width: 1110px) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateX(calc(-100% - 50px));
+
+    .project-header__year__number {
+      line-height: 81px;
+    }
+  }
+}
+
+.project-header__title {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.project-header__tags {
+  font-style: italic;
+}
+
+//
+// Project images
+//
+
+.project-image-outer {
+  margin-bottom: 40px;
+  position: relative;
+
+  &.project-with-pin {
+    margin-bottom: 130px;
+  }
+}
+
+.project-image-content {
+  // @extend %box-shadow;
+  padding: 20px;
+}
+
+//
+// Pins
+//
+
+.pin-wrapper {
+  position: absolute;
+  right: -20px;
+  bottom: -90px;
+  z-index: 1;
+}
+
+.pin {
+  @extend .small-sans;
+  @extend %box-shadow;
+  position: relative;
+  height: 0;
+  width: 140px;
+  padding-bottom: 140px;
+  border-radius: 50%;
+  background-color: #fff;
+  line-height: 1;
+  display: inline-block;
+  margin-left: 20px;
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+  &,
+  a {
+    color: #000;
+  }
+
+  .pin-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+  }
+}
+
+a.pin:hover {
+  color: #000;
+  transform: translate(0, -20px);
+}
+
+//
+// Single
+//
+
+.adjacent-post-wrapper {
+  height: 100px;
+}
+
+.previous-post-link,
+.next-post-link {
+  a {
+    display: inline-block;
+
+    &:hover {
+      color: #fff;
+
+      .hidden-title {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.previous-post-link {
+   text-align: left;
+}
+
+.next-post-link {
+  text-align: right;
+}
+
+.hidden-title {
+  @extend .medium-serif;
+  opacity: 0;
+  transition: opacity $tt;
+}

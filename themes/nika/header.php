@@ -32,12 +32,30 @@ Website developed by Dylan Fisher
   <?php include(locate_template('partials/color_assignments.php')); ?>
   <?php wp_head(); // For plugins ?>
 </head>
-<body <?php body_class('gradient'); ?>>
+<?php
+  $body_class = '';
+  if ( !is_single() ):
+    $body_class = 'gradient';
+  endif;
+?>
+<body <?php body_class( $body_class ); ?>>
   <?php include(locate_template('partials/night.php')); // The moon page ?>
   <div class="wrapper">
-    <div class="info-button" id="info-button">
-      <?php get_template_part('images/svg/info_icon.svg'); ?>
-    </div>
+    <header class="header">
+      <div class="site-max-width relative">
+        <h1 class="text-left">
+          <a href="<?php echo get_home_url(); ?>">
+            <?php echo get_bloginfo('name'); ?>
+          </a>
+        </h1>
+        <div class="info-button">
+          <?php $info_page = get_page_by_path('information/'); ?>
+          <a href="<?php echo get_permalink( $info_page ); ?>">
+            <?php get_template_part('images/svg/info_icon.svg'); ?>
+          </a>
+        </div>
+      </div>
+    </header>
     <div class="moon ib" id="moon">
       <?php get_template_part('images/svg/'.$moon_phase_name.'.svg'); ?>
     </div>

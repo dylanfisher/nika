@@ -237,6 +237,7 @@ function project_init() {
     'has_archive'       => true,
     'rewrite'           => true,
     'query_var'         => true,
+    'taxonomies'        => array('post_tag')
   ) );
 }
 add_action( 'init', 'project_init' );

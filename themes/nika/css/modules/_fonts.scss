@@ -13,3 +13,14 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'ElectraLTStd-Display';
+  src: url('fonts/ElectraLTStd-CursiveDisplay.eot?#iefix') format('embedded-opentype'),
+       url('fonts/ElectraLTStd-CursiveDisplay.otf') format('opentype'),
+       url('fonts/ElectraLTStd-CursiveDisplay.woff') format('woff'),
+       url('fonts/ElectraLTStd-CursiveDisplay.ttf') format('truetype'),
+       url('fonts/ElectraLTStd-CursiveDisplay.svg#ElectraLTStd-Display') format('svg');
+  font-weight: normal;
+  font-style: italic;
+}

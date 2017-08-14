@@ -5,10 +5,14 @@
 
   <div class="content">
     <div id="page-<?php the_ID() ?>" <?php post_class() ?>>
-      <h1 class="text-left"><?php echo get_bloginfo('name'); ?></h1>
-      <div class="entry-content entry-content--left">
-        <div class="home-landing-text large-serif">
-          <?php the_content(); ?>
+      <div class="landing-wrapper">
+        <div class="landing-text">
+          <span class="home-page__name huge-sans">Nika Simovich</span>
+          <span class="home-page__title large-serif">Art Direction &amp; Graphic Design</span>
+        </div>
+
+        <div class="home__down-arrow">
+          <?php get_template_part('images/svg/arrow-down.svg'); ?>
         </div>
       </div>
 
@@ -39,12 +43,24 @@
               echo '<div class="home-carousel__slide-info" data-index="' . $i . '">';
                 if ( get_sub_field('description') ):
                   echo '<div class="entry-content">';
-                    echo '<div class="home-carousel__description large-serif">' . get_sub_field('description') . '</div>';
+                    echo '<div class="home-carousel__description large-sans">' . get_sub_field('description') . '</div>';
                   echo '</div>';
                 endif;
 
-                if ( get_sub_field('project_url') ):
-                  echo '<div class="home-carousel__project_url">' . get_sub_field('project_url') . '</div>';
+                if ( get_sub_field('project_link') ):
+                  echo '<div class="home-carousel__project_link">';
+                    echo '<a class="big-button" href="' . get_sub_field('project_link') . '">';
+                      echo get_sub_field('project_link_label') ? get_sub_field('project_link_label') : get_sub_field('project_link');
+                    echo '</a>';
+                  echo '</div>';
+                endif;
+
+                if ( get_sub_field('additional_info') ):
+                  echo '<div class="home-carousel__additional-info entry-content">';
+                    echo '<div class="medium-sans">';
+                      echo get_sub_field('additional_info');
+                    echo '</div>';
+                  echo '</div>';
                 endif;
               echo '</div>';
             endwhile;

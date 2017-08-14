@@ -1,13 +1,13 @@
 <?php get_header() ?>
-  <div class="content">
-<?php the_post() ?>
-    <div id="page-<?php the_ID() ?>" <?php post_class() ?>>
-      <h2 class="entry-title"><?php the_title() ?></h2>
-      <div class="entry-content">
-<?php the_content() ?>
+  <?php the_post(); ?>
+  <div class="ibfix">
+    <?php get_template_part( 'partials/landing_text' ); ?>
+    <div class="entry-content entry-content--left text-left">
+      <div class="large-sans">
+        <?php the_content(); ?>
       </div>
-    </div><!-- .post -->
-  </div><!-- .content -->
+    </div>
+  </div>
 <?php get_footer() ?>
 </body>
 </html>

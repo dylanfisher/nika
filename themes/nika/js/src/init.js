@@ -31,7 +31,9 @@ jQuery(document).ready(function($){
 
     screensaverTimout();
 
-    $('#info-button').click(function(){
+    $('.website-info-link').click(function(e){
+      e.preventDefault();
+
       if($('body').hasClass('home')) {
         if($('html').hasClass('night')) {
           nightOff();
@@ -193,20 +195,18 @@ jQuery(document).ready(function($){
   var $moon = $('#moon');
 
   if ( App.isHome() ) {
+    var $html = $('html');
+
     $(window).scroll(function() {
-      // checkMoonOpacity();
+      var st = $(window).scrollTop();
+      var offsetPoint = App.windowHeight - 80;
+
+      if ( st >= offsetPoint ) {
+        $html.addClass('header-is-fixed');
+      } else {
+        $html.removeClass('header-is-fixed');
+      }
     });
-
-    // checkMoonOpacity();
-  }
-
-  function checkMoonOpacity() {
-    var st = $(window).scrollTop();
-    var ratio = 1 - ( st / App.windowHeight );
-    var minOpacity = 0.2;
-    var opacity = Math.max( ratio, minOpacity );
-
-    $moon.css({ opacity: opacity });
   }
 
   var $homeCarousel = $('.home-carousel');
@@ -237,9 +237,6 @@ jQuery(document).ready(function($){
 
     $allInfoWrappers.hide();
     $infoWrapper.show();
-
-    console.log(flkty);
-    console.log( 'Flickity select ' + flkty.selectedIndex );
   });
 
 });
@@ -252,4 +249,8 @@ $(window).resize(function(){
 
   $('.night-cover').css({height: ''});
   $('.night-cover').css({height: $(document).height() });
+});
+
+$(document).on('click', '.home__down-arrow', function() {
+  $('html, body').animate({ scrollTop: App.windowHeight }, 1000);
 });

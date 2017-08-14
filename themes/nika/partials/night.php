@@ -6,15 +6,23 @@
   <div class="moon-page">
     <div class="moon-page-content">
       <div class="wrapper">
-        <div class="large-serf time-and-date">
-          <div class="small-sans">
-            <div class="screensaver-clock"></div> on
-            <div class="screensaver-date"></div>
-          </div>
+        <div class="huge-serif small-width">
+          <?php echo 'Today, the Moon is ' . round( $moon->age() ) . ' days old. ' ?>
         </div>
-        <p><?php echo $phase_name; ?></p>
-        <p><?php echo 'The Moon is ' . round( $moon->age() ) . ' days old today. ' ?><br>
-        Next phase begins on
+        <div class="entry-content">
+          <?php
+            $moon_page = get_page_by_path('moon');
+            $moon_content = $moon_page->post_content;
+            $filtered_content = apply_filters( 'the_content', $moon_content );
+            $filtered_content = str_replace( ']]>', ']]&gt;', $moon_content );
+            echo '<div class="night-content">';
+              echo $filtered_content;
+            echo '</div>';
+          ?>
+        </div>
+
+        <p>
+          Next phase begins on
           <?php
             $next_moon_index = $acf_index;
             $next_moon_index++;
@@ -24,15 +32,14 @@
             echo sandbox_month_day_time($moon->day_of_new_phase()) . '.';
           ?>
         </p>
-        <?php
-          $moon_page = get_page_by_path('moon');
-          $moon_content = $moon_page->post_content;
-          $filtered_content = apply_filters( 'the_content', $moon_content );
-          $filtered_content = str_replace( ']]>', ']]&gt;', $moon_content );
-          echo '<div class="night-content medium-serif">';
-            echo $filtered_content;
-          echo '</div>';
-        ?>
+
+        <div class="time-and-date">
+          <div class="small-sans">
+            <div><?php echo $phase_name; ?></div>
+            <div class="screensaver-clock"></div> on
+            <div class="screensaver-date"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

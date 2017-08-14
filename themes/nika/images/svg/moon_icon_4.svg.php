@@ -1,7 +1,7 @@
-<svg width="23px" height="20px" viewBox="0 0 23 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" >
-        <g id="footer" transform="translate(-505.000000, -46.000000)" fill="#FFFFFF">
-            <path d="M527.406551,56 C527.406551,61.5229172 522.534231,66 516.524042,66 C510.513663,66 505.641438,61.5229172 505.641438,56 C505.641438,50.4771661 510.513663,46 516.524042,46 C522.534231,46 527.406551,50.4771661 527.406551,56" id="Fill-1"></path>
+<svg width="14px" height="20px" viewBox="0 0 14 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="1">
+        <g id="footer" transform="translate(-470.000000, -46.000000)" fill="#FFFFFF">
+            <path d="M481.741958,49.5173704 C481.741958,49.5173704 478.539119,45.4412232 473.779984,46.064911 C473.328828,46.1094304 471.749949,46.5994767 470.554478,50.6979253 C470.554478,50.6979253 468.682525,59.1842402 471.817699,64.3071344 C471.817699,64.3071344 473.554406,68.116082 479.712008,64.3071344 C479.712008,64.3071344 483.683093,61.7701106 483.976337,56.624915 C484.269495,51.4796362 481.741958,49.8068714 481.741958,49.5173704" id="Fill-1"></path>
         </g>
     </g>
 </svg>

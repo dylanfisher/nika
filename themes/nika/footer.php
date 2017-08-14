@@ -3,7 +3,7 @@
 <footer class="footer small-sans">
   <?php
     global $moon_phase_name;
-    for ( $i=1; $i < 7; $i++ ):
+    for ( $i=1; $i <= 8; $i++ ):
       $active_class = '';
       if ( $moon_phase_name == 'moon_' . $i ):
         $active_class = 'moon-icon-active';
@@ -14,6 +14,11 @@
     endfor;
   ?>
 
+  <ul class="footer__static-links">
+    <li>
+      <a class="website-info-link" href="#">About this Website</a>
+    </li>
+  </ul>
   <?php wp_nav_menu(); ?>
 </footer>
 
