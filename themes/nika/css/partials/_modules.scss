@@ -1,0 +1,12 @@
+//
+// Modules
+//
+
+.module {
+  margin-top: 100px;
+  margin-bottom: 100px;
+
+  &:first-of-type {
+    margin-top: 50px;
+  }
+}

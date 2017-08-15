@@ -15,29 +15,34 @@
   a {
     color: #000;
   }
+
+  .moon:not(.night-moon-clone) {
+    opacity: 0.4;
+  }
 }
 
 .project-header {
   margin-top: 120px;
-  margin-bottom: 80px;
+  margin-bottom: 50px;
 }
 
 .project-header__year {
-  @media (min-width: 1110px) {
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: translateX(calc(-100% - 50px));
+  width: 180px;
+  display: inline-block;
 
-    .project-header__year__number {
-      line-height: 81px;
-    }
+  .project-header__year__number {
+    line-height: 81px;
   }
 }
 
 .project-header__title {
   position: relative;
   margin-bottom: 10px;
+  display: inline-block;
+}
+
+.project-header__title-label {
+  margin-bottom: 20px;
 }
 
 .project-header__tags {
@@ -55,11 +60,6 @@
   &.project-with-pin {
     margin-bottom: 130px;
   }
-}
-
-.project-image-content {
-  // @extend %box-shadow;
-  padding: 20px;
 }
 
 //
@@ -141,4 +141,12 @@ a.pin:hover {
   @extend .medium-serif;
   opacity: 0;
   transition: opacity $tt;
+}
+
+.project__additional-info-title {
+  margin-bottom: 12px;
+}
+
+.project__additional {
+  font-style: italic;
 }

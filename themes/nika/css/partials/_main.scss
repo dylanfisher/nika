@@ -8,7 +8,7 @@
 
 .small-sans {
   font-family: $sans;
-  font-size: 17px;
+  font-size: 20px;
   line-height: 1.4;
   letter-spacing: 0.6px;
 }
@@ -40,10 +40,19 @@
 }
 .medium-sans { @include medium-sans; }
 
+@mixin medium-sans-caps {
+  font-family: $sans;
+  font-size: 22px;
+  line-height: 1.4;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+.medium-sans-caps { @include medium-sans-caps; }
+
 @mixin large-sans {
   font-family: $sans;
   font-size: 36px;
-  line-height: 1.4;
+  line-height: 1.3;
   letter-spacing: 0.6px;
 }
 .large-sans { @include large-sans; }
@@ -91,6 +100,7 @@ html {
   text-align: center;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'liga' 0;
 
   @include break(hand) {
     text-rendering: auto;
@@ -99,6 +109,11 @@ html {
 
 body {
   min-height: 100%;
+}
+
+.on-top-fix {
+  position: relative;
+  z-index: 1;
 }
 
 .site-max-width {
@@ -125,6 +140,10 @@ body {
 .landing-wrapper {
   min-height: 100vh;
   position: relative;
+}
+
+.no-landing-wrapper {
+  margin-bottom: 100px;
 }
 
 .landing-text {
@@ -168,8 +187,7 @@ body {
 .entry-content {
   @extend %ibnorm;
   max-width: 750px;
-  margin: 0 auto;
-  padding-bottom: 40px;
+  margin: 0 auto 40px;
 }
 
 .entry-content--left {
@@ -190,9 +208,10 @@ body {
 
 .big-button {
   @include medium-sans;
+  transition: all $tt;
   padding: 26px 26px 21px;
   border: 2px solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0 1px 10px 0 #FFD643;
+  box-shadow: 0 1px 10px 0 #fff;
   border-radius: 19px;
   line-height: 1;
   display: inline-block;
@@ -238,6 +257,11 @@ iframe {
   margin-right: auto;
 }
 
+.small-width--left {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 //
 // Typography
 //
@@ -263,6 +287,10 @@ h1, h2, h3, h4, h5, h6 {
 p {
   margin-top: 0;
   margin-bottom: 1em;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 //
@@ -278,6 +306,10 @@ a {
 .entry-content a,
 .sidebar a {
   border-bottom: 1px solid;
+
+  // &:hover {
+  //   border-bottom: 0;
+  // }
 }
 
 //
@@ -290,7 +322,7 @@ a {
   top: 0;
   left: 0;
   width: 100%;
-  padding: 15px 20px;
+  padding: 15px 60px;
 
   .home & {
     position: absolute;
@@ -300,6 +332,11 @@ a {
   .header-is-fixed & {
     position: fixed;
     top: 0;
+  }
+
+  @include break(hand) {
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 
@@ -325,6 +362,7 @@ a {
   opacity: 0.4;
   pointer-events: none;
   z-index: 0;
+  transform: translate3d(0, 0, 0);
 
   &:hover {
     filter: drop-shadow( 0px 0px 20px rgba(185, 185, 185, 1) );
@@ -359,10 +397,6 @@ a {
 
 .night-transition,
 .night {
-  .moon {
-    opacity: 0;
-  }
-
   .night-moon-clone {
     opacity: 0.3;
   }
@@ -388,6 +422,30 @@ a {
   overflow: auto;
   transition: opacity 2s;
 
+  .blockquote {
+    @include huge-serif;
+    width: calc(100vw - 120px);
+    margin: 100px 0;
+    position: relative;
+    text-align: center;
+
+    @include break(hand) {
+      width: 100%;
+    }
+  }
+
+  .blockquote__inner {
+    max-width: 850px;
+    margin: 0 auto;
+  }
+
+  .time-and-date__line {
+    width: 50px;
+    height: 2px;
+    background: #fff;
+    margin: 0 0 32px;
+  }
+
   .time-and-date {
     margin-bottom: 1em;
   }
@@ -409,17 +467,27 @@ a {
 .moon-page-content {
   padding-top: 60px;
   text-align: left;
+  color: #fff;
 
   .home & {
     padding-top: 60px;
   }
+
+  a {
+    color: #fff
+  }
 }
 
 .night-content {
-  margin-top: 6em;
+  margin-top: 200px;
+
+  @include break(hand) {
+    margin-top: 100px;
+  }
 }
 
 .night-cover {
+  display: none;
   opacity: 0;
   background: #000;
   position: absolute;

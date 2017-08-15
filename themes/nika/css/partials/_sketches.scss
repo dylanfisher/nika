@@ -1,0 +1,92 @@
+//
+// Sketches
+//
+
+.sketches {
+  min-height: 100vh;
+}
+
+.single-sketch-outer-wrapper {
+  margin-top: 50px;
+}
+
+.sketch-header {
+  position: relative;
+}
+
+.sketch-page-title {
+  margin-top: 100px;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.sketch-filters {
+  margin-bottom: 50px;
+  padding: 20px 0 14px;
+  border-top: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  text-align: left;
+}
+
+.sketch-filters__title {
+  line-height: 1;
+}
+
+.close-icon-wrapper {
+  position: absolute;
+  top: -12px;
+  right: -20px;
+  padding: 20px;
+  cursor: pointer;
+
+  svg {
+    [fill="#FFFFFF"] {
+      fill: #000;
+    }
+  }
+}
+
+.sketch__image {
+  margin-top: 20px;
+}
+
+.sketch__description {
+  margin-top: 30px;
+}
+
+.next-page-wrapper {
+  visibility: hidden;
+}
+
+// Masonry
+
+$masonry-gutter: 15px;
+$masonry-gutter-mobile: 10px;
+
+.masonry {
+  margin-left: -$masonry-gutter;
+  margin-right: -$masonry-gutter;
+
+  @include break(hand) {
+    margin-left: -$masonry-gutter-mobile;
+    margin-right: -$masonry-gutter-mobile;
+  }
+}
+
+.grid-sizer {
+  width: 33.33%;
+}
+
+.grid-item {
+  float: left;
+  width: 66.66%;
+  padding: $masonry-gutter;
+
+  @include break(hand) {
+    padding: $masonry-gutter-mobile;
+  }
+}
+
+.grid-item--portrait {
+  width: 33.33%;
+}

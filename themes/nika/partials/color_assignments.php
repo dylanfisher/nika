@@ -64,6 +64,8 @@
   .entry-content a,
   .sidebar a               { border-color: <?php echo $accent; ?>; }
 
+  .big-button:hover        { box-shadow: 0 1px 10px 0 <?php echo $accent; ?>; border-color: <?php echo $accent; ?>; }
+
   ::-moz-selection         { background: <?php echo $accent; ?>; }
   ::selection              { background: <?php echo $accent; ?>; }
 

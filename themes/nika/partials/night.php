@@ -1,8 +1,8 @@
-<div class="moon night-moon-clone ib">
-  <?php get_template_part('images/svg/'.$moon_phase_name.'.svg'); ?>
-</div>
-
 <div class="night-cover">
+  <div class="moon night-moon-clone ib">
+    <?php get_template_part('images/svg/'.$moon_phase_name.'.svg'); ?>
+  </div>
+
   <div class="moon-page">
     <div class="moon-page-content">
       <div class="wrapper">
@@ -21,23 +21,30 @@
           ?>
         </div>
 
-        <p>
-          Next phase begins on
-          <?php
-            $next_moon_index = $acf_index;
-            $next_moon_index++;
-            if($next_moon_index > 7) $next_moon_index = 0;
-            $next_moon_phase = $moon->phase_at($next_moon_index);
-            $next_moon = sandbox_month_day_time($next_moon_phase);
-            echo sandbox_month_day_time($moon->day_of_new_phase()) . '.';
-          ?>
-        </p>
+        <div class="time-and-date__line"></div>
 
         <div class="time-and-date">
           <div class="small-sans">
             <div><?php echo $phase_name; ?></div>
             <div class="screensaver-clock"></div> on
             <div class="screensaver-date"></div>
+            <div>
+              The next phase begins on
+              <?php
+                $next_moon_index = $acf_index;
+                $next_moon_index++;
+                if($next_moon_index > 7) $next_moon_index = 0;
+                $next_moon_phase = $moon->phase_at($next_moon_index);
+                $next_moon = sandbox_month_day_time($next_moon_phase);
+                echo sandbox_month_day_time($moon->day_of_new_phase()) . '.';
+              ?>
+            </div>
+            <br>
+            <div class="small-width">
+              <div class="small-sans">
+                The lunar phase is the shape of the illuminated (sunlit) portion of the moon as seen by an observer on Earth.
+              </div>
+            </div>
           </div>
         </div>
       </div>

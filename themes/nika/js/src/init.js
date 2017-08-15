@@ -12,6 +12,10 @@ jQuery(document).ready(function($){
   App.documentWidth = $(document).width();
   App.documentHeight = $(document).height();
 
+  $(window).on('scroll', function() {
+    App.scrollTop = $(window).scrollTop();
+  });
+
   App.isHome = function() {
     return $('body').hasClass('home');
   };
@@ -34,25 +38,21 @@ jQuery(document).ready(function($){
     $('.website-info-link').click(function(e){
       e.preventDefault();
 
-      if($('body').hasClass('home')) {
-        if($('html').hasClass('night')) {
-          nightOff();
-        } else {
-          nightOn();
-        }
+      if($('html').hasClass('night')) {
+        nightOff();
+      } else {
+        nightOn();
       }
     });
 
     $(document).on('click', function(e){
-      if($('body').hasClass('home')) {
-        if(!$('html').hasClass('night-transition') && !$(e.target).closest('a').length && $('html').hasClass('night')) {
-          nightOff();
-        }
+      if(!$('html').hasClass('night-transition') && !$(e.target).closest('a').length && $('html').hasClass('night')) {
+        nightOff();
       }
     });
 
     function nightOn(callback) {
-      $('.night-cover').css({height: ''});
+      $('.night-cover').show().css({height: ''});
       $('.night-cover').css({height: $(document).height() });
       $('html').addClass('night night-transition');
 
@@ -73,7 +73,7 @@ jQuery(document).ready(function($){
       clearTimeout(transition);
       transition = setTimeout(function(){
         $('html').removeClass('night-transition');
-        $('.night-cover').css({height: ''});
+        $('.night-cover').hide().css({height: ''});
 
         starsOff();
         stopClock();
@@ -198,7 +198,7 @@ jQuery(document).ready(function($){
     var $html = $('html');
 
     $(window).scroll(function() {
-      var st = $(window).scrollTop();
+      var st = App.scrollTop;
       var offsetPoint = App.windowHeight - 80;
 
       if ( st >= offsetPoint ) {
@@ -239,7 +239,34 @@ jQuery(document).ready(function($){
     $infoWrapper.show();
   });
 
-});
+  // Hide down arrow when you scroll
+  var $downArrow = $('.home__down-arrow');
+  if ( $downArrow.length ) {
+    $(window).on('scroll', function() {
+      var st = App.scrollTop;
+      var opacity = Math.max( 0, 1 - ( st / ( App.windowHeight / 2 ) ) );
+
+      $downArrow.css({ opacity: opacity });
+    });
+  }
+
+  var $masonry = $('.masonry');
+  if ( $masonry.length ) {
+    $masonry.each(function() {
+      var $grid = $(this).masonry({
+        itemSelector: '.grid-item',
+        columnWidth: '.grid-sizer',
+        percentPosition: true,
+      });
+
+      // layout Masonry after each image loads
+      $grid.imagesLoaded().progress( function() {
+        $grid.masonry('layout');
+      });
+    });
+  }
+
+}); // document ready
 
 $(window).resize(function(){
   App.windowWidth = $(window).width();
@@ -253,4 +280,144 @@ $(window).resize(function(){
 
 $(document).on('click', '.home__down-arrow', function() {
   $('html, body').animate({ scrollTop: App.windowHeight }, 1000);
+});
+
+// Sketch book lightbox
+$(document).on('click', '[data-lightbox]', function(e) {
+  e.preventDefault();
+
+  var url = $(this).attr('href');
+
+  if ( !url ) {
+    console.log('No URL specified for lightbox');
+    return;
+  }
+
+  App.lightbox.new();
+
+  $.ajax({
+    url: url
+  }).done(function(data) {
+    var $sketchWrapper = $(data).find('.single-sketch-outer-wrapper');
+
+    $sketchWrapper.find('.grid-sizer').remove();
+
+    App.lightbox.load( $sketchWrapper.html() );
+  });
+});
+
+$(document).on('click', '.close-icon-wrapper', function(e) {
+  if ( App.lightbox.isOpen ) {
+    e.preventDefault();
+    App.lightbox.destroy();
+  }
+});
+
+// Lightbox
+App.lightbox = {};
+
+App.lightbox.new = function() {
+  var lightboxHTML = '<div class="lightbox" id="lightbox">' +
+                       '<div class="lightbox__inner wrapper">' +
+                         '<div class="lightbox__loading-message medium-sans">' +
+                           'Loading...' +
+                         '</div>' +
+                       '</div>' +
+                     '</div>';
+
+  $('html').addClass('lightbox-is-open').append( lightboxHTML );
+};
+
+App.lightbox.load = function(content) {
+  var $lightbox = $('#lightbox');
+  var $lightboxInner = $lightbox.find('.lightbox__inner');
+
+  $lightboxInner.html( content );
+};
+
+App.lightbox.destroy = function() {
+  $('html').removeClass('lightbox-is-open');
+  $('#lightbox').remove();
+};
+
+App.lightbox.isOpen = function() {
+  return $(html).hasClass('lightbox-is-open');
+};
+
+$(document).on('keyup', function(e) {
+  if ( e.keyCode === 27 ) {
+    if ( App.lightbox.isOpen ) {
+      App.lightbox.destroy();
+    }
+  }
+});
+
+$(document).on('click', function(e) {
+  if ( App.lightbox.isOpen ) {
+    if ( !$(e.target).closest('a').length ) {
+      App.lightbox.destroy();
+    }
+  }
+});
+
+// Infinite loader
+$(function() {
+  var loadingInProgress = false;
+  var $sketchbook = $('.sketches');
+
+  loadNextSketchbookPage();
+
+  function loadNextSketchbookPage() {
+    var $nextPageWrapper = $('.next-page-wrapper');
+    var $nextPageLink = $nextPageWrapper.find('a');
+
+    if ( $sketchbook.length && $nextPageLink.length ) {
+      var infiniteLoadPoint = App.documentHeight - ( App.windowHeight * 2 );
+      var url = $nextPageLink.attr('href');
+
+      $(window).resize(function() {
+        infiniteLoadPoint = App.documentHeight - ( App.windowHeight * 2 );
+      });
+
+      $(window).on('scroll.infiniteLoaderEvents app:infiniteLoaderInit', function() {
+        if ( !loadingInProgress && App.scrollTop > infiniteLoadPoint ) {
+          loadingInProgress = true;
+
+          $.ajax({
+            method: 'GET',
+            url: url
+          }).done(function(data) {
+            var $newSketchbook = $(data).find('.sketches');
+
+            $newSketchbook.find('.grid-sizer').remove();
+
+            $newContent = $( $newSketchbook.html() );
+
+            turnOffEvents();
+            $nextPageWrapper.remove();
+
+            $sketchbook.append( $newContent ).masonry( 'appended', $newContent );
+
+            $sketchbook.imagesLoaded().progress( function() {
+              $sketchbook.masonry('layout');
+            });
+
+            loadingInProgress = false;
+
+            $(document).trigger('app:sketchbookInit');
+
+            loadNextSketchbookPage();
+          });
+        }
+      });
+
+      $(window).trigger('app:infiniteLoaderInit');
+    } else {
+      turnOffEvents();
+    }
+  }
+
+  function turnOffEvents() {
+    $(window).off('scroll.infiniteLoaderEvents app:infiniteLoaderInit');
+  }
 });

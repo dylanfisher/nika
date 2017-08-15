@@ -12,4 +12,6 @@
       <?php get_template_part('images/svg/arrow-down.svg'); ?>
     </div>
   </div>
+<?php else: ?>
+  <div class="no-landing-wrapper"></div>
 <?php endif; ?>

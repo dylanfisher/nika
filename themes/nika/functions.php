@@ -11,6 +11,16 @@ include 'lib/MoonPhase.php';
 // CSS and JS script enqueues
 require_once('functions/enqueue_scripts.php');
 
+// Include custom post types
+foreach (glob(get_stylesheet_directory() . '/post-types/*.php') as $filename) {
+  require_once $filename;
+}
+
+// Include custom taxonomues
+foreach (glob(get_stylesheet_directory() . '/taxonomies/*.php') as $filename) {
+  require_once $filename;
+}
+
 // Include all functions
 foreach (glob(get_stylesheet_directory() . '/functions/functions/*.php') as $filename) {
   require_once $filename;
@@ -85,6 +95,19 @@ add_action( 'admin_menu', 'sandbox_remove_menus' );
 //
 // Custom functions
 //
+
+function sandbox_image_orientation($acf_image) {
+  $width = $acf_image['width'];
+  $height = $acf_image['height'];
+
+  if ( $width > $height ) {
+    $orientation = 'landscape';
+  } else {
+    $orientation = 'portrait';
+  }
+
+  return $orientation;
+}
 
 function sandbox_month_day_time($timestamp) {
   return strftime( "%B %e", $timestamp );
