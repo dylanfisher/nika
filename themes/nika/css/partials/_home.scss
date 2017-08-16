@@ -2,6 +2,21 @@
 // Home
 //
 
+.home {
+  .header {
+    opacity: 0;
+    transition: opacity $tt;
+
+    .scrolled-halfway & {
+      opacity: 1;
+    }
+  }
+
+  .footer {
+    margin-top: 0;
+  }
+}
+
 .home-page__name {
   margin-right: 15px;
 }
@@ -37,6 +52,24 @@
   video {
     width: 100%;
   }
+
+  .flickity-slider {
+    transform: none !important;
+  }
+
+  .home-carousel__slide {
+    left: 0 !important;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .home-carousel__slide.is-selected {
+    opacity: 1;
+  }
+
+  @include break(hand) {
+    margin-top: 50px;
+  }
 }
 
 .home-carousel__slide {
@@ -51,11 +84,11 @@
   }
 }
 
-// .home-carousel__description {
-//   strong {
-//     @include large-serif;
-//   }
-// }
+.home-carousel__description {
+  strong {
+    @include huge-sans;
+  }
+}
 
 .home-carousel__project_link {
   margin-bottom: 45px;

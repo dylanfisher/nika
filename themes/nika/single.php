@@ -7,7 +7,7 @@
           <div class="project-header__year-and-title">
             <div class="project-header__year">
               <div class="project-header__year__number large-sans">
-                <?php the_field( 'year' ); ?>
+                <strong><?php the_field( 'year' ); ?></strong>
               </div>
             </div>
             <div class="project-header__title">

@@ -45,7 +45,7 @@ Website developed by Dylan Fisher
       <div class="site-max-width relative">
         <h1 class="text-left">
           <a href="<?php echo get_home_url(); ?>">
-            <?php echo get_bloginfo('name'); ?>
+            <strong><?php echo get_bloginfo('name'); ?></strong>
           </a>
         </h1>
         <div class="info-button">

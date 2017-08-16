@@ -6,9 +6,7 @@
     <?php get_template_part( 'partials/landing_text' ); ?>
     <div class="site-max-width">
       <div class="entry-content entry-content--left text-left">
-        <div class="large-sans">
-          <?php the_content(); ?>
-        </div>
+        <?php the_content(); ?>
       </div>
     </div>
   </div>

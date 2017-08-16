@@ -14,11 +14,7 @@
 
   a {
     color: #fff;
-    border-bottom: 2px solid;
-
-    &:hover {
-      border-bottom: 0;
-    }
+    border-bottom: 1px solid;
   }
 
   ul,
@@ -28,6 +24,11 @@
     padding: 0;
   }
 
+  li {
+    display: inline-block;
+    margin: 0 10px 10px;
+  }
+
   svg {
     opacity: 0.4;
   }
@@ -35,6 +36,10 @@
   .moon-icon-active svg {
     opacity: 1;
   }
+}
+
+.footer__static-links {
+  display: block;
 }
 
 .moon-icon-wrapper {

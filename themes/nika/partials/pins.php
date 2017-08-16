@@ -6,13 +6,17 @@
           if(get_sub_field('link')):
             echo '<a class="pin" href="'.get_sub_field('link').'" target="_blank">';
               echo '<div class="pin-content">';
-                the_sub_field('content');
+                echo '<strong>';
+                  the_sub_field('content');
+                echo '</strong>';
               echo '</div>';
             echo '</a>';
           else:
             echo '<div class="pin">';
               echo '<div class="pin-content">';
-                the_sub_field('content');
+                echo '<strong>';
+                  the_sub_field('content');
+                echo '</strong>';
               echo '</div>';
             echo '</div>';
           endif;

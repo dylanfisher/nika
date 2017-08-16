@@ -7,7 +7,7 @@
     <div id="page-<?php the_ID() ?>" <?php post_class() ?>>
       <div class="landing-wrapper">
         <div class="landing-text">
-          <span class="home-page__name huge-sans">Nika Simovich</span>
+          <span class="home-page__name huge-sans"><strong>Nika Simovich</strong></span>
           <span class="home-page__title large-serif">Art Direction &amp; Graphic Design</span>
         </div>
 
@@ -43,7 +43,7 @@
               echo '<div class="home-carousel__slide-info" data-index="' . $i . '">';
                 if ( get_sub_field('description') ):
                   echo '<div class="entry-content">';
-                    echo '<div class="home-carousel__description large-sans">' . get_sub_field('description') . '</div>';
+                    echo '<div class="home-carousel__description large-serif">' . get_sub_field('description') . '</div>';
                   echo '</div>';
                 endif;
 

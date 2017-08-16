@@ -4,16 +4,16 @@
     <div class="sketch-wrapper">
       <div class="site-max-width">
         <header class="sketch-header text-left">
-          <h1 class="large-sans">
+          <h1 class="large-serif">
             <?php the_title(); ?>
           </h1>
 
           <?php
-            $category_names = wp_get_post_terms( $post->ID, 'sketch_category', array( 'fields' => 'names' ) );
+            $category_names = get_field('metadata');
 
             if ( $category_names ):
-              echo '<div class="sketch__categories large-sans">';
-                echo join( $category_names, ', ' );
+              echo '<div class="sketch__categories small-serif">';
+                echo $category_names;
               echo '</div>';
             endif;
           ?>

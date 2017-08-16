@@ -23,7 +23,7 @@
 
 .project-header {
   margin-top: 120px;
-  margin-bottom: 50px;
+  margin-bottom: 85px;
 }
 
 .project-header__year {
@@ -33,12 +33,21 @@
   .project-header__year__number {
     line-height: 81px;
   }
+
+  @include break(hand) {
+    width: 100%;
+  }
 }
 
 .project-header__title {
   position: relative;
   margin-bottom: 10px;
   display: inline-block;
+  width: calc(100% - 200px);
+
+  @include break(hand) {
+    width: 100%;
+  }
 }
 
 .project-header__title-label {

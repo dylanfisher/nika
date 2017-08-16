@@ -1,7 +1,44 @@
 @import url("//hello.myfonts.net/count/2e224d");
 @import url("//hello.myfonts.net/count/2e224c");
-@font-face {font-family: 'electra';src: url('fonts/2E224D_0_0.eot');src: url('fonts/2E224D_0_0.eot?#iefix') format('embedded-opentype'),url('fonts/2E224D_0_0.woff2') format('woff2'),url('fonts/2E224D_0_0.woff') format('woff'),url('fonts/2E224D_0_0.ttf') format('truetype');}
-@font-face {font-family: 'venus';src: url('fonts/2E224C_0_0.eot');src: url('fonts/2E224C_0_0.eot?#iefix') format('embedded-opentype'),url('fonts/2E224C_0_0.woff2') format('woff2'),url('fonts/2E224C_0_0.woff') format('woff'),url('fonts/2E224C_0_0.ttf') format('truetype');}
+@import url("//hello.myfonts.net/count/34749e");
+
+@font-face {
+  font-family: 'electra';
+  src: url('fonts/2E224D_0_0.eot');
+  src: url('fonts/2E224D_0_0.eot?#iefix') format('embedded-opentype'),
+       url('fonts/2E224D_0_0.woff2') format('woff2'),
+       url('fonts/2E224D_0_0.woff') format('woff'),
+       url('fonts/2E224D_0_0.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'VenusCom-Regular';
+  src: url('fonts/34749E_0_0.eot');
+  src: url('fonts/34749E_0_0.eot?#iefix') format('embedded-opentype'),
+       url('fonts/34749E_0_0.woff2') format('woff2'),
+       url('fonts/34749E_0_0.woff') format('woff'),
+       url('fonts/34749E_0_0.ttf') format('truetype');
+  font-weight: normal;
+}
+
+// @font-face {
+//   font-family: 'VenusCom-Light';
+//   src: url('fonts/34749E_1_0.eot');
+//   src: url('fonts/34749E_1_0.eot?#iefix') format('embedded-opentype'),
+//        url('fonts/34749E_1_0.woff2') format('woff2'),
+//        url('fonts/34749E_1_0.woff') format('woff'),
+//        url('fonts/34749E_1_0.ttf') format('truetype');
+// }
+
+@font-face {
+  font-family: 'VenusCom-Regular';
+  src: url('fonts/2E224C_0_0.eot');
+  src: url('fonts/2E224C_0_0.eot?#iefix') format('embedded-opentype'),
+       url('fonts/2E224C_0_0.woff2') format('woff2'),
+       url('fonts/2E224C_0_0.woff') format('woff'),
+       url('fonts/2E224C_0_0.ttf') format('truetype');
+  font-weight: bold;
+}
 
 @font-face {
   font-family: 'ElectraLTStd-Display';

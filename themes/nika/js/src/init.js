@@ -200,6 +200,13 @@ jQuery(document).ready(function($){
     $(window).scroll(function() {
       var st = App.scrollTop;
       var offsetPoint = App.windowHeight - 80;
+      var halfwayPoint = App.windowHeight / 2 - 80;
+
+      if ( st >= halfwayPoint ) {
+        $html.addClass('scrolled-halfway');
+      } else {
+        $html.removeClass('scrolled-halfway');
+      }
 
       if ( st >= offsetPoint ) {
         $html.addClass('header-is-fixed');
@@ -238,6 +245,11 @@ jQuery(document).ready(function($){
     $allInfoWrappers.hide();
     $infoWrapper.show();
   });
+
+  $homeCarousel.on('staticClick.flickity', function() {
+    $homeCarousel.flickity('next');
+  });
+
 
   // Hide down arrow when you scroll
   var $downArrow = $('.home__down-arrow');

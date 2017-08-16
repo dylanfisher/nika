@@ -12,24 +12,13 @@
 
 .sketch-header {
   position: relative;
+  padding-right: 40px;
 }
 
 .sketch-page-title {
   margin-top: 100px;
   text-align: left;
   margin-bottom: 20px;
-}
-
-.sketch-filters {
-  margin-bottom: 50px;
-  padding: 20px 0 14px;
-  border-top: 2px solid #fff;
-  border-bottom: 2px solid #fff;
-  text-align: left;
-}
-
-.sketch-filters__title {
-  line-height: 1;
 }
 
 .close-icon-wrapper {
@@ -52,6 +41,10 @@
 
 .sketch__description {
   margin-top: 30px;
+}
+
+.sketch__categories {
+  font-style: italic;
 }
 
 .next-page-wrapper {
