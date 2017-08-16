@@ -228,22 +228,19 @@ jQuery(document).ready(function($){
 
   if ( App.isHome() ) {
     var $html = $('html');
+    var halfwayPoint = App.windowHeight / 2 + 120;
+
+    $(window).resize(function() {
+      halfwayPoint = App.windowHeight / 2 + 120;
+    });
 
     $(window).scroll(function() {
       var st = App.scrollTop;
-      var offsetPoint = App.windowHeight - 80;
-      var halfwayPoint = App.windowHeight / 2 - 80;
 
       if ( st >= halfwayPoint ) {
         $html.addClass('scrolled-halfway');
       } else {
         $html.removeClass('scrolled-halfway');
-      }
-
-      if ( st >= offsetPoint ) {
-        $html.addClass('header-is-fixed');
-      } else {
-        $html.removeClass('header-is-fixed');
       }
     });
   }
@@ -268,6 +265,9 @@ jQuery(document).ready(function($){
 
     if ( $video.length ) {
       $video.get(0).play();
+      window.setTimeout(function() {
+        $homeCarousel.flickity('resize');
+      }, 250);
     } else {
       $allVideos.each(function() {
         $(this).get(0).pause();

@@ -30,7 +30,7 @@
 }
 
 .home-carousel {
-  margin-bottom: 104px;
+  margin-bottom: 84px;
 
   .flickity-page-dots {
     bottom: -61px !important;
@@ -74,6 +74,31 @@
 
 .home-carousel__slide {
   width: 100%;
+
+  img,
+  video {
+    max-height: 300px;
+
+    @media (min-height: 500px) {
+      max-height: 300px;
+    }
+
+    @media (min-height: 600px) {
+      max-height: 400px;
+    }
+
+    @media (min-height: 700px) {
+      max-height: 500px;
+    }
+
+    @media (min-height: 850px) {
+      max-height: 550px;
+    }
+
+    @media (min-height: 1000px) {
+      max-height: 650px;
+    }
+  }
 }
 
 .home-carousel__slide-info {

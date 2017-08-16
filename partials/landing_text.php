@@ -1,9 +1,11 @@
 <?php if ( get_field( 'landing_page_text' ) ): ?>
   <div class="landing-wrapper">
     <div class="landing-text">
-      <div class="page-entry-content">
-        <div class="text-center">
-          <?php the_field( 'landing_page_text' ); ?>
+      <div class="site-max-width">
+        <div class="landing-text-content">
+          <div class="text-center">
+            <?php the_field( 'landing_page_text' ); ?>
+          </div>
         </div>
       </div>
     </div>
