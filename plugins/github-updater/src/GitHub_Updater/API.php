@@ -2,7 +2,7 @@
 /**
  * GitHub Updater
  *
- * @package   GitHub_Updater
+ * @package   Fragen\GitHub_Updater
  * @author    Andy Fragen
  * @license   GPL-2.0+
  * @link      https://github.com/afragen/github-updater
@@ -22,18 +22,22 @@ if ( ! defined( 'WPINC' ) ) {
  * Class API
  *
  * @package Fragen\GitHub_Updater
+ * @uses    \Fragen\GitHub_Updater\Base
  */
 abstract class API extends Base {
 
 	/**
 	 * Variable to hold all repository remote info.
 	 *
-	 * @var array
+	 * @access protected
+	 * @var    array
 	 */
 	protected $response = array();
 
 	/**
 	 * Adds custom user agent for GitHub Updater.
+	 *
+	 * @access public
 	 *
 	 * @param array  $args Existing HTTP Request arguments.
 	 * @param string $url  URL being passed.
@@ -42,8 +46,8 @@ abstract class API extends Base {
 	 */
 	public static function http_request_args( $args, $url ) {
 		$args['sslverify'] = true;
-		if ( false === stristr( $args['user-agent'], 'GitHub Updater' ) ) {
-			$args['user-agent']    = $args['user-agent'] . '; GitHub Updater - https://github.com/afragen/github-updater';
+		if ( false === stripos( $args['user-agent'], 'GitHub Updater' ) ) {
+			$args['user-agent']    .= '; GitHub Updater - https://github.com/afragen/github-updater';
 			$args['wp-rest-cache'] = array( 'tag' => 'github-updater' );
 		}
 
@@ -54,6 +58,9 @@ abstract class API extends Base {
 	 * Shiny updates results in the update transient being reset with only the wp.org data.
 	 * This catches the response and reloads the transients.
 	 *
+	 * @uses \Fragen\GitHub_Updater\Base
+	 * @uses \Fragen\GitHub_Updater\Base::make_update_transient_current()
+	 *
 	 * @param mixed  $response HTTP server response.
 	 * @param array  $args     HTTP response arguments.
 	 * @param string $url      URL of HTTP response.
@@ -62,14 +69,13 @@ abstract class API extends Base {
 	 */
 	public static function wp_update_response( $response, $args, $url ) {
 		$parsed_url = parse_url( $url );
-		$base       = new Base();
 
 		if ( 'api.wordpress.org' === $parsed_url['host'] ) {
 			if ( isset( $args['body']['plugins'] ) ) {
-				$base->make_update_transient_current( 'update_plugins' );
+				Class_Factory::get_instance( 'Base' )->make_update_transient_current( 'update_plugins' );
 			}
 			if ( isset( $args['body']['themes'] ) ) {
-				$base->make_update_transient_current( 'update_themes' );
+				Class_Factory::get_instance( 'Base' )->make_update_transient_current( 'update_themes' );
 			}
 		}
 
@@ -78,6 +84,8 @@ abstract class API extends Base {
 
 	/**
 	 * Return repo data for API calls.
+	 *
+	 * @access protected
 	 *
 	 * @return array
 	 */
@@ -117,11 +125,11 @@ abstract class API extends Base {
 	 * Call the API and return a json decoded body.
 	 * Create error messages.
 	 *
-	 * @see http://developer.github.com/v3/
+	 * @link http://developer.github.com/v3/
 	 *
-	 * @param string $url
+	 * @param string $url The URL to send the request to.
 	 *
-	 * @return boolean|object
+	 * @return boolean|\stdClass
 	 */
 	protected function api( $url ) {
 
@@ -132,8 +140,15 @@ abstract class API extends Base {
 		$code          = (integer) wp_remote_retrieve_response_code( $response );
 		$allowed_codes = array( 200, 404 );
 
+		// Set 'broken' if main file doesn't return 200.
+		if ( false !== strrpos( basename( $url ), '.php' ) ||
+		     false !== strrpos( basename( $url ), '.css' )
+		) {
+			$this->type->broken = (int) 200 !== $code;
+		}
+
 		if ( is_wp_error( $response ) ) {
-			Messages::instance()->create_error_message( $response );
+			Class_Factory::get_instance( 'Messages' )->create_error_message( $response );
 
 			return false;
 		}
@@ -147,11 +162,12 @@ abstract class API extends Base {
 						'name' => $this->type->name,
 						'git'  => $this->type->type,
 					),
-				) );
+				)
+			);
 			if ( 'github' === $type['repo'] ) {
 				GitHub_API::ratelimit_reset( $response, $this->type->repo );
 			}
-			Messages::instance()->create_error_message( $type['repo'] );
+			Class_Factory::get_instance( 'Messages' )->create_error_message( $type['repo'] );
 
 			return false;
 		}
@@ -164,7 +180,8 @@ abstract class API extends Base {
 	 *
 	 * @access protected
 	 *
-	 * @param string $endpoint
+	 * @param string      $endpoint      The endpoint to access.
+	 * @param bool|string $download_link The plugin or theme download link. Defaults to false.
 	 *
 	 * @return string $endpoint
 	 */
@@ -214,8 +231,7 @@ abstract class API extends Base {
 					if ( $download_link ) {
 						break;
 					}
-					$api      = new Bitbucket_Server_API( new \stdClass() );
-					$endpoint = $api->add_endpoints( $this, $endpoint );
+					$endpoint = Class_Factory::get_instance( 'Bitbucket_Server_API', new \stdClass() )->add_endpoints( $this, $endpoint );
 
 					return $this->type->enterprise_api . $endpoint;
 				}
@@ -232,22 +248,22 @@ abstract class API extends Base {
 	/**
 	 * Validate wp_remote_get response.
 	 *
-	 * @param $response
+	 * @access protected
+	 *
+	 * @param \stdClass $response The response.
 	 *
 	 * @return bool true if invalid
 	 */
 	protected function validate_response( $response ) {
-		if ( empty( $response ) || isset( $response->message ) ) {
-			return true;
-		}
-
-		return false;
+		return empty( $response ) || isset( $response->message );
 	}
 
 	/**
 	 * Returns repo cached data.
 	 *
-	 * @return array|bool false for expired cache
+	 * @access protected
+	 *
+	 * @return array|bool The repo cache. False if expired.
 	 */
 	protected function get_repo_cache() {
 		$repo      = isset( $this->type->repo ) ? $this->type->repo : 'ghu';
@@ -264,13 +280,18 @@ abstract class API extends Base {
 	/**
 	 * Sets repo data for cache in site option.
 	 *
-	 * @param string $id       Data Identifier.
-	 * @param mixed  $response Data to be stored.
+	 * @access protected
+	 *
+	 * @param string      $id       Data Identifier.
+	 * @param mixed       $response Data to be stored.
+	 * @param string|bool $repo     Repo name or false.
 	 *
 	 * @return bool
 	 */
-	protected function set_repo_cache( $id, $response ) {
-		$repo      = isset( $this->type->repo ) ? $this->type->repo : 'ghu';
+	protected function set_repo_cache( $id, $response, $repo = false ) {
+		if ( ! $repo ) {
+			$repo = isset( $this->type->repo ) ? $this->type->repo : 'ghu';
+		}
 		$cache_key = 'ghu-' . md5( $repo );
 		$timeout   = '+' . self::$hours . ' hours';
 
@@ -285,6 +306,8 @@ abstract class API extends Base {
 	/**
 	 * Create release asset download link.
 	 * Filename must be `{$slug}-{$newest_tag}.zip`
+	 *
+	 * @access protected
 	 *
 	 * @return string $download_link
 	 */
@@ -329,60 +352,69 @@ abstract class API extends Base {
 	}
 
 	/**
-	 * Query wp.org for plugin information.
+	 * Query wp.org for plugin/theme information.
+	 * Exit early and false for override dot org active.
 	 *
-	 * @return array|bool|mixed|string|\WP_Error
+	 * @access protected
+	 *
+	 * @return bool|int|mixed|string|\WP_Error
 	 */
 	protected function get_dot_org_data() {
+		if ( $this->is_override_dot_org() ) {
+			return false;
+		}
+
 		$slug     = $this->type->repo;
 		$response = isset( $this->response['dot_org'] ) ? $this->response['dot_org'] : false;
 
 		if ( ! $response ) {
-			$response = wp_remote_get( 'https://api.wordpress.org/plugins/info/1.0/' . $slug . '.json' );
+			//@TODO shorten syntax for PHP 5.4
+			$type     = explode( '_', $this->type->type );
+			$type     = $type[1];
+			$url      = 'https://api.wordpress.org/' . $type . 's/info/1.1/';
+			$url      = add_query_arg( array( 'action' => $type . '_information', 'request[slug]' => $slug ), $url );
+			$response = wp_remote_get( $url );
+			$response = json_decode( $response['body'] );
+
 			if ( is_wp_error( $response ) ) {
-				return false;
+				return $response;
 			}
-			$wp_repo_body = json_decode( $response['body'] );
-			$response     = is_object( $wp_repo_body ) ? 'in dot org' : 'not in dot org';
+
+			$response = ! empty( $response ) ? 'in dot org' : 'not in dot org';
 
 			$this->set_repo_cache( 'dot_org', $response );
 		}
-		$response = ( 'in dot org' === $response ) ? true : false;
 
-		return $response;
+		return 'in dot org' === $response;
 	}
 
 	/**
 	 * Check if a local file for the repository exists.
 	 * Only checks the root directory of the repository.
 	 *
-	 * @param $filename
+	 * @access protected
+	 *
+	 * @param string $filename The filename to check for.
 	 *
 	 * @return bool
 	 */
-	protected function exists_local_file( $filename ) {
-		if ( file_exists( $this->type->local_path . $filename ) ||
-		     file_exists( $this->type->local_path_extended . $filename )
-		) {
-			return true;
-		}
-
-		return false;
+	protected function local_file_exists( $filename ) {
+		return file_exists( $this->type->local_path . $filename );
 	}
 
 	/**
 	 * Add appropriate access token to endpoint.
 	 *
-	 * @param object $git
-	 * @param string $endpoint
+	 * @access protected
 	 *
-	 * @access private
+	 * @param GitHub_API|GitLab_API $git      Class containing the GitAPI used.
+	 * @param string                $endpoint The endpoint being accessed.
 	 *
 	 * @return string $endpoint
 	 */
 	protected function add_access_token_endpoint( $git, $endpoint ) {
 		// This will return if checking during shiny updates.
-		if ( ! isset( parent::$options ) ) {
+		if ( null === parent::$options ) {
 			return $endpoint;
 		}
 		$key              = null;

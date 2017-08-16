@@ -27,26 +27,19 @@ class Language_Pack extends Base {
 	/**
 	 * Variable containing the plugin/theme object.
 	 *
-	 * @var object
+	 * @var Plugin|Theme
 	 */
 	protected $repo;
 
 	/**
-	 * Variable containing the git host API object.
-	 *
-	 * @var
-	 */
-	protected $repo_api;
-
-	/**
 	 * Language_Pack constructor.
 	 *
-	 * @param object                                   $repo Plugin/Theme object.
-	 * @param \Fragen\GitHub_Updater\Language_Pack_API $api  Language_Pack_API object.
+	 * @param Plugin|Theme      $repo Plugin/Theme object
+	 * @param Language_Pack_API $api  Language_Pack_API object.
 	 */
 	public function __construct( $repo, Language_Pack_API $api ) {
 		if ( empty( $repo->languages ) ) {
-			return false;
+			return;
 		}
 
 		$this->repo     = $repo;
@@ -82,11 +75,11 @@ class Language_Pack extends Base {
 		}
 
 		if ( 'pre_set_site_transient_update_plugins' === current_filter() ) {
-			$repos        = Plugin::instance()->get_plugin_configs();
+			$repos        = Class_Factory::get_instance( 'Plugin' )->get_plugin_configs();
 			$translations = wp_get_installed_translations( 'plugins' );
 		}
 		if ( 'pre_set_site_transient_update_themes' === current_filter() ) {
-			$repos        = Theme::instance()->get_theme_configs();
+			$repos        = Class_Factory::get_instance( 'Theme' )->get_theme_configs();
 			$translations = wp_get_installed_translations( 'themes' );
 		}
 

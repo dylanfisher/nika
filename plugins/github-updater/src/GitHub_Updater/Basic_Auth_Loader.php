@@ -27,28 +27,25 @@ class Basic_Auth_Loader {
 	/**
 	 * Stores Basic::$options.
 	 *
-	 * @var mixed
+	 * @access private
+	 * @var    mixed
 	 */
 	private static $options;
 
 	/**
 	 * Stores the object calling Basic_Auth_Loader.
 	 *
-	 * @var
+	 * @access public
+	 * @var    \stdClass
 	 */
-	private static $object;
-
-	/**
-	 * Basic_Auth_Loader object.
-	 *
-	 * @var bool|object
-	 */
-	private static $instance = false;
+	public $caller;
 
 	/**
 	 * Basic_Auth_Loader constructor.
 	 *
-	 * @param array $options
+	 * @access public
+	 *
+	 * @param array $options Options to pass to the updater.
 	 */
 	public function __construct( $options ) {
 		self::$options = empty( $options )
@@ -57,25 +54,9 @@ class Basic_Auth_Loader {
 	}
 
 	/**
-	 * The Basic_Auth_Loader object can be created/obtained via this
-	 * method - this prevents potential duplicate loading.
-	 *
-	 * @param array $options
-	 *
-	 * @return object $instance Basic_Auth_Loader
-	 */
-	public static function instance( $options ) {
-		if ( false === self::$instance ) {
-			self::$instance = new static( $options );
-			$backtrace      = debug_backtrace();
-			self::$object   = $backtrace[1]['object'];
-		}
-
-		return self::$instance;
-	}
-
-	/**
 	 * Load hooks for Bitbucket authentication headers.
+	 *
+	 * @access public
 	 */
 	public function load_authentication_hooks() {
 		add_filter( 'http_request_args', array( &$this, 'maybe_basic_authenticate_http' ), 5, 2 );
@@ -84,6 +65,8 @@ class Basic_Auth_Loader {
 
 	/**
 	 * Remove hooks for Bitbucket authentication headers.
+	 *
+	 * @access public
 	 */
 	public function remove_authentication_hooks() {
 		remove_filter( 'http_request_args', array( &$this, 'maybe_basic_authenticate_http' ) );
@@ -94,12 +77,13 @@ class Basic_Auth_Loader {
 	 * Add Basic Authentication $args to http_request_args filter hook
 	 * for private repositories only.
 	 *
-	 * @uses $this->get_credentials()
+	 * @access public
+	 * @uses   \Fragen\GitHub_Updater\Basic_Auth_Loader::get_credentials()
 	 *
-	 * @param  mixed  $args
-	 * @param  string $url
+	 * @param  array  $args Args passed to the URL.
+	 * @param  string $url  The URL.
 	 *
-	 * @return mixed $args
+	 * @return array $args
 	 */
 	public function maybe_basic_authenticate_http( $args, $url ) {
 		$credentials = $this->get_credentials( $url );
@@ -117,42 +101,46 @@ class Basic_Auth_Loader {
 	/**
 	 * Get credentials (username/password) for Basic Authentication.
 	 *
-	 * @uses $this->is_repo_private()
+	 * @access public
+	 * @uses   \Fragen\GitHub_Updater\Basic_Auth_Loader::is_repo_private()
 	 *
-	 * @param string $url
+	 * @param string $url The URL.
 	 *
 	 * @return array $credentials
 	 */
 	private function get_credentials( $url ) {
 		$headers      = parse_url( $url );
-		$type         = self::$object;
+		$type         = $this->caller;
 		$username_key = null;
 		$password_key = null;
 		$credentials  = array(
 			'username'      => null,
 			'password'      => null,
-			'api.wordpress' => 'api.wordpress.org' === $headers['host'] ? true : false,
+			'api.wordpress' => 'api.wordpress.org' === $headers['host'],
 			'isset'         => false,
 			'private'       => false,
 		);
 
-		$slug  = isset( $_REQUEST['plugin'] ) ? dirname( $_REQUEST['plugin'] ) : false;
+		$slug  = isset( $_REQUEST['slug'] ) ? $_REQUEST['slug'] : false;
+		$slug  = isset( $_REQUEST['plugin'] ) && ! $slug ? $_REQUEST['plugin'] : $slug;
 		$slug  = isset( $_REQUEST['theme'] ) ? $_REQUEST['theme'] : $slug;
-		$slug  = isset( $_REQUEST['slug'] ) ? $_REQUEST['slug'] : $slug;
-		$repos = isset( $_REQUEST )
+		$repos = null !== $_REQUEST
 			? array_merge(
-				Plugin::instance()->get_plugin_configs(),
-				Theme::instance()->get_theme_configs()
+				Class_Factory::get_instance( 'Plugin' )->get_plugin_configs(),
+				Class_Factory::get_instance( 'Theme' )->get_theme_configs()
 			)
-			: array();
-		$type  = $slug ? $repos[ $slug ]->type : $type;
+			: false;
+		$type  = $slug && $repos &&
+		         isset( $repos[ $slug ] ) && property_exists( $repos[ $slug ], 'type' )
+			? $repos[ $slug ]->type
+			: $type;
 
 		switch ( $type ) {
 			case ( 'bitbucket_plugin' ):
 			case ( 'bitbucket_theme' ):
 			case ( $type instanceof Bitbucket_API ):
 			case ( $type instanceof Bitbucket_Server_API ):
-				$bitbucket_org = 'bitbucket.org' === $headers['host'] ? true : false;
+				$bitbucket_org = 'bitbucket.org' === $headers['host'];
 				$username_key  = $bitbucket_org ? 'bitbucket_username' : 'bitbucket_server_username';
 				$password_key  = $bitbucket_org ? 'bitbucket_password' : 'bitbucket_server_password';
 				break;
@@ -171,7 +159,9 @@ class Basic_Auth_Loader {
 	/**
 	 * Determine if repo is private.
 	 *
-	 * @param string $url
+	 * @access private
+	 *
+	 * @param string $url The URL.
 	 *
 	 * @return bool true if private
 	 */
@@ -181,9 +171,9 @@ class Basic_Auth_Loader {
 		$slug = isset( $_REQUEST['rollback'], $_REQUEST['theme'] ) ? $_REQUEST['theme'] : $slug;
 		$slug = isset( $_REQUEST['slug'] ) ? $_REQUEST['slug'] : $slug;
 
-		if ( ( $slug && array_key_exists( $slug, self::$options ) &&
-		       1 == self::$options[ $slug ] &&
-		       false !== stristr( $url, $slug ) )
+		if ( $slug && array_key_exists( $slug, self::$options ) &&
+		     1 === (int) self::$options[ $slug ] &&
+		     false !== stripos( $url, $slug )
 		) {
 			return true;
 		}
@@ -197,7 +187,7 @@ class Basic_Auth_Loader {
 
 		// Used for refreshing cache.
 		foreach ( array_keys( self::$options ) as $option ) {
-			if ( 1 == self::$options[ $option ] &&
+			if ( 1 === (int) self::$options[ $option ] &&
 			     false !== strpos( $url, $option )
 			) {
 				return true;
@@ -211,16 +201,17 @@ class Basic_Auth_Loader {
 	 * Removes Basic Authentication header for Bitbucket Release Assets.
 	 * Storage in AmazonS3 buckets, uses Query String Request Authentication Alternative.
 	 *
-	 * @link http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html#RESTAuthenticationQueryStringAuth
+	 * @access public
+	 * @link   http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html#RESTAuthenticationQueryStringAuth
 	 *
-	 * @param mixed  $args
-	 * @param string $url
+	 * @param array  $args The URL arguments passed.
+	 * @param string $url  The URL.
 	 *
-	 * @return mixed $args
+	 * @return array $args
 	 */
 	public function http_release_asset_auth( $args, $url ) {
-		$arrURL = parse_url( $url );
-		if ( isset( $arrURL['host'] ) && 'bbuseruploads.s3.amazonaws.com' === $arrURL['host'] ) {
+		$arr_url = parse_url( $url );
+		if ( isset( $arr_url['host'] ) && 'bbuseruploads.s3.amazonaws.com' === $arr_url['host'] ) {
 			unset( $args['headers']['Authorization'] );
 		}
 

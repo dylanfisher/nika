@@ -1,6 +1,43 @@
 #### [unreleased]
+* fixed PHP Notice [#584](https://github.com/afragen/github-updater/issues/584)
+* created a Factory class to use instead of creating Singletons
+* fixed Override Dot Org for themes
+
+#### 7.1.0 / 2017-08-10
+* always show _Install_ button for single site theme when branch switch is active [#567](https://github.com/afragen/github-updater/issues/567)
+* fixed override of dot org to correctly ignore dot org updates [#581](https://github.com/afragen/github-updater/issues/581)
+* no more extended naming
+* added constant for overriding dot org updates when plugins have identical slugs, `GITHUB_UPDATER_OVERRIDE_DOT_ORG` replacing the `GITHUB_UPDATER_EXTENDED_NAMING` constant
+* added Overriding Dot Org functions for both plugins and themes
+
+#### 7.0.0 / 2017-08-01
+* added support for GitLab Groups [#556](https://github.com/afragen/github-updater/issues/556), thanks @rolandsaven
+* refactored Settings and Install to place API Settings data in individual API classes
+* refactored Settings to make smaller methods
+* simplified `composer.json`, removed autoload section and no need to require `composer/installer`
+* many PHP Inspections fixes
+* fixed `class Rest_Update` for PHP 5.3 compatibility, thanks @epicfaace
+* created `class Branch` to automatically set correct branch during branch switch or install. No more need for Branch header. This is a breaking change as `master` will become the default branch for all repositories. You will need to use _Branch Switch_ to reinstall the current branch for it to be correctly set.
+
+#### 6.3.5 / 2017-06-29
+* hotfix to `composer.json` to remove classmap and files, I think I messed something up.
+
+#### 6.3.4 / 2017-05-28
+* fixed [#547](https://github.com/afragen/github-updater/issues/547) for RESTful updating after breaking it again
+* fixed PHP errors [#550](https://github.com/afragen/github-updater/issues/550)
+
+#### 6.3.3 / 2017-05-16
+* definitive fix for [#549](https://github.com/afragen/github-updater/issues/549)
+* update to `class-parser.php@5483`
+
+#### 6.3.2 / 2017-05-09
+* added _broken_ setting to repo not returning HTTP 200 for the main file
+* ~~~fixed PHP error [#549](https://github.com/afragen/github-updater/issues/549)~~~
+* added div class to Settings page to create more specific CSS selectors
+
+#### 6.3.1 / 2017-05-01
 * simplify uninstall.php
-* ensure Basic Auth headers are loaded for RESTful updating
+* ensure Basic Auth headers are loaded for RESTful updating [#547](https://github.com/afragen/github-updater/issues/547)
 
 #### 6.3.0 / 2017-04-26
 * fixed to not run `load_pre_filters()` during WP-CLI, fixes [#528](https://github.com/afragen/github-updater/issues/528) thanks @egifford

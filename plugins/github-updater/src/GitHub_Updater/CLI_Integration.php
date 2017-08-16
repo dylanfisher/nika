@@ -34,7 +34,7 @@ class CLI_Integration extends WP_CLI_Command {
 	 * GitHub_Updater_CLI_Integration constructor.
 	 */
 	public function __construct() {
-		$this->base = new Base();
+		$this->base = Class_Factory::get_instance( 'Base' );
 		$this->init_plugins();
 		$this->init_themes();
 	}
@@ -48,7 +48,7 @@ class CLI_Integration extends WP_CLI_Command {
 	public function init_plugins() {
 		$this->base->forced_meta_update_plugins( true );
 		$current = get_site_transient( 'update_plugins' );
-		$current = Plugin::instance()->pre_set_site_transient_update_plugins( $current );
+		$current = Class_Factory::get_instance( 'Plugin' )->pre_set_site_transient_update_plugins( $current );
 		set_site_transient( 'update_plugins', $current );
 	}
 
@@ -61,7 +61,7 @@ class CLI_Integration extends WP_CLI_Command {
 	public function init_themes() {
 		$this->base->forced_meta_update_themes( true );
 		$current = get_site_transient( 'update_themes' );
-		$current = Theme::instance()->pre_set_site_transient_update_themes( $current );
+		$current = Class_Factory::get_instance( 'Theme' )->pre_set_site_transient_update_themes( $current );
 		set_site_transient( 'update_themes', $current );
 	}
 
@@ -119,6 +119,7 @@ class CLI_Integration extends WP_CLI_Command {
 
 		$headers = parse_url( $uri, PHP_URL_PATH );
 		$slug    = basename( $headers );
+		$this->process_branch( $cli_config, $slug );
 		WP_CLI::success( sprintf( esc_html__( 'Plugin %s installed.', 'github-updater' ), "'$slug'" ) );
 	}
 
@@ -176,6 +177,7 @@ class CLI_Integration extends WP_CLI_Command {
 
 		$headers = parse_url( $uri, PHP_URL_PATH );
 		$slug    = basename( $headers );
+		$this->process_branch( $cli_config, $slug );
 		WP_CLI::success( sprintf( esc_html__( 'Theme %s installed.', 'github-updater' ), "'$slug'" ) );
 	}
 
@@ -212,6 +214,19 @@ class CLI_Integration extends WP_CLI_Command {
 		return $cli_config;
 	}
 
+	/**
+	 * Process branch setting for WP-CLI.
+	 *
+	 * @param array  $cli_config
+	 * @param string $slug
+	 */
+	private function process_branch( $cli_config, $slug ) {
+		$branch_data['github_updater_branch'] = $cli_config['branch'];
+		$branch_data['repo']                  = $slug;
+
+		Class_Factory::get_instance( 'Branch' )->set_branch_on_install( $branch_data );
+	}
+
 }
 
 /**
@@ -223,26 +238,38 @@ require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
  * Class GitHub_Upgrader_CLI_Plugin_Installer_Skin
  */
 class CLI_Plugin_Installer_Skin extends \Plugin_Installer_Skin {
-	public function header() {}
-	public function footer() {}
+	public function header() {
+	}
+
+	public function footer() {
+	}
+
 	public function error( $errors ) {
 		if ( is_wp_error( $errors ) ) {
 			WP_CLI::error( $errors->get_error_message() . "\n" . $errors->get_error_data() );
-		};
+		}
 	}
-	public function feedback( $string ) {}
+
+	public function feedback( $string ) {
+	}
 }
 
 /**
  * Class GitHub_Upgrader_CLI_Theme_Installer_Skin
  */
 class CLI_Theme_Installer_Skin extends \Theme_Installer_Skin {
-	public function header() {}
-	public function footer() {}
+	public function header() {
+	}
+
+	public function footer() {
+	}
+
 	public function error( $errors ) {
 		if ( is_wp_error( $errors ) ) {
 			WP_CLI::error( $errors->get_error_message() . "\n" . $errors->get_error_data() );
-		};
+		}
 	}
-	public function feedback( $string ) {}
+
+	public function feedback( $string ) {
+	}
 }

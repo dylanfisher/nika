@@ -25,31 +25,11 @@ if ( ! defined( 'WPINC' ) ) {
 class Messages extends Base {
 
 	/**
-	 * Holds instance of this object.
-	 *
-	 * @var bool|Messages
-	 */
-	private static $instance = false;
-
-	/**
 	 * Holds WP_Error message.
 	 *
 	 * @var string
 	 */
 	public static $error_message = '';
-
-	/**
-	 * Singleton
-	 *
-	 * @return object $instance Messages
-	 */
-	public static function instance() {
-		if ( false === self::$instance ) {
-			self::$instance = new self();
-		}
-
-		return self::$instance;
-	}
 
 	/**
 	 * Display message when API returns other than 200 or 404.
@@ -65,9 +45,10 @@ class Messages extends Base {
 		$settings_pages = array( 'settings.php', 'options-general.php' );
 
 		if (
-			! in_array( $pagenow, array_merge( $update_pages, $settings_pages ) ) ||
-			( in_array( $pagenow, $settings_pages ) &&
-			  ( ! isset( $_GET['page'] ) || 'github-updater' !== $_GET['page'] ) )
+			( ( ! isset( $_GET['page'] ) || 'github-updater' !== $_GET['page'] ) &&
+			  in_array( $pagenow, $settings_pages, true ) ) ||
+			! in_array( $pagenow, array_merge( $update_pages, $settings_pages ), true )
+
 		) {
 			return false;
 		}
@@ -76,7 +57,7 @@ class Messages extends Base {
 			switch ( $type ) {
 				case is_wp_error( $type ):
 					self::$error_message = $type->get_error_message();
-					if ( false !== strstr( self::$error_message, 'timed out' ) ) {
+					if ( false !== strpos( self::$error_message, 'timed out' ) ) {
 						break;
 					}
 					add_action( 'admin_notices', array( &$this, 'show_wp_error' ) );
@@ -104,7 +85,7 @@ class Messages extends Base {
 	public function show_403_error_message() {
 		$_403 = false;
 		foreach ( self::$error_code as $repo ) {
-			if ( 403 === $repo['code'] && 'github' === $repo['git'] && ! $_403 ) {
+			if ( ! $_403 && 403 === $repo['code'] && 'github' === $repo['git'] ) {
 				$_403 = true;
 				if ( ! \PAnD::is_admin_notice_active( '403-error-1' ) ) {
 					return;
@@ -142,7 +123,7 @@ class Messages extends Base {
 	public function show_401_error_message() {
 		$_401 = false;
 		foreach ( self::$error_code as $repo ) {
-			if ( 401 === $repo['code'] && ! $_401 ) {
+			if ( ! $_401 && 401 === $repo['code'] ) {
 				$_401 = true;
 				if ( ! \PAnD::is_admin_notice_active( '401-error-1' ) ) {
 					return;
