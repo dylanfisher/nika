@@ -9,14 +9,14 @@
 .small-sans {
   font-family: $sans;
   font-size: 20px;
-  line-height: 1.4;
-  letter-spacing: 0.6px;
+  line-height: 1.2;
+  letter-spacing: 0;
 }
 
 .small-serif {
   font-family: $serif;
   font-size: 22px;
-  line-height: 1.4;
+  line-height: 1.2;
   letter-spacing: 0;
 }
 
@@ -78,7 +78,7 @@
 @mixin huge-sans {
   font-family: $sans;
   font-size: 45px;
-  line-height: 1.4;
+  line-height: 1.2;
 }
 .huge-sans { @include huge-sans; }
 
@@ -212,16 +212,21 @@ body {
     }
   }
 
-  @include break(hand) {
-    position: static;
-    transform: none;
-  }
+  // @include break(hand) {
+  //   position: static;
+  //   transform: none;
+  //   margin-top: 0;
+  // }
 }
 
 .landing-text-content {
   @extend %ibnorm;
   max-width: 720px;
   margin: 0 auto;
+
+  .huge-sans {
+    padding: 0 3px;
+  }
 }
 
 .content {
@@ -352,12 +357,9 @@ a {
 }
 
 .entry-content a,
-.sidebar a {
+.sidebar a,
+.home-carousel__slide-info a {
   border-bottom: 1px solid;
-
-  // &:hover {
-  //   border-bottom: 0;
-  // }
 }
 
 //
