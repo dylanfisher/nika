@@ -32,7 +32,7 @@
 
         if ( get_sub_field('additional_info') ):
           echo '<div class="home-carousel__additional-info">';
-            echo '<div class="medium-sans">';
+            echo '<div class="small-serif">';
               echo get_sub_field('additional_info');
             echo '</div>';
           echo '</div>';
