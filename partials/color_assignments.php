@@ -66,8 +66,6 @@
   .sidebar a,
   .footer a                { border-color: <?php echo $accent; ?>; }
 
-  .big-button:hover        { border-color: <?php echo $accent; ?>; }
-
   ::-moz-selection         { background: <?php echo $accent; ?>; }
   ::selection              { background: <?php echo $accent; ?>; }
 

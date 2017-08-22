@@ -265,6 +265,11 @@ body {
   line-height: 1;
   display: inline-block;
   font-weight: bold;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+    color: #fff;
+  }
 }
 
 .embed-wrapper {
