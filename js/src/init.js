@@ -213,43 +213,57 @@ jQuery(document).ready(function($){
     });
   }
 
-  var $homeCarousel = $('.home-carousel');
+  var $homeCarousels = $('.home-carousel');
 
-  $homeCarousel.flickity({
-    adaptiveHeight: true,
-    prevNextButtons: false,
-    wrapAround: true,
-    imagesLoaded: true
-  });
+  $homeCarousels.each(function() {
+    var $homeCarousel = $(this);
 
-  $homeCarousel.on( 'select.flickity', function() {
-    var flkty = $homeCarousel.data('flickity');
-    var $currentSlide = $(flkty.selectedElement);
-    var $video = $currentSlide.find('video');
-    var $allVideos = $homeCarousel.find('video');
-    var index = $currentSlide.attr('data-index');
-    var $infoWrapper = $('.home-carousel__slide-info[data-index="' + index + '"]');
-    var $allInfoWrappers = $('.home-carousel__slide-info');
-
-    if ( $video.length ) {
-      $video.get(0).play();
-      window.setTimeout(function() {
-        $homeCarousel.flickity('resize');
-      }, 250);
-    } else {
-      $allVideos.each(function() {
-        $(this).get(0).pause();
-      });
+    if ( $homeCarousel.hasClass('home-carousel-slide-count-1') ) {
+      return;
     }
 
-    $allInfoWrappers.hide();
-    $infoWrapper.show();
-  });
+    $homeCarousel.flickity({
+      adaptiveHeight: true,
+      wrapAround: true,
+      imagesLoaded: true,
+        arrowShape: {
+        x0: 10,
+        x1: 70, y1: 50,
+        x2: 70, y2: 30,
+        x3: 70
+      }
+    });
 
-  $homeCarousel.on('staticClick.flickity', function() {
-    $homeCarousel.flickity('next');
-  });
+    $homeCarousel.on( 'select.flickity', function() {
+      var flkty = $homeCarousel.data('flickity');
+      var $currentSlide = $(flkty.selectedElement);
+      var $video = $currentSlide.find('video');
+      var $allVideos = $homeCarousel.find('video');
+      var index = $currentSlide.attr('data-index');
+      // var $infoWrapper = $('.home-carousel__slide-info[data-index="' + index + '"]');
+      // var $allInfoWrappers = $('.home-carousel__slide-info');
 
+      console.log($video);
+
+      if ( $video.length ) {
+        $video.get(0).play();
+        // window.setTimeout(function() {
+        //   $homeCarousel.flickity('resize');
+        // }, 250);
+      } else {
+        $allVideos.each(function() {
+          $(this).get(0).pause();
+        });
+      }
+
+      // $allInfoWrappers.hide();
+      // $infoWrapper.show();
+    });
+
+    $homeCarousel.on('staticClick.flickity', function() {
+      $homeCarousel.flickity('next');
+    });
+  });
 
   // Hide down arrow when you scroll
   var $downArrow = $('.home__down-arrow');

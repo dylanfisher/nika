@@ -17,51 +17,11 @@
       </div>
 
       <?php
-        if ( have_rows('project_carousel') ):
-          $i = -1;
-          echo '<div class="home-carousel wrapper-offset">';
-            while ( have_rows('project_carousel') ) : the_row(); $i++;
-              echo '<div class="home-carousel__slide" data-index="' . $i . '">';
-                if ( get_sub_field('video_url') ):
-                  $poster_url = '';
-                  if ( get_sub_field('image') ):
-                    $poster_url = get_sub_field('image')['sizes']['medium'];
-                  endif;
-                  echo '<video src="' . get_sub_field('video_url') . '" poster="' . $poster_url . '">';
-                else:
-                  if ( get_sub_field('image') ):
-                    sandbox_image('image', 'large');
-                  endif;
-                endif;
-              echo '</div>';
-            endwhile;
-          echo '</div>';
-
-          $i = -1;
-          echo '<div class="home-carousel__slide-info-wrapper">';
-            while ( have_rows('project_carousel') ) : the_row(); $i++;
-              echo '<div class="home-carousel__slide-info" data-index="' . $i . '">';
-                echo '<div class="site-max-width">';
-                  if ( get_sub_field('description') ):
-                    echo '<div class="home-carousel__description large-serif">' . get_sub_field('description') . '</div>';
-                  endif;
-
-                  if ( get_sub_field('project_link') ):
-                    echo '<div class="home-carousel__project_link">';
-                      echo '<a class="big-button" href="' . get_sub_field('project_link') . '">';
-                        echo get_sub_field('project_link_label') ? get_sub_field('project_link_label') : get_sub_field('project_link');
-                      echo '</a>';
-                    echo '</div>';
-                  endif;
-
-                  if ( get_sub_field('additional_info') ):
-                    echo '<div class="home-carousel__additional-info">';
-                      echo '<div class="medium-sans">';
-                        echo get_sub_field('additional_info');
-                      echo '</div>';
-                    echo '</div>';
-                  endif;
-                echo '</div>';
+        if ( have_rows( 'modules' ) ):
+          echo '<div class="home-page-modules">';
+            while ( have_rows( 'modules' ) ) : the_row();
+              echo '<div class="module module-type--' . get_row_layout() . '">';
+                get_template_part( 'partials/home-page-modules/' . get_row_layout() );
               echo '</div>';
             endwhile;
           echo '</div>';

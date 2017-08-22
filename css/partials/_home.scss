@@ -35,6 +35,36 @@
 
 .home-carousel {
   margin-bottom: 84px;
+  background-color: $gray;
+
+  &.home-carousel-slide-count-1 {
+    background-color: transparent;
+  }
+
+  &:hover {
+    .flickity-prev-next-button {
+      opacity: 1;
+    }
+  }
+
+  .flickity-prev-next-button {
+    opacity: 0;
+    background: transparent;
+    transition: opacity 0.4s;
+
+    &:hover {
+      background: transparent;
+
+      .arrow {
+        fill: #333;
+      }
+    }
+
+    .arrow {
+      transition: fill 0.2s;
+      fill: #fff;
+    }
+  }
 
   .flickity-page-dots {
     bottom: -61px !important;
@@ -62,6 +92,7 @@
   }
 
   .home-carousel__slide {
+    padding: 100px 70px;
     left: 0 !important;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
@@ -105,21 +136,36 @@
   }
 }
 
-.home-carousel__slide-info {
-  display: none;
+.home-carousel-slide-count-1 {
+  margin-bottom: 60px;
 
-  &:first-child {
-    display: block;
+  .home-carousel__slide {
+    opacity: 1;
+    padding: 0;
   }
 }
 
 .home-carousel__description,
 .home-carousel__project_link {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .home-carousel__description {
   strong {
     @include huge-sans;
   }
+}
+
+.home-carousel__slide__link-area {
+  margin-top: 60px;
+
+  .big-button {
+    width: 50%;
+    max-width: 275px;
+    margin: 0 20px;
+  }
+}
+
+.home-carousel__additional-info {
+  font-style: italic;
 }
