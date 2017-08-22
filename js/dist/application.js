@@ -251,6 +251,12 @@ jQuery(document).ready(function($){
     var $homeCarousel = $(this);
 
     if ( $homeCarousel.hasClass('home-carousel-slide-count-1') ) {
+      var $video = $homeCarousel.find('video');
+
+      if ( $video.length ) {
+        $video.get(0).play();
+      }
+
       return;
     }
 
