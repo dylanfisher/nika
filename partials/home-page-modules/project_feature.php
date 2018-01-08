@@ -11,9 +11,9 @@
               $poster_url = get_sub_field('image')['sizes']['medium'];
             endif;
             if ( $poster_url ):
-              echo '<video src="' . get_sub_field('video_url') . '" poster="' . $poster_url . '">';
+              echo '<video src="' . get_sub_field('video_url') . '" poster="' . $poster_url . '" loop>';
             else:
-              echo '<video src="' . get_sub_field('video_url') . '">';
+              echo '<video src="' . get_sub_field('video_url') . '" loop>';
             endif;
           else:
             sandbox_image('image', 'large');

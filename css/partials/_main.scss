@@ -18,6 +18,10 @@
   font-size: 22px;
   line-height: 1.2;
   letter-spacing: 0;
+
+  @include break(tab) {
+    font-size: 28px;
+  }
 }
 
 @mixin medium-serif {
@@ -115,8 +119,29 @@
   margin: 0 -20px;
 }
 
+.small-gutters {
+  padding-left: 10px;
+  padding-right: 10px;
+
+  [class*="col-"] {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
 .col-3 {
   width: 33.33%;
+  display: inline-block;
+  padding: 0 20px;
+
+  @include break(hand) {
+    width: 100%;
+    margin-bottom: 60px;
+  }
+}
+
+.col-6 {
+  width: 50%;
   display: inline-block;
   padding: 0 20px;
 
@@ -269,6 +294,15 @@ body {
   &:hover {
     background: rgba(255, 255, 255, 0.3);
     color: #fff;
+  }
+}
+
+.big-button--dark {
+  border: 2px solid rgba(0, 0, 0, 0.8);
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.15);
+    color: #000;
   }
 }
 

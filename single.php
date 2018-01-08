@@ -61,6 +61,34 @@
           endif;
         ?>
       </div>
+
+      <div class="project-bottom-area">
+        <?php $related_projects = get_field('related_projects'); ?>
+        <?php if ( $related_projects ): ?>
+          <div class="site-max-width text-left">
+            <div class="related-projects__title medium-sans-caps">More projects</div>
+            <div class="row small-gutters">
+              <?php
+                foreach ( $related_projects as $index => $related_project ):
+                  echo '<div class="related-project col-6 large-serif">';
+                    $image = get_field( 'featured_image', $related_project );
+                    $size = 'medium';
+                    $url = $image['sizes'][$size];
+
+                    echo '<a href="' . get_permalink( $related_project ) . '">';
+                      echo '<div class="related-project__image" style="background-image: url(' . $url . ');"></div>';
+                      echo $related_project->post_title;
+                    echo '</a>';
+                  echo '</div>';
+                endforeach;
+                wp_reset_query();
+              ?>
+            </div>
+          </div>
+        <?php endif; ?>
+
+        <a href="<?php echo get_home_url(); ?>" class="project-bottom-area__home-button big-button big-button--dark">Back home</a>
+      </div>
     </div>
   </div>
 <?php get_footer() ?>

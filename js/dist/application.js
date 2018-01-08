@@ -52,6 +52,8 @@ jQuery(document).ready(function($){
     return $('body').hasClass('home');
   };
 
+  var homeScrollHalfwayPoint = App.windowHeight / 2 + 120;
+
   nightTimeInit();
   surveyInit();
 
@@ -228,16 +230,15 @@ jQuery(document).ready(function($){
 
   if ( App.isHome() ) {
     var $html = $('html');
-    var halfwayPoint = App.windowHeight / 2 + 120;
 
     $(window).resize(function() {
-      halfwayPoint = App.windowHeight / 2 + 120;
+      homeScrollHalfwayPoint = App.windowHeight / 2 + 120;
     });
 
     $(window).scroll(function() {
       var st = App.scrollTop;
 
-      if ( st >= halfwayPoint ) {
+      if ( st >= homeScrollHalfwayPoint ) {
         $html.addClass('scrolled-halfway');
       } else {
         $html.removeClass('scrolled-halfway');
@@ -281,8 +282,6 @@ jQuery(document).ready(function($){
       // var $infoWrapper = $('.home-carousel__slide-info[data-index="' + index + '"]');
       // var $allInfoWrappers = $('.home-carousel__slide-info');
 
-      console.log($video);
-
       if ( $video.length ) {
         $video.get(0).play();
         // window.setTimeout(function() {
@@ -306,11 +305,13 @@ jQuery(document).ready(function($){
   // Hide down arrow when you scroll
   var $downArrow = $('.home__down-arrow');
   if ( $downArrow.length ) {
-    $(window).on('scroll', function() {
-      var st = App.scrollTop;
-      var opacity = Math.max( 0, 1 - ( st / ( App.windowHeight / 2 ) ) );
 
-      $downArrow.css({ opacity: opacity });
+    $(window).on('scroll', function() {
+      if ( App.scrollTop > homeScrollHalfwayPoint ) {
+        $downArrow.addClass('active');
+      } else {
+        $downArrow.removeClass('active');
+      }
     });
   }
 

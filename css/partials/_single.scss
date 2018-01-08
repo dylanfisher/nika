@@ -159,3 +159,42 @@ a.pin:hover {
 .project__additional {
   font-style: italic;
 }
+
+.project-bottom-area {
+  background-color: #fff;
+  margin: 0 -60px -160px;
+  padding: 40px 60px;
+
+  @include break(hand) {
+    margin: 0 -20px -120px;
+    padding: 40px 20px;
+  }
+}
+
+.related-projects__title {
+  margin-bottom: 12px;
+}
+
+.related-project {
+  margin-bottom: 20px;
+
+  a {
+    &:hover {
+      .related-project__image {
+        opacity: 0.7;
+      }
+    }
+  }
+}
+
+.related-project__image {
+  padding-bottom: 66.66%;
+  background-size: cover;
+  background-position: center center;
+  margin-bottom: 10px;
+  transition: opacity $tt;
+}
+
+.project-bottom-area__home-button {
+  margin-top: 20px;
+}
