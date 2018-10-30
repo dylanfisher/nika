@@ -53,7 +53,7 @@
             <div class="col-3">
               <div class="small-title">Credits</div>
               <div class="small-sans">
-                This website was designed by Nika Simovich and programmed by <a href="http://dylanfisher.com/" target="_blank">Dylan Fisher</a>.
+                This website was designed by Nika Fisher and programmed by <a href="http://dylanfisher.com/" target="_blank">Dylan Fisher</a>.
               </div>
             </div>
             <div class="col-3">

@@ -27,7 +27,7 @@ Website developed by Dylan Fisher
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title><?php wp_title( '-', true, 'right' ); echo esc_html( get_bloginfo('name'), 1 ); ?></title>
   <meta name="description" content="<?php echo get_bloginfo('description'); ?>">
-  <meta name="keywords" content="nika simovich, graphic design, designer, new york, nyc">
+  <meta name="keywords" content="nika fisher, nika simovich, graphic design, designer, new york, nyc, labud">
   <link rel="icon" type="image/png" href="<?php echo get_bloginfo('template_url'); ?>/images/favicon.png">
   <?php include(locate_template('partials/color_assignments.php')); ?>
   <?php wp_head(); // For plugins ?>

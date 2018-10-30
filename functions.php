@@ -123,7 +123,7 @@ function sandbox_image($acf_image_field_name, $image_size) {
   $url = $image['sizes'][$size];
   $width = $image['sizes'][$size.'-width'];
   $height = $image['sizes'][$size.'-height'];
-  echo '<img src="'.$url.'" width="'.$width.'" height="'.$height.'" alt="nika simovich '.$alt.'">';
+  echo '<img src="'.$url.'" width="'.$width.'" height="'.$height.'" alt="Nika Fisher '.$alt.'">';
 }
 
 // Function to create slug out of text
