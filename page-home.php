@@ -8,7 +8,7 @@
       <div class="landing-wrapper">
         <div class="landing-text">
           <span class="home-page__name huge-sans"><strong>Nika Fisher</strong></span>
-          <span class="home-page__title large-serif">Creative Direction &amp; Graphic Design</span>
+          <span class="home-page__title large-serif">Creative Direction &amp; Design</span>
         </div>
 
         <div class="home__down-arrow">
